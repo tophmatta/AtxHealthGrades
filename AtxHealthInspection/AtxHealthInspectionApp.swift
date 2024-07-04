@@ -12,7 +12,7 @@ import SwiftData
 struct AtxHealthInspectionApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(report: Report.empty)
+            MainView()
         }
     }
 }

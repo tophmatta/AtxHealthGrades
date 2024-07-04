@@ -1,28 +1,17 @@
 //
-//  ContentView.swift
+//  SearchView.swift
 //  AtxHealthInspection
 //
 //  Created by Toph Matta on 7/4/24.
 //
 
 import SwiftUI
-import SwiftData
 
-struct ContentView: View {
-    
-    @State var report: Report
-
+struct SearchView: View {
     var body: some View {
-        VStack {
-            Text(report.restaurantName)
-            Text(report.score)
-        }
-            .task {
-                guard let data = await makeRequest() else { return }
-                report = data
-            }
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
-
+    
     func makeRequest() async -> Report? {
         guard
             var url = URL(string: Constants.endpoint)
@@ -44,25 +33,9 @@ struct ContentView: View {
         }
         return nil
     }
-    
-}
-
-struct Report: Decodable {
-    let restaurantName: String
-    let score: String
 
 }
 
-extension Report: CustomStringConvertible {
-    var description: String {
-        return "name: \(restaurantName), score: \(score)"
-    }
-    
-    static var empty: Report {
-        return Report(restaurantName: "N/A", score: "N/A")
-    }
+#Preview {
+    SearchView()
 }
-
-//#Preview {
-//    ContentView()
-//}
