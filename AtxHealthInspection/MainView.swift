@@ -10,9 +10,17 @@ import SwiftData
 
 struct MainView: View {
     
+    @StateObject var viewModel: SearchViewModel = SearchViewModel()
 
     var body: some View {
-        Text("TODO")
+        TabView {
+            SearchView()
+                .environmentObject(viewModel)
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+            //TODO: Mapview
+        }
     }
 
     

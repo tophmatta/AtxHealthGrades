@@ -65,9 +65,21 @@ extension Report: CustomStringConvertible {
     }
 
     var description: String {
-        return "name: \(restaurantName), score: \(score), address: \(location.address)"
+        var desc = "Restaurant Name: \(restaurantName)\n"
+        desc += "Score: \(score)\n"
+        desc += "Location:\n"
+        desc += "- Address: \(location.address)\n"
+        
+        if let coordinate = location.coordinate {
+            desc += "- Latitude: \(coordinate.latitude)\n"
+            desc += "- Longitude: \(coordinate.longitude)\n"
+        } else {
+            desc += "- Coordinates: N/A\n"
+        }
+        
+        return desc
     }
-    
+
     static var empty: Report {
         return Report()
     }
