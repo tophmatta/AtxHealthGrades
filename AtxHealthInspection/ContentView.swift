@@ -10,15 +10,16 @@ import SwiftData
 
 struct ContentView: View {
     
-    @State var report: Report? = nil
+    @State var report: Report
 
     var body: some View {
         VStack {
-            Text(report?.restaurantName ?? Report.empty.restaurantName)
-            Text(report?.score ?? Report.empty.score)
+            Text(report.restaurantName)
+            Text(report.score)
         }
             .task {
-                report = await makeRequest() ?? Report.empty
+                guard let data = await makeRequest() else { return }
+                report = data
             }
     }
 
@@ -30,7 +31,8 @@ struct ContentView: View {
         url = url.appending(queryItems: [URLQueryItem(name: "$where", value: "score>90")])
 
         do {
-            let (data, response) = try await URLSession.shared.data(from: url)
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
             
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
