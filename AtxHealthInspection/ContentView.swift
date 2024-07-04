@@ -9,53 +9,58 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    
+    @State var report: Report? = nil
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
+        VStack {
+            Text(report?.restaurantName ?? Report.empty.restaurantName)
+            Text(report?.score ?? Report.empty.score)
         }
+            .task {
+                report = await makeRequest() ?? Report.empty
+            }
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
+    func makeRequest() async -> Report? {
+        guard
+            var url = URL(string: Constants.endpoint)
+        else { return nil }
+        
+        url = url.appending(queryItems: [URLQueryItem(name: "$where", value: "score>90")])
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let result = try decoder.decode([Report].self, from: data)
+            
+            return result.first!
+        } catch {
+            print("Error with request")
         }
+        return nil
+    }
+    
+}
+
+struct Report: Decodable {
+    let restaurantName: String
+    let score: String
+
+}
+
+extension Report: CustomStringConvertible {
+    var description: String {
+        return "name: \(restaurantName), score: \(score)"
+    }
+    
+    static var empty: Report {
+        return Report(restaurantName: "N/A", score: "N/A")
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
-}
+//#Preview {
+//    ContentView()
+//}
