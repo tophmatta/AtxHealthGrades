@@ -15,6 +15,8 @@
 		F1EACEF22C37368B006BE3F9 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEF12C37368B006BE3F9 /* SearchView.swift */; };
 		F1EACEF42C373CF5006BE3F9 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEF32C373CF5006BE3F9 /* Report.swift */; };
 		F1EACEF82C374B89006BE3F9 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEF72C374B89006BE3F9 /* SearchViewModel.swift */; };
+		F1F55FA92C3856C6005C0F30 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F55FA82C3856C6005C0F30 /* Environment.swift */; };
+		F1F55FAB2C38680B005C0F30 /* FoodBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		F1EACEF12C37368B006BE3F9 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		F1EACEF32C373CF5006BE3F9 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		F1EACEF72C374B89006BE3F9 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		F1F55FA82C3856C6005C0F30 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBackground.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,9 +66,11 @@
 				F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */,
 				F1EACEE12C371C71006BE3F9 /* MainView.swift */,
 				F1EACEF12C37368B006BE3F9 /* SearchView.swift */,
+				F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */,
 				F1EACEF72C374B89006BE3F9 /* SearchViewModel.swift */,
 				F1EACEF32C373CF5006BE3F9 /* Report.swift */,
 				F1EACEEF2C371DED006BE3F9 /* Constants.swift */,
+				F1F55FA82C3856C6005C0F30 /* Environment.swift */,
 				F1EACEE52C371C73006BE3F9 /* Assets.xcassets */,
 				F1EACEE72C371C73006BE3F9 /* Preview Content */,
 			);
@@ -152,9 +158,11 @@
 				F1EACEF22C37368B006BE3F9 /* SearchView.swift in Sources */,
 				F1EACEF82C374B89006BE3F9 /* SearchViewModel.swift in Sources */,
 				F1EACEF42C373CF5006BE3F9 /* Report.swift in Sources */,
+				F1F55FA92C3856C6005C0F30 /* Environment.swift in Sources */,
 				F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */,
 				F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */,
+				F1F55FAB2C38680B005C0F30 /* FoodBackground.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,13 @@ import SwiftData
 
 struct MainView: View {
     
+    init() {
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.isTranslucent = false
+        tabBarAppearance.barTintColor = UIColor.green
+        tabBarAppearance.backgroundColor = UIColor(Constants.megaLightGray)
+    }
+    
     @StateObject var viewModel: SearchViewModel = SearchViewModel()
 
     var body: some View {
@@ -20,13 +27,16 @@ struct MainView: View {
                     Label("Search", systemImage: "magnifyingglass")
                 }
             //TODO: Mapview
+            Text("yo")
+                .tabItem { Label("Map", systemImage: "map") }
         }
+        .tint(Color.green)
     }
 
     
 }
 
 
-//#Preview {
-//    MainView()
-//}
+#Preview {
+    MainView()
+}

@@ -8,7 +8,16 @@
 import Foundation
 
 
+public enum FilterType: String, CaseIterable, Identifiable {
+    case Name, ZipCode = "Zip Code"
+    public var id: Self { self }
+}
+
 class SearchViewModel: ObservableObject {
+    
+    @Published var filterType: FilterType = .Name
+    @Published var searchText: String = ""
+    
     
     func makeRequest() async -> Report? {
         guard
