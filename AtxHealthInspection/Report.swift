@@ -10,71 +10,73 @@ import CoreLocation
 struct Report: Decodable {
     let restaurantName: String
     let score: String
-    let location: Location
+    let address: String
+    var coordinate: CLLocationCoordinate2D? = nil
     
-    init(from decoder: any Decoder) throws {
-        let container: KeyedDecodingContainer<CodingKeys> = try decoder.container(keyedBy: CodingKeys.self)
-        
-        let name = try container.decode(String.self, forKey: CodingKeys.restaurantName)
-        let score = try container.decode(String.self, forKey: CodingKeys.score)
-        let location = try container.decode(Location.self, forKey: CodingKeys.address)
-        
-        self.restaurantName = name
-        self.score = score
-        self.location = location
-    }
-    
-    struct Location: Decodable {
-        var coordinate: CLLocationCoordinate2D? = nil
+    struct HumanAddress: Decodable {
         let address: String
+        let city: String
+        let state: String
+        let zip: String
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        init(from decoder: any Decoder) throws {
-            let container: KeyedDecodingContainer<CodingKeys> = try decoder.container(keyedBy: CodingKeys.self)
-            
-            self.address = try container.decode(String.self, forKey: CodingKeys.humanAddress)
-            
-            guard
-                let latStr = try container.decodeIfPresent(String.self, forKey: CodingKeys.latitude),
-                let lonStr = try container.decodeIfPresent(String.self, forKey: CodingKeys.longitude),
-                let lat = Double(latStr),
-                let lon = Double(lonStr)
-            else {
-                return
-            }
-            
-            let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            
-            guard CLLocationCoordinate2DIsValid(coord) else {
-                return
-            }
-            
-            self.coordinate = coord
+        self.restaurantName = try container.decode(String.self, forKey: .restaurantName)
+        self.score = try container.decode(String.self, forKey: .score)
+        
+        let addressContainer = try container.nestedContainer(keyedBy: CodingKeys.Address.self, forKey: .address)
+        
+        let humanAddressString = try addressContainer.decode(String.self, forKey: .humanAddress)
+        
+        guard let humanAddressData = humanAddressString.data(using: .utf8) else {
+            throw DecodingError.dataCorruptedError(forKey: .humanAddress, in: addressContainer, debugDescription: "Human address string data is corrupted")
         }
+        
+        let humanAddress = try JSONDecoder().decode(HumanAddress.self, from: humanAddressData)
+        self.address = humanAddress.address
+        
+        guard
+            let latStr = try addressContainer.decodeIfPresent(String.self, forKey: .latitude),
+            let lonStr = try addressContainer.decodeIfPresent(String.self, forKey: .longitude),
+            let lat = Double(latStr),
+            let lon = Double(lonStr)
+        else { return }
+        
+        let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        
+        guard CLLocationCoordinate2DIsValid(coord) else { return }
+        
+        self.coordinate = coord
     }
 }
 
 extension Report: CustomStringConvertible {
-    private init(restaurantName: String = "N/A", score: String = "N/A", location: Location = Location.empty) {
-        self.restaurantName = restaurantName
-        self.score = score
-        self.location = location
-    }
-    
-    private enum CodingKeys: CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case restaurantName, score, address
+         
+        enum Address: CodingKey {
+            case latitude, longitude, humanAddress
+        }
     }
 
+    private init(restaurantName: String = "N/A", score: String = "N/A", address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D()) {
+        self.restaurantName = restaurantName
+        self.score = score
+        self.address = address
+        self.coordinate = coordinate
+    }
+    
     var description: String {
         var desc = "Restaurant Name: \(restaurantName)\n"
         desc += "Score: \(score)\n"
-        desc += "Location:\n"
-        desc += "- Address: \(location.address)\n"
+        desc += "Address: \(address)\n"
         
-        if let coordinate = location.coordinate {
-            desc += "- Latitude: \(coordinate.latitude)\n"
-            desc += "- Longitude: \(coordinate.longitude)\n"
+        if let coordinate = coordinate {
+            desc += "Coordinate: (\(coordinate.latitude), \(coordinate.longitude))\n"
         } else {
-            desc += "- Coordinates: N/A\n"
+            desc += "Coordinate: N/A\n"
         }
         
         return desc
@@ -84,19 +86,3 @@ extension Report: CustomStringConvertible {
         return Report()
     }
 }
-
-private extension Report.Location {
-    private init(coordinate: CLLocationCoordinate2D =  CLLocationCoordinate2D(), address: String = "N/A") {
-        self.coordinate = coordinate
-        self.address = address
-    }
-
-    private enum CodingKeys: CodingKey {
-        case latitude, longitude, humanAddress
-    }
-    
-    static var empty: Report.Location {
-        return Report.Location()
-    }
-}
-
