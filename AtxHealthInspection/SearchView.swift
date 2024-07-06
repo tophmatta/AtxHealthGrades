@@ -22,9 +22,9 @@ struct SearchView: View {
             FoodBackground().ignoresSafeArea(edges: [.top, .leading, .trailing])
             GeometryReader { geometry in
                 VStack(alignment: .center) {
-                    FilterControl(geoWidth: geometry.size.width)
+                    FilterControl()
                     Logo()
-                    SearchBarAndButton(geoWidth: geometry.size.width)
+                    SearchBarAndButton()
                 }
             }
         }
@@ -36,8 +36,8 @@ struct SearchView: View {
                     Image(systemName: "fork.knife.circle.fill")
                         .resizable()
                         .frame(width: 100, height: 100)
-                        .background(Circle().fill(Color.white))
-                        .overlay(Circle().stroke(Color.white, lineWidth: 6))
+                        .background(Circle().fill(Color.systemBackground))
+                        .overlay(Circle().stroke(Color.systemBackground, lineWidth: 6))
                         .clipShape(Circle())
             }
             .padding([.top], 2)
@@ -46,12 +46,12 @@ struct SearchView: View {
             Text("ATX Safe Eats")
                 .font(.system(.largeTitle, design: .rounded, weight: .semibold))
                 .frame(width: 255, height: 70)
-                .background(.white)
+                .background(Color.systemBackground)
         }
         .foregroundColor(.green)
     }
     
-    func FilterControl(geoWidth: CGFloat) -> some View {
+    func FilterControl() -> some View {
         HStack(alignment: .center) {
             Spacer()
             Picker("Filter", selection: $viewModel.filterType) {
@@ -61,24 +61,24 @@ struct SearchView: View {
             }
             .pickerStyle(.segmented)
             .shadow(color: Color.gray, radius: 5)
-            .background(Color.white)
-            .frame(width: geoWidth * 0.75)
+            .background(Color.systemBackground)
             Spacer()
         }
         .padding([.top, .leading, .trailing])
         .padding(.bottom, 45)
     }
     
-    func SearchBarAndButton(geoWidth: CGFloat) -> some View {
+    func SearchBarAndButton() -> some View {
         VStack(spacing: 15) {
             TextField("Search", text: $viewModel.searchText)
                 .padding()
-                .background(Constants.lightGray)
+                .background(Color("tabBarBackground"))
                 .clipShape(
                     RoundedRectangle(cornerSize: CGSize(width: 20, height: 20), style: .continuous)
                 )
                 .padding([.leading, .trailing], 10)
                 .shadow(color: Color.gray, radius: 5)
+                .foregroundStyle(Color("searchTextColor"))
             
             Button {
                 //TODO

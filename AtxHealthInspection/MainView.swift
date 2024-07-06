@@ -14,7 +14,7 @@ struct MainView: View {
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.isTranslucent = false
         tabBarAppearance.barTintColor = UIColor.green
-        tabBarAppearance.backgroundColor = UIColor(Constants.megaLightGray)
+        tabBarAppearance.backgroundColor = UIColor(Color("tabBarBackground"))
     }
     
     @StateObject var viewModel: SearchViewModel = SearchViewModel()
