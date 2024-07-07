@@ -17,7 +17,7 @@ struct MainView: View {
         tabBarAppearance.backgroundColor = UIColor(Color("tabBarBackground"))
     }
     
-    @StateObject var viewModel: SearchViewModel = SearchViewModel()
+    @StateObject var viewModel: SearchViewModel = SearchViewModel(SocrataClient())
 
     var body: some View {
         TabView {

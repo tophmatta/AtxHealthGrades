@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataClient.swift */; };
 		F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */; };
 		F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEE12C371C71006BE3F9 /* MainView.swift */; };
 		F1EACEE62C371C73006BE3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1EACEE52C371C73006BE3F9 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F152C1312C3B3C120064F570 /* SocrataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClient.swift; sourceTree = "<group>"; };
 		F1EACEDC2C371C71006BE3F9 /* AtxHealthInspection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtxHealthInspection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtxHealthInspectionApp.swift; sourceTree = "<group>"; };
 		F1EACEE12C371C71006BE3F9 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				F1EACEE12C371C71006BE3F9 /* MainView.swift */,
 				F1EACEF12C37368B006BE3F9 /* SearchView.swift */,
 				F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */,
+				F152C1312C3B3C120064F570 /* SocrataClient.swift */,
 				F1EACEF72C374B89006BE3F9 /* SearchViewModel.swift */,
 				F1EACEF32C373CF5006BE3F9 /* Report.swift */,
 				F1EACEEF2C371DED006BE3F9 /* Constants.swift */,
@@ -167,6 +170,7 @@
 				F1F55FA92C3856C6005C0F30 /* Environment.swift in Sources */,
 				F1F55FAF2C38F1FC005C0F30 /* UrlBuilder.swift in Sources */,
 				F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */,
+				F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */,
 				F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */,
 				F1F55FAD2C38E632005C0F30 /* Extensions.swift in Sources */,

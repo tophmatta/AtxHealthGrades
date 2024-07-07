@@ -57,8 +57,8 @@ struct SearchView: View {
     func FilterControl() -> some View {
         HStack(alignment: .center) {
             Spacer()
-            Picker("Filter", selection: $viewModel.filterType) {
-                ForEach(FilterType.allCases) {
+            Picker("Filter", selection: $viewModel.searchType) {
+                ForEach(SearchType.allCases) {
                     Text($0.rawValue)
                 }
             }
@@ -104,6 +104,6 @@ struct SearchView: View {
 
 #Preview {
     SearchView()
-        .environmentObject(SearchViewModel())
+        .environmentObject(SearchViewModel(SocrataClient()))
         .environment(\.isPreview, true)
 }
