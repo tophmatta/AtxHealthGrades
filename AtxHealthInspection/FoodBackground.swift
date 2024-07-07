@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct FoodBackground: View {
-    private let darkGreen = Color(red: 41, green: 153, blue: 71)
-    private let offset: CGFloat = 70
+    private let darkGreen = Color(red: 41.0, green: 153.0, blue: 71.0)
+    private let offset: CGFloat = 70.0
     
     
     var body: some View {
@@ -20,7 +20,7 @@ struct FoodBackground: View {
                     ForEach(0..<20) { column in
                         Image(systemName: "fork.knife")
                             .resizable()
-                            .frame(width: 40, height: 40)
+                            .frame(width: 40.0, height: 40.0)
                             .foregroundColor(Color.green.opacity(0.3))
                             .offset(x: CGFloat(row) * offset, y: CGFloat(column) * offset)
                     }

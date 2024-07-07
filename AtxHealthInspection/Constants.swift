@@ -8,5 +8,8 @@
 import SwiftUI
 
 enum Constants {
-    static let endpoint = "https://data.austintexas.gov/resource/ecmv-9xxi.json"
+    enum Api {
+        static let host = "data.austintexas.gov"
+        static let path = "/resource/ecmv-9xxi.json"
+    }
 }

@@ -18,6 +18,7 @@
 		F1F55FA92C3856C6005C0F30 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F55FA82C3856C6005C0F30 /* Environment.swift */; };
 		F1F55FAB2C38680B005C0F30 /* FoodBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */; };
 		F1F55FAD2C38E632005C0F30 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F55FAC2C38E632005C0F30 /* Extensions.swift */; };
+		F1F55FAF2C38F1FC005C0F30 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F55FAE2C38F1FC005C0F30 /* RequestBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		F1F55FA82C3856C6005C0F30 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBackground.swift; sourceTree = "<group>"; };
 		F1F55FAC2C38E632005C0F30 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F1F55FAE2C38F1FC005C0F30 /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				F1EACEEF2C371DED006BE3F9 /* Constants.swift */,
 				F1F55FA82C3856C6005C0F30 /* Environment.swift */,
 				F1F55FAC2C38E632005C0F30 /* Extensions.swift */,
+				F1F55FAE2C38F1FC005C0F30 /* RequestBuilder.swift */,
 				F1EACEE52C371C73006BE3F9 /* Assets.xcassets */,
 				F1EACEE72C371C73006BE3F9 /* Preview Content */,
 			);
@@ -162,6 +165,7 @@
 				F1EACEF82C374B89006BE3F9 /* SearchViewModel.swift in Sources */,
 				F1EACEF42C373CF5006BE3F9 /* Report.swift in Sources */,
 				F1F55FA92C3856C6005C0F30 /* Environment.swift in Sources */,
+				F1F55FAF2C38F1FC005C0F30 /* RequestBuilder.swift in Sources */,
 				F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */,
 				F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */,
