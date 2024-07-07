@@ -13,6 +13,18 @@ public enum FilterType: String, CaseIterable, Identifiable {
     public var id: Self { self }
 }
 
+/*
+ TODO:
+ - testing response decoding
+ - testing api requests
+ - testing string preparing
+ - onSearchTypeChanged
+ */
+
+protocol ISearchViewModel {
+    //TODO: -
+}
+
 @MainActor
 class SearchViewModel: ObservableObject {
     
@@ -36,17 +48,21 @@ class SearchViewModel: ObservableObject {
         }
     }
     
+    func onSearchTypeChanged() {
+        //TODO: -
+    }
+    
     private func searchByName(_ value: String) async -> Result<Report, SearchError> {
         return await Task.detached(priority: .background) { [weak self] in
             guard value.isNotEmpty, let self else { return .failure(.emtpyValue) }
             
-            var searchName = prepareForRequest(value)
+            let searchName = prepareForRequest(value)
             
             // Lowercase the column to match param
             let query = "lower(restaurant_name) like '%\(searchName)%'"
             
             guard
-                let url = RequestBuilder
+                let url = UrlBuilder
                             .create()
                             .addQuery(query)
                             .build()

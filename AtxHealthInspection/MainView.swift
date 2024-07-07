@@ -32,8 +32,6 @@ struct MainView: View {
         }
         .tint(Color.green)
     }
-
-    
 }
 
 

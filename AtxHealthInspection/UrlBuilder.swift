@@ -1,5 +1,5 @@
 //
-//  RequestBuilder.swift
+//  UrlBuilder.swift
 //  AtxHealthInspection
 //
 //  Created by Toph Matta on 7/5/24.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct RequestBuilder {
+struct UrlBuilder {
     let path: String
     var queryItems: [URLQueryItem] = []
 }
 
 
-extension RequestBuilder {
-    static func create() -> RequestBuilder {
+extension UrlBuilder {
+    static func create() -> UrlBuilder {
         return Self(path: Constants.Api.path)
     }
         
-    func addQuery(_ query: String) -> RequestBuilder {
+    func addQuery(_ query: String) -> UrlBuilder {
         var builder = self
         builder.queryItems.append(URLQueryItem(name: "$where", value: query))
 
@@ -35,7 +35,7 @@ extension RequestBuilder {
         return components.url
     }
     
-    static var empty: RequestBuilder {
-        RequestBuilder(path: "")
+    static var empty: UrlBuilder {
+        UrlBuilder(path: "")
     }
 }
