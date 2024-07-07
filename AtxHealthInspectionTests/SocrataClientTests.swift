@@ -42,7 +42,7 @@ final class SocrataClientTests: XCTestCase {
         }
     }
     
-    func testPrepareForRequest() {
+    func testPrepareForRequestWithPrefixToTrim() {
         let input = "The Vincent's Restaurant"
         let expected = "vincent restaurant"
         let result = client.prepareForRequest(input)
@@ -50,8 +50,15 @@ final class SocrataClientTests: XCTestCase {
     }
     
     func testPrepareForRequestOneWord() {
-        let input = "Amy's"
+        let input = "Amy's "
         let expected = "amy"
+        let result = client.prepareForRequest(input)
+        XCTAssertEqual(result, expected)
+    }
+    
+    func testPrepareForAnotherApostrophe() {
+        let input = "Fat Daddy's Chicken "
+        let expected = "fat daddy chicken"
         let result = client.prepareForRequest(input)
         XCTAssertEqual(result, expected)
     }

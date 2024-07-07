@@ -19,6 +19,12 @@ public enum SearchType: String, CaseIterable, Identifiable {
  - testing api requests
  - testing string preparing
  - onSearchTypeChanged
+ - show modal for errors
+ - show list of results
+    - design cell: show address, score, last inspection date, maybe a picture of the front
+    - perhaps collapsable cells
+    - show on map button
+ - map search feature - search within a X mile radius
  */
 
 @MainActor
