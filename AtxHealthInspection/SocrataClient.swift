@@ -10,17 +10,18 @@ import Foundation
 
 protocol ISocrataClient {
     func get(_ value: String) async -> Result<Report, SearchError>
+    func prepareForRequest(_ value: String) -> String
 }
 
 enum SearchError: Error {
-    case invalidUrl, decodingError, emtpyValue
+    case invalidUrl, decodingError, emptyValue
 }
 
 struct SocrataClient: ISocrataClient {
     
     func get(_ value: String) async -> Result<Report, SearchError> {
         return await Task.detached(priority: .background) {
-            guard value.isNotEmpty else { return .failure(.emtpyValue) }
+            guard value.isNotEmpty else { return .failure(.emptyValue) }
             
             let searchName = prepareForRequest(value)
             
@@ -49,20 +50,13 @@ struct SocrataClient: ISocrataClient {
             }
         }.value
     }
-}
-
-private extension SocrataClient {
-    nonisolated private func prepareForRequest(_ value: String) -> String {
+    
+    nonisolated func prepareForRequest(_ value: String) -> String {
         return value
             .lowercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .split(separator: " ")
-            .map { substring -> String in
-                let str = String(substring)
-                // Must use unicode value for apostrophe
-                return str.hasSuffix("\u{2019}s") ? String(str.dropLast(2)) : str
-            }
-            .joined(separator: " ")
             .replacingOccurrences(of: "^the ", with: "", options: .regularExpression)
+            .replacingOccurrences(of: "\u{2019}s", with: "")
+            .replacingOccurrences(of: "'s", with: "")
     }
 }

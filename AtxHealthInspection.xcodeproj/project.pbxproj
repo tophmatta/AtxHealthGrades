@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataClient.swift */; };
+		F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1402C3B48590064F570 /* SocrataClientTests.swift */; };
 		F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */; };
 		F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEE12C371C71006BE3F9 /* MainView.swift */; };
 		F1EACEE62C371C73006BE3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1EACEE52C371C73006BE3F9 /* Assets.xcassets */; };
@@ -22,8 +23,20 @@
 		F1F55FAF2C38F1FC005C0F30 /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F55FAE2C38F1FC005C0F30 /* UrlBuilder.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F152C13B2C3B482A0064F570 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1EACED42C371C71006BE3F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1EACEDB2C371C71006BE3F9;
+			remoteInfo = AtxHealthInspection;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		F152C1312C3B3C120064F570 /* SocrataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClient.swift; sourceTree = "<group>"; };
+		F152C1372C3B482A0064F570 /* AtxHealthInspectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtxHealthInspectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F152C1402C3B48590064F570 /* SocrataClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClientTests.swift; sourceTree = "<group>"; };
 		F1EACEDC2C371C71006BE3F9 /* AtxHealthInspection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtxHealthInspection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtxHealthInspectionApp.swift; sourceTree = "<group>"; };
 		F1EACEE12C371C71006BE3F9 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -40,6 +53,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F152C1342C3B482A0064F570 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F1EACED92C371C71006BE3F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -50,10 +70,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F152C1382C3B482A0064F570 /* AtxHealthInspectionTests */ = {
+			isa = PBXGroup;
+			children = (
+				F152C1402C3B48590064F570 /* SocrataClientTests.swift */,
+			);
+			path = AtxHealthInspectionTests;
+			sourceTree = "<group>";
+		};
 		F1EACED32C371C71006BE3F9 = {
 			isa = PBXGroup;
 			children = (
 				F1EACEDE2C371C71006BE3F9 /* AtxHealthInspection */,
+				F152C1382C3B482A0064F570 /* AtxHealthInspectionTests */,
 				F1EACEDD2C371C71006BE3F9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				F1EACEDC2C371C71006BE3F9 /* AtxHealthInspection.app */,
+				F152C1372C3B482A0064F570 /* AtxHealthInspectionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,6 +127,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F152C1362C3B482A0064F570 /* AtxHealthInspectionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F152C13D2C3B482A0064F570 /* Build configuration list for PBXNativeTarget "AtxHealthInspectionTests" */;
+			buildPhases = (
+				F152C1332C3B482A0064F570 /* Sources */,
+				F152C1342C3B482A0064F570 /* Frameworks */,
+				F152C1352C3B482A0064F570 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F152C13C2C3B482A0064F570 /* PBXTargetDependency */,
+			);
+			name = AtxHealthInspectionTests;
+			productName = AtxHealthInspectionTests;
+			productReference = F152C1372C3B482A0064F570 /* AtxHealthInspectionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F1EACEDB2C371C71006BE3F9 /* AtxHealthInspection */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F1EACEEC2C371C73006BE3F9 /* Build configuration list for PBXNativeTarget "AtxHealthInspection" */;
@@ -124,6 +172,10 @@
 				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					F152C1362C3B482A0064F570 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = F1EACEDB2C371C71006BE3F9;
+					};
 					F1EACEDB2C371C71006BE3F9 = {
 						CreatedOnToolsVersion = 15.4;
 					};
@@ -143,11 +195,19 @@
 			projectRoot = "";
 			targets = (
 				F1EACEDB2C371C71006BE3F9 /* AtxHealthInspection */,
+				F152C1362C3B482A0064F570 /* AtxHealthInspectionTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F152C1352C3B482A0064F570 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F1EACEDA2C371C71006BE3F9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -160,6 +220,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F152C1332C3B482A0064F570 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F1EACED82C371C71006BE3F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -180,7 +248,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F152C13C2C3B482A0064F570 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1EACEDB2C371C71006BE3F9 /* AtxHealthInspection */;
+			targetProxy = F152C13B2C3B482A0064F570 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		F152C13E2C3B482A0064F570 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XXRYJDD55J;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toph.AtxHealthInspectionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AtxHealthInspection.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AtxHealthInspection";
+			};
+			name = Debug;
+		};
+		F152C13F2C3B482A0064F570 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XXRYJDD55J;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.toph.AtxHealthInspectionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AtxHealthInspection.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AtxHealthInspection";
+			};
+			name = Release;
+		};
 		F1EACEEA2C371C73006BE3F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -371,6 +483,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F152C13D2C3B482A0064F570 /* Build configuration list for PBXNativeTarget "AtxHealthInspectionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F152C13E2C3B482A0064F570 /* Debug */,
+				F152C13F2C3B482A0064F570 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F1EACED72C371C71006BE3F9 /* Build configuration list for PBXProject "AtxHealthInspection" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
