@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataClient.swift */; };
 		F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1402C3B48590064F570 /* SocrataClientTests.swift */; };
+		F152C1432C3CAF990064F570 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1422C3CAF990064F570 /* MapView.swift */; };
 		F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */; };
 		F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEE12C371C71006BE3F9 /* MainView.swift */; };
 		F1EACEE62C371C73006BE3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1EACEE52C371C73006BE3F9 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		F152C1312C3B3C120064F570 /* SocrataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClient.swift; sourceTree = "<group>"; };
 		F152C1372C3B482A0064F570 /* AtxHealthInspectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtxHealthInspectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F152C1402C3B48590064F570 /* SocrataClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClientTests.swift; sourceTree = "<group>"; };
+		F152C1422C3CAF990064F570 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		F1EACEDC2C371C71006BE3F9 /* AtxHealthInspection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtxHealthInspection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtxHealthInspectionApp.swift; sourceTree = "<group>"; };
 		F1EACEE12C371C71006BE3F9 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				F1F55FAE2C38F1FC005C0F30 /* UrlBuilder.swift */,
 				F1EACEE52C371C73006BE3F9 /* Assets.xcassets */,
 				F1EACEE72C371C73006BE3F9 /* Preview Content */,
+				F152C1422C3CAF990064F570 /* MapView.swift */,
 			);
 			path = AtxHealthInspection;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1EACEF22C37368B006BE3F9 /* SearchView.swift in Sources */,
+				F152C1432C3CAF990064F570 /* MapView.swift in Sources */,
 				F1EACEF82C374B89006BE3F9 /* SearchViewModel.swift in Sources */,
 				F1EACEF42C373CF5006BE3F9 /* Report.swift in Sources */,
 				F1F55FA92C3856C6005C0F30 /* Environment.swift in Sources */,

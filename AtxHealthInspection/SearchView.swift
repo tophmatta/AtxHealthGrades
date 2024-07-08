@@ -13,12 +13,9 @@ struct SearchView: View {
       UITextField.appearance().clearButtonMode = .whileEditing
     }
     
-    @State private var searchText: String = ""
-
-    
     @EnvironmentObject var viewModel: SearchViewModel
-    @Environment(\.isPreview) private var isPreview: Bool
     
+    @State private var searchText: String = ""
     
     var body: some View {
         ZStack {
@@ -105,5 +102,4 @@ struct SearchView: View {
 #Preview {
     SearchView()
         .environmentObject(SearchViewModel(SocrataClient()))
-        .environment(\.isPreview, true)
 }

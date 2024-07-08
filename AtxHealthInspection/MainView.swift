@@ -26,8 +26,7 @@ struct MainView: View {
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
                 }
-            //TODO: Mapview
-            Text("yo")
+            MapView()
                 .tabItem { Label("Map", systemImage: "map") }
         }
         .tint(Color.green)

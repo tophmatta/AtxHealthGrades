@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol ISocrataClient {
-    func get(_ value: String) async -> Result<Report, SearchError>
+    func searchByName(_ value: String) async -> Result<Report, SearchError>
     func prepareForRequest(_ value: String) -> String
 }
 
@@ -19,19 +19,22 @@ enum SearchError: Error {
 
 struct SocrataClient: ISocrataClient {
     
-    func get(_ value: String) async -> Result<Report, SearchError> {
+    func searchByName(_ value: String) async -> Result<Report, SearchError> {
+        guard value.isNotEmpty else { return .failure(.emptyValue) }
+        
+        let searchName = prepareForRequest(value)
+        
+        // Lowercase the column to match param
+        let query = "lower(restaurant_name) like '%\(searchName)%'"
+        return await get(query)
+    }
+    
+    private func get(_ rawQuery: String) async -> Result<Report, SearchError> {
         return await Task.detached(priority: .background) {
-            guard value.isNotEmpty else { return .failure(.emptyValue) }
-            
-            let searchName = prepareForRequest(value)
-            
-            // Lowercase the column to match param
-            let query = "lower(restaurant_name) like '%\(searchName)%'"
-            
             guard
                 let url = UrlBuilder
                             .create()
-                            .addQuery(query)
+                            .addQuery(rawQuery)
                             .build()
             else { return .failure(.invalidUrl) }
             
@@ -42,6 +45,7 @@ struct SocrataClient: ISocrataClient {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let result = try decoder.decode([Report].self, from: data)
                 
+                //TODO return a list of reports
                 guard !result.isEmpty else { return .failure(.decodingError) }
                 
                 return .success(result.first!)
@@ -49,7 +53,12 @@ struct SocrataClient: ISocrataClient {
                 return .failure(.decodingError)
             }
         }.value
+
     }
+    
+//    func searchByLocation(_ location: CLLocationCoordinate2D, proximity: SearchProximity) async -> Result<Report, SearchError> {
+//        
+//    }
     
     nonisolated func prepareForRequest(_ value: String) -> String {
         return value

@@ -23,7 +23,7 @@ final class SocrataClientTests: XCTestCase {
     }
     
     func testGetWithValidInput() async throws {
-        let result = await client.get("The 04 Lounge")
+        let result = await client.searchByName("The 04 Lounge")
         switch result {
         case .success(let report):
             XCTAssertNotNil(report)
@@ -33,7 +33,7 @@ final class SocrataClientTests: XCTestCase {
     }
     
     func testGetWithEmptyInput() async {
-        let result = await client.get("")
+        let result = await client.searchByName("")
         switch result {
         case .success:
             XCTFail("Expected failure for empty input, but got success")

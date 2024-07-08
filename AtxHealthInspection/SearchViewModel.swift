@@ -17,7 +17,6 @@ public enum SearchType: String, CaseIterable, Identifiable {
  TODO:
  - testing response decoding
  - testing api requests
- - testing string preparing
  - onSearchTypeChanged
  - show modal for errors
  - show list of results
@@ -47,7 +46,7 @@ class SearchViewModel: ObservableObject, ISearchViewModel {
     
     func triggerSearch(value: String) {
         Task {
-            let result = await client.get(value)
+            let result = await client.searchByName(value)
             
             switch result {
             case .success(let reportResult):
