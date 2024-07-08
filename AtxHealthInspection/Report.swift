@@ -12,20 +12,34 @@ struct Report: Decodable {
     let score: String
     let address: String
     var coordinate: CLLocationCoordinate2D? = nil
+    let date: String
     
-    struct HumanAddress: Decodable {
+    // Only for decoding JSON
+    private struct HumanAddress: Decodable {
         let address: String
         let city: String
         let state: String
         let zip: String
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.restaurantName = try container.decode(String.self, forKey: .restaurantName)
         self.score = try container.decode(String.self, forKey: .score)
+        let dateString = try container.decode(String.self, forKey: .inspectionDate)
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+
+        if let date = dateFormatter.date(from: dateString) {
+            self.date = date.formatted(date: .numeric, time: .omitted)
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .inspectionDate,
+                                                   in: container,
+                                                   debugDescription: "Date string does not match format")
+        }
+
         let addressContainer = try container.nestedContainer(keyedBy: CodingKeys.Address.self, forKey: .address)
         
         let humanAddressString = try addressContainer.decode(String.self, forKey: .humanAddress)
@@ -54,18 +68,19 @@ struct Report: Decodable {
 
 extension Report: CustomStringConvertible {
     private enum CodingKeys: String, CodingKey {
-        case restaurantName, score, address
+        case restaurantName, score, address, inspectionDate
          
         enum Address: CodingKey {
             case latitude, longitude, humanAddress
         }
     }
 
-    private init(restaurantName: String = "N/A", score: String = "N/A", address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D()) {
+    private init(restaurantName: String = "N/A", score: String = "N/A", address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(), date: String = "06/22/2024") {
         self.restaurantName = restaurantName
         self.score = score
         self.address = address
         self.coordinate = coordinate
+        self.date = date
     }
     
     var description: String {
