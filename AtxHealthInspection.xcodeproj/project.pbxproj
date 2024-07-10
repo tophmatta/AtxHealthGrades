@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F13860582C3CBCEC0052EBC8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860572C3CBCEC0052EBC8 /* LocationModel.swift */; };
+		F138605A2C3CBDF70052EBC8 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860592C3CBDF70052EBC8 /* MapViewModel.swift */; };
 		F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataClient.swift */; };
 		F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1402C3B48590064F570 /* SocrataClientTests.swift */; };
 		F152C1432C3CAF990064F570 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1422C3CAF990064F570 /* MapView.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F13860572C3CBCEC0052EBC8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		F13860592C3CBDF70052EBC8 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		F152C1312C3B3C120064F570 /* SocrataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClient.swift; sourceTree = "<group>"; };
 		F152C1372C3B482A0064F570 /* AtxHealthInspectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtxHealthInspectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F152C1402C3B48590064F570 /* SocrataClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClientTests.swift; sourceTree = "<group>"; };
@@ -115,6 +119,8 @@
 				F1EACEE52C371C73006BE3F9 /* Assets.xcassets */,
 				F1EACEE72C371C73006BE3F9 /* Preview Content */,
 				F152C1422C3CAF990064F570 /* MapView.swift */,
+				F13860572C3CBCEC0052EBC8 /* LocationModel.swift */,
+				F13860592C3CBDF70052EBC8 /* MapViewModel.swift */,
 			);
 			path = AtxHealthInspection;
 			sourceTree = "<group>";
@@ -245,6 +251,8 @@
 				F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */,
 				F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */,
+				F13860582C3CBCEC0052EBC8 /* LocationModel.swift in Sources */,
+				F138605A2C3CBDF70052EBC8 /* MapViewModel.swift in Sources */,
 				F1F55FAD2C38E632005C0F30 /* Extensions.swift in Sources */,
 				F1F55FAB2C38680B005C0F30 /* FoodBackground.swift in Sources */,
 			);
@@ -428,6 +436,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App_Name requires user's location to peform location-based searches. No user data is retained.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,6 +471,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App_Name requires user's location to peform location-based searches. No user data is retained.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

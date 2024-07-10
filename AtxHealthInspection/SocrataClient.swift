@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import CoreLocation
 
 protocol ISocrataClient {
     func searchByName(_ value: String) async -> Result<Report, SearchError>
@@ -14,11 +14,10 @@ protocol ISocrataClient {
 }
 
 enum SearchError: Error {
-    case invalidUrl, decodingError, emptyValue
+    case invalidUrl, decodingError, emptyValue, invalidLocation
 }
 
 struct SocrataClient: ISocrataClient {
-    
     func searchByName(_ value: String) async -> Result<Report, SearchError> {
         guard value.isNotEmpty else { return .failure(.emptyValue) }
         
@@ -32,10 +31,11 @@ struct SocrataClient: ISocrataClient {
     private func get(_ rawQuery: String) async -> Result<Report, SearchError> {
         return await Task.detached(priority: .background) {
             guard
-                let url = UrlBuilder
-                            .create()
-                            .addQuery(rawQuery)
-                            .build()
+                let url =
+                UrlBuilder
+                    .create()
+                    .addQuery(rawQuery)
+                    .build()
             else { return .failure(.invalidUrl) }
             
             do {
@@ -45,7 +45,7 @@ struct SocrataClient: ISocrataClient {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let result = try decoder.decode([Report].self, from: data)
                 
-                //TODO return a list of reports
+                // TODO: return a list of reports
                 guard !result.isEmpty else { return .failure(.decodingError) }
                 
                 return .success(result.first!)
@@ -53,12 +53,14 @@ struct SocrataClient: ISocrataClient {
                 return .failure(.decodingError)
             }
         }.value
-
     }
     
-//    func searchByLocation(_ location: CLLocationCoordinate2D, proximity: SearchProximity) async -> Result<Report, SearchError> {
-//        
-//    }
+    func searchByLocation(_ location: CLLocationCoordinate2D) async -> Result<Report, SearchError> {
+        guard CLLocationCoordinate2DIsValid(location) else { return .failure(.invalidLocation) }
+        
+        let query = "within_circle(null, \(location.latitude), \(location.longitude), 1000)"
+        return await get(query)
+    }
     
     nonisolated func prepareForRequest(_ value: String) -> String {
         return value

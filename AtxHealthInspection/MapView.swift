@@ -9,8 +9,15 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+    @EnvironmentObject var viewModel: MapViewModel
+    
     var body: some View {
-        Map()
+        Map(position: $viewModel.cameraPosition) {
+            UserAnnotation()
+        }
+        .onAppear {
+            viewModel.checkLocationStatus()
+        }
     }
 }
 
