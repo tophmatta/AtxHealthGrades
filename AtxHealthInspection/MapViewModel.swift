@@ -38,15 +38,7 @@ class MapViewModel: ObservableObject, IMapViewModel {
     init(_ client: ISocrataClient, locationModel: LocationModel) {
         self.client = client
         self.locationModel = locationModel
-        
-        locationModel.$lastLocation
-            .receive(on: DispatchQueue.main)
-            .throttle(for: .seconds(3), scheduler: DispatchQueue.main, latest: true)
-            .compactMap { $0 }
-            .sink { [weak self] location in
-                guard let self else { return }
-                lastLocation = location.coordinate
-            }.store(in: &locationSubscriber)
+        setupLocationObserver()
     }
     
     func checkLocationStatus() {
@@ -55,5 +47,15 @@ class MapViewModel: ObservableObject, IMapViewModel {
     
     func zoomCameraToUser() {
         cameraPosition = .userLocation(fallback: .automatic)
+    }
+    
+    private func setupLocationObserver() {
+        locationModel.$lastLocation
+            .throttle(for: .seconds(3), scheduler: DispatchQueue.main, latest: true)
+            .compactMap { $0 }
+            .sink { [weak self] location in
+                guard let self else { return }
+                lastLocation = location.coordinate
+            }.store(in: &locationSubscriber)
     }
 }

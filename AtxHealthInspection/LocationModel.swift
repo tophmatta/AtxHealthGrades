@@ -9,50 +9,55 @@ import Combine
 import CoreLocation
 
 class LocationModel: NSObject, ObservableObject {
-    private let locationManager = CLLocationManager()
-    
-    @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
+    @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var lastLocation: CLLocation?
+    
+    private lazy var locationManager = {
+        CLLocationManager()
+    }()
     
     private var cancellables: Set<AnyCancellable> = []
     
     override init() {
         super.init()
         locationManager.delegate = self
-        
-        $authorisationStatus
-            .sink { [weak self] newStatus in
-                guard let self else { return }
-                
-                if newStatus.isAuthorized && authorisationStatus.isNotAuthorized {
-                    startUpdatingLocation()
-                }
-            }.store(in: &cancellables)
-    }
-
-    public func requestAuthorisation() {
-        locationManager.requestWhenInUseAuthorization()
-    }
-        
-    func startUpdatingLocation() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.startUpdatingLocation()
+        observerAuthorizationStatus()
     }
     
     func checkStatus() {
         // TODO: handle if user denies - show some kind of UI/modal
-        if authorisationStatus.isNotAuthorized {
+        if authorizationStatus.isNotAuthorized {
             requestAuthorisation()
-        } else if lastLocation == nil && authorisationStatus.isAuthorized {
+        } else if lastLocation == nil && authorizationStatus.isAuthorized {
             startUpdatingLocation()
         }
+    }
+
+    private func requestAuthorisation() {
+        locationManager.requestWhenInUseAuthorization()
+    }
+        
+    private func startUpdatingLocation() {
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.startUpdatingLocation()
+    }
+        
+    private func observerAuthorizationStatus() {
+        $authorizationStatus
+            .sink { [weak self] newStatus in
+                guard let self else { return }
+                
+                if newStatus.isAuthorized && authorizationStatus.isNotAuthorized {
+                    startUpdatingLocation()
+                }
+            }.store(in: &cancellables)
     }
 }
 
 extension LocationModel: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         DispatchQueue.main.async {
-            self.authorisationStatus = status
+            self.authorizationStatus = status
         }
     }
     
