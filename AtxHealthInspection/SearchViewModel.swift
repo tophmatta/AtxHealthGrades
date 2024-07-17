@@ -36,8 +36,8 @@ class SearchViewModel: ObservableObject, ISearchViewModel {
     let client: ISocrataClient
 
     @Published var searchType: SearchType = .Name
-    @Published var error: SearchError? = nil
-    @Published var currReport: Report? = nil
+    @Published var searchError: SearchError? = nil
+    @Published var currReports = [Report]()
 
     init(_ client: ISocrataClient) {
         self.client = client
@@ -45,16 +45,12 @@ class SearchViewModel: ObservableObject, ISearchViewModel {
 
     func triggerSearch(value: String) {
         Task {
-            let result = await client.searchByName(value)
-
-            switch result {
-            case .success(let reportResult):
-                currReport = reportResult
-                print(reportResult.description)
-
-            case .failure(let errorResult):
-                error = errorResult
-                print(error!.localizedDescription)
+            do {
+                currReports = try await client.searchByName(value)
+                print(currReports.description)
+            } catch let error as SearchError {
+                searchError = error
+                print(error.localizedDescription)
             }
         }
     }

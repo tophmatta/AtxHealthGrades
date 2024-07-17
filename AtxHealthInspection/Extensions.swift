@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 extension Color {
     static let systemBackground = Color(UIColor.systemBackground)
@@ -36,4 +37,10 @@ extension String {
         }
     }
     #endif
+}
+
+extension CLLocationCoordinate2D {
+    func isValid() -> Bool {
+        return CLLocationCoordinate2DIsValid(self)
+    }
 }

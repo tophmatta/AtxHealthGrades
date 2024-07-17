@@ -60,7 +60,7 @@ struct Report: Decodable {
         
         let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         
-        guard CLLocationCoordinate2DIsValid(coord) else { return }
+        guard coord.isValid() else { return }
         
         self.coordinate = coord
     }

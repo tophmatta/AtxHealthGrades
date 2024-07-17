@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 protocol ISocrataClient {
-    func searchByName(_ value: String) async -> Result<Report, SearchError>
+    func searchByName(_ value: String) async throws -> [Report]
     func prepareForRequest(_ value: String) -> String
 }
 
@@ -18,48 +18,44 @@ enum SearchError: Error {
 }
 
 struct SocrataClient: ISocrataClient {
-    func searchByName(_ value: String) async -> Result<Report, SearchError> {
-        guard value.isNotEmpty else { return .failure(.emptyValue) }
+    func searchByName(_ value: String) async throws -> [Report] {
+        guard value.isNotEmpty else { throw SearchError.emptyValue }
         
         let searchName = prepareForRequest(value)
         
         // Lowercase the column to match param
         let query = "lower(restaurant_name) like '%\(searchName)%'"
-        return await get(query)
+        return try! await get(query)
     }
     
-    private func get(_ rawQuery: String) async -> Result<Report, SearchError> {
-        return await Task.detached(priority: .background) {
+    private func get(_ rawQuery: String) async throws -> [Report] {
+        try! await Task(priority: .background) {
             guard
                 let url =
                 UrlBuilder
                     .create()
                     .addQuery(rawQuery)
                     .build()
-            else { return .failure(.invalidUrl) }
+            else { throw SearchError.invalidUrl }
             
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                             
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let result = try decoder.decode([Report].self, from: data)
                 
-                // TODO: return a list of reports
-                guard !result.isEmpty else { return .failure(.decodingError) }
-                
-                return .success(result.first!)
+                return try decoder.decode([Report].self, from: data)
             } catch {
-                return .failure(.decodingError)
+                throw SearchError.decodingError
             }
         }.value
     }
     
-    func searchByLocation(_ location: CLLocationCoordinate2D) async -> Result<Report, SearchError> {
-        guard CLLocationCoordinate2DIsValid(location) else { return .failure(.invalidLocation) }
+    func searchByLocation(_ location: CLLocationCoordinate2D) async throws -> Report? {
+        guard location.isValid() else { throw SearchError.invalidLocation }
         
         let query = "within_circle(null, \(location.latitude), \(location.longitude), 1000)"
-        return await get(query)
+        return try! await get(query).first
     }
     
     nonisolated func prepareForRequest(_ value: String) -> String {

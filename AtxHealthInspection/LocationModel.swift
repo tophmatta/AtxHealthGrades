@@ -62,7 +62,10 @@ extension LocationModel: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
+        guard 
+            let location = locations.last,
+            location.coordinate.isValid()
+        else { return }
         DispatchQueue.main.async {
             self.lastLocation = location
         }
