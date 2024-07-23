@@ -32,14 +32,16 @@ struct SearchView: View {
             viewModel.dismissSheet()
         }) { item in
             VStack {
+                Tab()
+                Spacer()
                 Text("Name: \(item.restaurantName)")
                 Text("Score: \(item.score)")
-                Text("Last inspection: \(item.date)")
+                Text("Last inspection: \(item.date.toReadable())")
+                Spacer()
             }
             .presentationDetents([.height(200)])
             .presentationCompactAdaptation(.none)
         }
-
     }
     
     func Logo() -> some View {
@@ -108,6 +110,13 @@ struct SearchView: View {
             .padding(.top, 20.0)
             Spacer()
         }
+    }
+    
+    func Tab() -> some View {
+        Capsule()
+            .fill(Color.gray.opacity(0.5))
+            .frame(width: 40, height: 5)
+            .padding(.top, 20)
     }
 }
 

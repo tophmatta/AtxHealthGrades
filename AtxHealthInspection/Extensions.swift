@@ -43,3 +43,9 @@ extension CLLocationCoordinate2D {
         return CLLocationCoordinate2DIsValid(self)
     }
 }
+
+extension Date {
+    func toReadable() -> String {
+        return self.formatted(date: .numeric, time: .omitted)
+    }
+}

@@ -47,10 +47,10 @@ class SearchViewModel: ObservableObject, ISearchViewModel {
         Task {
             do {
                 let reports = try await client.searchByName(value)
-                //FIXME: need to be date object and not string here or query by date sorted
+                
                 currentReport = reports.sorted { $0.date > $1.date }.first
 
-                print(reports)
+                print(reports.sorted { $0.date > $1.date })
             } catch let error as SearchError {
                 searchError = error
                 print(error.localizedDescription)

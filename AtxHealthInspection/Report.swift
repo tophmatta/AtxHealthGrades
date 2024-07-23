@@ -14,7 +14,7 @@ struct Report: Decodable, Identifiable {
     let score: String
     let address: String
     var coordinate: CLLocationCoordinate2D? = nil
-    let date: String
+    let date: Date
     
     // Only for decoding JSON
     private struct HumanAddress: Decodable {
@@ -35,7 +35,7 @@ struct Report: Decodable, Identifiable {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
 
         if let date = dateFormatter.date(from: dateString) {
-            self.date = date.formatted(date: .numeric, time: .omitted)
+            self.date = date
         } else {
             throw DecodingError.dataCorruptedError(forKey: .inspectionDate,
                                                    in: container,
@@ -68,7 +68,7 @@ struct Report: Decodable, Identifiable {
     }
 }
 
-extension Report: CustomStringConvertible {
+extension Report {
     private enum CodingKeys: String, CodingKey {
         case restaurantName, score, address, inspectionDate
          
@@ -76,8 +76,8 @@ extension Report: CustomStringConvertible {
             case latitude, longitude, humanAddress
         }
     }
-
-    private init(restaurantName: String = "N/A", score: String = "N/A", address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(), date: String = "06/22/2024") {
+    
+    private init(restaurantName: String = "N/A", score: String = "N/A", address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(), date: Date = Date()) {
         self.restaurantName = restaurantName
         self.score = score
         self.address = address
@@ -85,20 +85,6 @@ extension Report: CustomStringConvertible {
         self.date = date
     }
     
-    var description: String {
-        var desc = "Restaurant Name: \(restaurantName)\n"
-        desc += "Score: \(score)\n"
-        desc += "Address: \(address)\n"
-        
-        if let coordinate = coordinate {
-            desc += "Coordinate: (\(coordinate.latitude), \(coordinate.longitude))\n"
-        } else {
-            desc += "Coordinate: N/A\n"
-        }
-        
-        return desc
-    }
-
     static var empty: Report {
         Report()
     }
@@ -110,5 +96,22 @@ extension Report: CustomStringConvertible {
             address: "123 Cucumber Lane",
             coordinate: CLLocationCoordinate2D(latitude: 30.194818005, longitude: -97.843463001)
         )
+    }
+}
+
+extension Report: CustomStringConvertible {
+    var description: String {
+        var desc = "Restaurant Name: \(restaurantName)\n"
+        desc += "Score: \(score)\n"
+        desc += "Date: \(date.toReadable())\n"
+        desc += "Address: \(address)\n"
+        
+        if let coordinate = coordinate {
+            desc += "Coordinate: (\(coordinate.latitude), \(coordinate.longitude))\n"
+        } else {
+            desc += "Coordinate: N/A\n"
+        }
+        
+        return desc
     }
 }
