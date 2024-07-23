@@ -13,8 +13,22 @@ protocol ISocrataClient {
     func prepareForRequest(_ value: String) -> String
 }
 
-enum SearchError: Error {
-    case invalidUrl, decodingError, emptyValue, invalidLocation, invalidResponse, networkError
+enum SearchError: Error, LocalizedError {
+    case invalidUrl, decodingError, emptyValue, invalidLocation, invalidResponse, networkError, emptyResponse
+    
+    var errorDescription: String? {
+        switch self {
+        case .emptyValue:
+            return "The search value cannot be empty. Please enter a value."
+        case .emptyResponse:
+            return "Your search did not yield any results."
+        case .networkError:
+            return "A network error occurred. Please check your connection and try again."
+        default:
+            return "Unknown Error"
+        }
+    }
+
 }
 
 struct SocrataClient: ISocrataClient {
@@ -22,11 +36,9 @@ struct SocrataClient: ISocrataClient {
         guard value.isNotEmpty else { throw SearchError.emptyValue }
         
         let searchName = prepareForRequest(value)
-        
-        // Lowercase the column to match param
         let query = "lower(restaurant_name) like '%\(searchName)%'"
-        
         let result: [Report]
+        
         do {
             result = try await get(query)
         } catch {
@@ -45,6 +57,8 @@ struct SocrataClient: ISocrataClient {
                     .build()
             else { throw SearchError.invalidUrl }
             
+            let result: [Report]
+            
             do {
                 let (data, response) = try await URLSession.shared.data(from: url)
                 
@@ -56,15 +70,20 @@ struct SocrataClient: ISocrataClient {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                return try decoder.decode([Report].self, from: data)
+                result = try decoder.decode([Report].self, from: data)
+                
+                guard !result.isEmpty else {
+                    throw SearchError.emptyResponse
+                }
             } catch DecodingError.dataCorrupted(_),
                     DecodingError.keyNotFound(_, _),
                     DecodingError.typeMismatch(_, _),
                     DecodingError.valueNotFound(_, _) {
                 throw SearchError.decodingError
             } catch {
-                throw SearchError.networkError
+                throw error
             }
+            return result
         }.value
     }
     

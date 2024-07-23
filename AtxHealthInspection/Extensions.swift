@@ -49,3 +49,13 @@ extension Date {
         return self.formatted(date: .numeric, time: .omitted)
     }
 }
+
+extension Binding {
+    func isNotNil<T>() -> Binding<Bool> where Value == T? {
+        .init(get: {
+            wrappedValue != nil
+        }, set: { _ in
+            wrappedValue = nil
+        })
+    }
+}

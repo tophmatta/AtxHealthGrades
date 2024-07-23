@@ -14,7 +14,6 @@ struct SearchView: View {
     }
     
     @EnvironmentObject var viewModel: SearchViewModel
-    
     @State private var searchText: String = ""
     
     var body: some View {
@@ -29,7 +28,7 @@ struct SearchView: View {
             }
         }
         .sheet(item: $viewModel.currentReport, onDismiss: {
-            viewModel.dismissSheet()
+            viewModel.clearResult()
         }) { item in
             VStack {
                 Tab()
@@ -42,6 +41,16 @@ struct SearchView: View {
             .presentationDetents([.height(200)])
             .presentationCompactAdaptation(.none)
         }
+        .alert(
+            "Something went wrong...",
+            isPresented: $viewModel.error.isNotNil(),
+            presenting: viewModel.error,
+            actions: { _ in },
+            message: { error in
+                Text(error.localizedDescription)
+            }
+        )
+
     }
     
     func Logo() -> some View {
