@@ -14,13 +14,12 @@ extension Color {
 
 extension Data {
     #if DEBUG
-    func prettyPrint() -> String? {
+    func prettyPrint() {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: self, options: []),
               let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]),
-              let prettyString = String(data: prettyData, encoding: .utf8) else {
-            return nil
-        }
-        return prettyString
+              let prettyString = String(data: prettyData, encoding: .utf8) 
+        else { return }
+        print(prettyString)
     }
     #endif
 }

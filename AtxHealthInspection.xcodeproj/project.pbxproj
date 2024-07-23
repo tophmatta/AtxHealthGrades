@@ -112,15 +112,15 @@
 				F152C1312C3B3C120064F570 /* SocrataClient.swift */,
 				F1EACEF72C374B89006BE3F9 /* SearchViewModel.swift */,
 				F1EACEF32C373CF5006BE3F9 /* Report.swift */,
-				F1EACEEF2C371DED006BE3F9 /* Constants.swift */,
-				F1F55FA82C3856C6005C0F30 /* Environment.swift */,
 				F1F55FAC2C38E632005C0F30 /* Extensions.swift */,
 				F1F55FAE2C38F1FC005C0F30 /* UrlBuilder.swift */,
+				F1F55FA82C3856C6005C0F30 /* Environment.swift */,
+				F1EACEEF2C371DED006BE3F9 /* Constants.swift */,
 				F1EACEE52C371C73006BE3F9 /* Assets.xcassets */,
-				F1EACEE72C371C73006BE3F9 /* Preview Content */,
 				F152C1422C3CAF990064F570 /* MapView.swift */,
 				F13860572C3CBCEC0052EBC8 /* LocationModel.swift */,
 				F13860592C3CBDF70052EBC8 /* MapViewModel.swift */,
+				F1EACEE72C371C73006BE3F9 /* Preview Content */,
 			);
 			path = AtxHealthInspection;
 			sourceTree = "<group>";

@@ -14,7 +14,7 @@ protocol ISocrataClient {
 }
 
 enum SearchError: Error {
-    case invalidUrl, decodingError, emptyValue, invalidLocation
+    case invalidUrl, decodingError, emptyValue, invalidLocation, invalidResponse, networkError
 }
 
 struct SocrataClient: ISocrataClient {
@@ -25,11 +25,18 @@ struct SocrataClient: ISocrataClient {
         
         // Lowercase the column to match param
         let query = "lower(restaurant_name) like '%\(searchName)%'"
-        return try! await get(query)
+        
+        let result: [Report]
+        do {
+            result = try await get(query)
+        } catch {
+            throw error
+        }
+        return result
     }
     
     private func get(_ rawQuery: String) async throws -> [Report] {
-        try! await Task(priority: .background) {
+        try await Task(priority: .background) {
             guard
                 let url =
                 UrlBuilder
@@ -39,14 +46,24 @@ struct SocrataClient: ISocrataClient {
             else { throw SearchError.invalidUrl }
             
             do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                            
+                let (data, response) = try await URLSession.shared.data(from: url)
+                
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode) else {
+                    throw SearchError.invalidResponse
+                }
+                
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 return try decoder.decode([Report].self, from: data)
-            } catch {
+            } catch DecodingError.dataCorrupted(_),
+                    DecodingError.keyNotFound(_, _),
+                    DecodingError.typeMismatch(_, _),
+                    DecodingError.valueNotFound(_, _) {
                 throw SearchError.decodingError
+            } catch {
+                throw SearchError.networkError
             }
         }.value
     }
