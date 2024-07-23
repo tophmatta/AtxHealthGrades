@@ -28,6 +28,18 @@ struct SearchView: View {
                 }
             }
         }
+        .sheet(item: $viewModel.currentReport, onDismiss: {
+            viewModel.dismissSheet()
+        }) { item in
+            VStack {
+                Text("Name: \(item.restaurantName)")
+                Text("Score: \(item.score)")
+                Text("Last inspection: \(item.date)")
+            }
+            .presentationDetents([.height(200)])
+            .presentationCompactAdaptation(.none)
+        }
+
     }
     
     func Logo() -> some View {

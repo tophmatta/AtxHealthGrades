@@ -7,7 +7,9 @@
 
 import CoreLocation
 
-struct Report: Decodable {
+struct Report: Decodable, Identifiable {
+    var id = UUID()
+    
     let restaurantName: String
     let score: String
     let address: String

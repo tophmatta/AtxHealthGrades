@@ -37,7 +37,7 @@ class SearchViewModel: ObservableObject, ISearchViewModel {
 
     @Published var searchType: SearchType = .Name
     @Published var searchError: SearchError? = nil
-    @Published var currReports = [Report]()
+    @Published var currentReport: Report? = nil
 
     init(_ client: ISocrataClient) {
         self.client = client
@@ -46,12 +46,19 @@ class SearchViewModel: ObservableObject, ISearchViewModel {
     func triggerSearch(value: String) {
         Task {
             do {
-                currReports = try await client.searchByName(value)
-                print(currReports.description)
+                let reports = try await client.searchByName(value)
+                //FIXME: need to be date object and not string here or query by date sorted
+                currentReport = reports.sorted { $0.date > $1.date }.first
+
+                print(reports)
             } catch let error as SearchError {
                 searchError = error
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func dismissSheet() {
+        currentReport = nil
     }
 }
