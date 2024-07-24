@@ -15,7 +15,7 @@ enum SearchError: Error, LocalizedError {
         case .emptyValue:
             return "The search value cannot be empty. Please enter a value."
         case .emptyResponse:
-            return "Your search did not yield any results."
+            return "Your search did not yield any results. Try shortening the restuarant name or searching with fewer words"
         case .networkError:
             return "A network error occurred. Please check your connection and try again."
         default:

@@ -19,9 +19,11 @@ public enum SearchType: String, CaseIterable, Identifiable {
  - onSearchTypeChanged
  - show modal for errors
  - show list of results
-    - design cell: show address, score, last inspection date, maybe a picture of the front
+    - design cell: show address, score, last inspection date
     - perhaps collapsable cells
-    - show on map button
+    - show on map button - all or specific result
+ - Show look around view when tap on result on map
+ - show look around view if user taps specific result from list
  - map search feature - search within a X mile radius
  */
 

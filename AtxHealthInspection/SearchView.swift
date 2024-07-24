@@ -47,7 +47,7 @@ struct SearchView: View {
             presenting: viewModel.error,
             actions: { _ in },
             message: { error in
-                Text(error.localizedDescription)
+                Text(error.localizedDescription).padding(.top, 15)
             }
         )
 

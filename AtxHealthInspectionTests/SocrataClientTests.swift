@@ -23,22 +23,22 @@ final class SocrataClientTests: XCTestCase {
     }
     
     func testGetWithValidInput() async throws {
-        let result = await client.searchByName("The 04 Lounge")
-        switch result {
-        case .success(let report):
-            XCTAssertNotNil(report)
-        case .failure(let error):
+        do {
+            let result = try await client.searchByName("The 04 Lounge")
+            XCTAssert(!result.isEmpty)
+        } catch {
             XCTFail("Expected success, but got failure with error: \(error)")
         }
     }
     
-    func testGetWithEmptyInput() async {
-        let result = await client.searchByName("")
-        switch result {
-        case .success:
+    func testGetWithEmptyInput() async throws {
+        do {
+            let result = try await client.searchByName("")
             XCTFail("Expected failure for empty input, but got success")
-        case .failure(let error):
+        } catch let error as SearchError {
             XCTAssertEqual(error, .emptyValue)
+        } catch {
+            XCTFail("Expected SearchError.emptyValue, but got unexpected error: \(error)")
         }
     }
     
