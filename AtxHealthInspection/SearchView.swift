@@ -19,27 +19,16 @@ struct SearchView: View {
     var body: some View {
         ZStack {
             FoodBackground().ignoresSafeArea(edges: [.top, .leading, .trailing])
-            GeometryReader { geometry in
-                VStack(alignment: .center) {
-                    FilterControl()
-                    Logo()
-                    SearchBarAndButton()
-                }
+            VStack(alignment: .center) {
+                FilterControl()
+                Logo()
+                SearchBarAndButton()
             }
         }
-        .sheet(item: $viewModel.currentReport, onDismiss: {
-            viewModel.clearResult()
-        }) { item in
-            VStack {
-                Tab()
-                Spacer()
-                Text("Name: \(item.restaurantName)")
-                Text("Score: \(item.score)")
-                Text("Last inspection: \(item.date.toReadable())")
-                Spacer()
-            }
-            .presentationDetents([.height(200)])
-            .presentationCompactAdaptation(.none)
+        .sheet(isPresented: $viewModel.currentReports.isNotEmpty()) {
+            ReportList(viewModel.currentReports)
+                .presentationDetents([.medium, .large])
+                .presentationCompactAdaptation(.none)
         }
         .alert(
             "Something went wrong...",
@@ -50,18 +39,17 @@ struct SearchView: View {
                 Text(error.localizedDescription).padding(.top, 15)
             }
         )
-
     }
     
     func Logo() -> some View {
         VStack {
             HStack(alignment: .center) {
-                    Image(systemName: "fork.knife.circle.fill")
-                        .resizable()
-                        .frame(width: 100.0, height: 100.0)
-                        .background(Circle().fill(Color.systemBackground))
-                        .overlay(Circle().stroke(Color.systemBackground, lineWidth: 6.0))
-                        .clipShape(Circle())
+                Image(systemName: "fork.knife.circle.fill")
+                    .resizable()
+                    .frame(width: 100.0, height: 100.0)
+                    .background(Circle().fill(Color.systemBackground))
+                    .overlay(Circle().stroke(Color.systemBackground, lineWidth: 6.0))
+                    .clipShape(Circle())
             }
             .padding([.top], 2.0)
             .shadow(color: Color.gray, radius: 5.0)

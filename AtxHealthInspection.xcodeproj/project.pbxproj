@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F10B6A992C508ABB001536B4 /* SearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B6A982C508ABB001536B4 /* SearchError.swift */; };
+		F10B6A9B2C508FA0001536B4 /* ReportList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B6A9A2C508FA0001536B4 /* ReportList.swift */; };
 		F13860582C3CBCEC0052EBC8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860572C3CBCEC0052EBC8 /* LocationModel.swift */; };
 		F138605A2C3CBDF70052EBC8 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860592C3CBDF70052EBC8 /* MapViewModel.swift */; };
 		F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataClient.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		F10B6A982C508ABB001536B4 /* SearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchError.swift; sourceTree = "<group>"; };
+		F10B6A9A2C508FA0001536B4 /* ReportList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportList.swift; sourceTree = "<group>"; };
 		F13860572C3CBCEC0052EBC8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		F13860592C3CBDF70052EBC8 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		F152C1312C3B3C120064F570 /* SocrataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClient.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */,
 				F1EACEE12C371C71006BE3F9 /* MainView.swift */,
 				F1EACEF12C37368B006BE3F9 /* SearchView.swift */,
+				F10B6A9A2C508FA0001536B4 /* ReportList.swift */,
 				F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */,
 				F152C1312C3B3C120064F570 /* SocrataClient.swift */,
 				F10B6A982C508ABB001536B4 /* SearchError.swift */,
@@ -250,6 +253,7 @@
 				F1EACEF42C373CF5006BE3F9 /* Report.swift in Sources */,
 				F1F55FA92C3856C6005C0F30 /* Environment.swift in Sources */,
 				F1F55FAF2C38F1FC005C0F30 /* UrlBuilder.swift in Sources */,
+				F10B6A9B2C508FA0001536B4 /* ReportList.swift in Sources */,
 				F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */,
 				F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */,

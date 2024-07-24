@@ -59,3 +59,20 @@ extension Binding {
         })
     }
 }
+
+extension Binding where Value: Collection {
+    func isNotEmpty() -> Binding<Bool> {
+        Binding<Bool>(
+            get: {
+                !self.wrappedValue.isEmpty
+            },
+            set: { newValue in
+                // This set block is required, but we don't need to do anything with newValue
+                if !newValue {
+                    self.wrappedValue = [] as! Value
+                }
+            }
+        )
+    }
+}
+
