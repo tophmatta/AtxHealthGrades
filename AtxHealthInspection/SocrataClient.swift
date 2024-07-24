@@ -13,24 +13,6 @@ protocol ISocrataClient {
     func prepareForRequest(_ value: String) -> String
 }
 
-enum SearchError: Error, LocalizedError {
-    case invalidUrl, decodingError, emptyValue, invalidLocation, invalidResponse, networkError, emptyResponse
-    
-    var errorDescription: String? {
-        switch self {
-        case .emptyValue:
-            return "The search value cannot be empty. Please enter a value."
-        case .emptyResponse:
-            return "Your search did not yield any results."
-        case .networkError:
-            return "A network error occurred. Please check your connection and try again."
-        default:
-            return "Unknown Error"
-        }
-    }
-
-}
-
 struct SocrataClient: ISocrataClient {
     func searchByName(_ value: String) async throws -> [Report] {
         guard value.isNotEmpty else { throw SearchError.emptyValue }
