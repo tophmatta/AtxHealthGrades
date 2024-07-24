@@ -11,7 +11,7 @@ struct Report: Decodable, Identifiable {
     var id = UUID()
     
     let restaurantName: String
-    let score: String
+    let score: Int
     let address: String
     var coordinate: CLLocationCoordinate2D? = nil
     let date: Date
@@ -28,7 +28,14 @@ struct Report: Decodable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.restaurantName = try container.decode(String.self, forKey: .restaurantName)
-        self.score = try container.decode(String.self, forKey: .score)
+        
+        let scoreString = try container.decode(String.self, forKey: .score)
+        if let score = Int(scoreString) {
+            self.score = score
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .score, in: container, debugDescription: "Score is not a valid integer")
+        }
+        
         let dateString = try container.decode(String.self, forKey: .inspectionDate)
         
         let dateFormatter = DateFormatter()
@@ -77,7 +84,7 @@ extension Report {
         }
     }
     
-    private init(restaurantName: String = "N/A", score: String = "N/A", address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(), date: Date = Date()) {
+    private init(restaurantName: String = "N/A", score: Int = 99, address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(), date: Date = Date()) {
         self.restaurantName = restaurantName
         self.score = score
         self.address = address
@@ -92,7 +99,7 @@ extension Report {
     static var sample: Report {
         Report(
             restaurantName: "Toph's Delight",
-            score: "69",
+            score: 99,
             address: "123 Cucumber Lane",
             coordinate: CLLocationCoordinate2D(latitude: 30.194818005, longitude: -97.843463001)
         )

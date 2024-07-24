@@ -16,6 +16,13 @@ struct ReportList: View {
     }
     
     var body: some View {
+        VStack(alignment: .leading) {
+            Text("Reports")
+                .font(.title)
+                .fontDesign(.rounded)
+                .padding()
+        }
+        Divider()
         List(reports) {
             ReportItem($0)
         }
@@ -32,21 +39,11 @@ struct ReportItem: View {
     
     var body: some View {
         HStack {
-            ZStack {
-                Circle()
-                    .frame(width: 50, height: 50)
-                    .foregroundStyle(Color.green)
-                Text("A")
-                    .foregroundStyle(Color.systemBackground)
-                    .fontWeight(.bold)
-                    .fontDesign(.rounded)
-                    .font(.title)
-            }
-            
+            CircleForScore(report.score)
             VStack(alignment: .leading) {
                 Text(report.restaurantName)
                 Text(report.address)
-                Text("Last insp: " + report.date.toReadable())
+                Text("Insp Date: " + report.date.toReadable())
             }
             .padding(.leading, 20)
             Spacer()
@@ -57,6 +54,36 @@ struct ReportItem: View {
                     .foregroundStyle(Color.green)
             }
             .padding(.trailing, 15)
+        }
+    }
+    
+    func CircleForScore(_ score: Int) -> some View {
+        let values: (letter: String, color: Color) = {
+            switch score {
+            case 90...100:
+                return ("A", Color.green)
+            case 80...89:
+                return ("B", Color.blue)
+            case 70...79:
+                return ("C", Color.orange)
+            case 60...69:
+                return ("D", Color.indigo)
+            case 0...59:
+                return ("F", Color.red)
+            default:
+                return ("?", Color.gray)
+            }
+        }()
+        
+        return ZStack {
+            Circle()
+                .frame(width: 50, height: 50)
+                .foregroundStyle(values.color)
+            Text(values.letter)
+                .foregroundStyle(Color.white)
+                .fontWeight(.bold)
+                .fontDesign(.rounded)
+                .font(.title)
         }
     }
 }
