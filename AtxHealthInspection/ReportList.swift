@@ -43,7 +43,7 @@ struct ReportItem: View {
             VStack(alignment: .leading) {
                 Text(report.restaurantName)
                 Text(report.address)
-                Text("Insp Date: " + report.date.toReadable())
+                Text("Last Insp: " + report.date.toReadable())
             }
             .padding(.leading, 20)
             Spacer()

@@ -76,3 +76,8 @@ extension Binding where Value: Collection {
     }
 }
 
+extension View {
+    func dismissKeyboardOnTap() -> some View {
+        modifier(DismissKeyboardOnTap())
+    }
+}

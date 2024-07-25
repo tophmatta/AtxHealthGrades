@@ -48,20 +48,35 @@ class SearchViewModel: ObservableObject, ISearchViewModel {
     func triggerSearch(value: String) {
         Task {
             do {
-                let reports = try await client.searchByName(value)
-                currentReports = reports.sorted { $0.date > $1.date }
+                currentReports = try await client.searchByName(value).filterOldDuplicates()
             } catch let searchError {
                 error = searchError
                 print(error?.localizedDescription ?? "No error description")
             }
         }
     }
-    
+        
     func clearResult() {
         currentReports = [Report]()
     }
     
     func clearError() {
         error = nil
+    }
+}
+
+private extension Collection where Element == Report {
+    func filterOldDuplicates() -> [Report] {
+        let sorted = self.sorted { $0.date > $1.date }
+        
+        var filtered = [Report]()
+        for curr in sorted {
+            let notInFilteredResult = !filtered.contains { $0.restaurantName == curr.restaurantName && $0.address == curr.address }
+            
+            if notInFilteredResult {
+                filtered.append(curr)
+            }
+        }
+        return filtered
     }
 }

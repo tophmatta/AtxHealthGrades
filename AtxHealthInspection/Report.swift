@@ -15,15 +15,7 @@ struct Report: Decodable, Identifiable {
     let address: String
     var coordinate: CLLocationCoordinate2D? = nil
     let date: Date
-    
-    // Only for decoding JSON
-    private struct HumanAddress: Decodable {
-        let address: String
-        let city: String
-        let state: String
-        let zip: String
-    }
-    
+        
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -72,6 +64,14 @@ struct Report: Decodable, Identifiable {
         guard coord.isValid() else { return }
         
         self.coordinate = coord
+    }
+    
+    // Only for decoding JSON to flatten obj structure
+    private struct HumanAddress: Decodable {
+        let address: String
+        let city: String
+        let state: String
+        let zip: String
     }
 }
 

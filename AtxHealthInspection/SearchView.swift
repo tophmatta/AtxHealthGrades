@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchView: View {
     
     init() {
-      UITextField.appearance().clearButtonMode = .whileEditing
+        UITextField.appearance().clearButtonMode = .always
     }
     
     @EnvironmentObject var viewModel: SearchViewModel
@@ -18,7 +18,9 @@ struct SearchView: View {
     
     var body: some View {
         ZStack {
-            FoodBackground().ignoresSafeArea(edges: [.top, .leading, .trailing])
+            FoodBackground()
+                .ignoresSafeArea(edges: [.top, .leading, .trailing])
+                .dismissKeyboardOnTap()
             VStack(alignment: .center) {
                 FilterControl()
                 Logo()
@@ -60,6 +62,7 @@ struct SearchView: View {
                 .background(Color.systemBackground)
         }
         .foregroundColor(.green)
+        .dismissKeyboardOnTap()
     }
     
     func FilterControl() -> some View {
