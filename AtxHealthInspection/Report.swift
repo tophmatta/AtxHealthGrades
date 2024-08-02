@@ -106,6 +106,17 @@ extension Report {
     }
 }
 
+extension Report: Hashable {
+    static func == (lhs: Report, rhs: Report) -> Bool {
+        return lhs.address == rhs.address && lhs.restaurantName == rhs.restaurantName
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(address)
+        hasher.combine(restaurantName)
+    }
+}
+
 extension Report: CustomStringConvertible {
     var description: String {
         var desc = "Restaurant Name: \(restaurantName)\n"

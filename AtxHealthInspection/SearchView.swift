@@ -84,7 +84,7 @@ struct SearchView: View {
     
     func SearchBarAndButton() -> some View {
         VStack(spacing: 15.0) {
-            TextField("Search", text: $searchText)
+            TextField("Enter a Restaurant Name", text: $searchText)
                 .padding()
                 .background(Color("tabBarBackground"))
                 .clipShape(
