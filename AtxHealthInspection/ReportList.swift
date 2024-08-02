@@ -16,12 +16,11 @@ struct ReportList: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Reports")
-                .font(.title)
-                .fontDesign(.rounded)
-                .padding()
-        }
+        Spacer()
+        Text("Reports")
+            .font(.title)
+            .fontDesign(.rounded)
+            .padding()
         Divider()
         List(reports) {
             ReportItem($0)

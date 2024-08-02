@@ -111,13 +111,6 @@ struct SearchView: View {
             Spacer()
         }
     }
-    
-    func Tab() -> some View {
-        Capsule()
-            .fill(Color.gray.opacity(0.5))
-            .frame(width: 40, height: 5)
-            .padding(.top, 20)
-    }
 }
 
 #Preview {
