@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		F101BD5D2C52034F00D91227 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F101BD5C2C52034F00D91227 /* Util.swift */; };
-		F10B6A992C508ABB001536B4 /* SearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B6A982C508ABB001536B4 /* SearchError.swift */; };
+		F10B6A992C508ABB001536B4 /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B6A982C508ABB001536B4 /* ClientError.swift */; };
 		F10B6A9B2C508FA0001536B4 /* ReportList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B6A9A2C508FA0001536B4 /* ReportList.swift */; };
 		F13860582C3CBCEC0052EBC8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860572C3CBCEC0052EBC8 /* LocationModel.swift */; };
 		F138605A2C3CBDF70052EBC8 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860592C3CBDF70052EBC8 /* MapViewModel.swift */; };
-		F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataClient.swift */; };
+		F152C1322C3B3C120064F570 /* SocrataAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */; };
 		F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1402C3B48590064F570 /* SocrataClientTests.swift */; };
 		F152C1432C3CAF990064F570 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1422C3CAF990064F570 /* MapView.swift */; };
+		F164205B2CC09D2C00E87F66 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F164205A2CC09D2C00E87F66 /* MockURLProtocol.swift */; };
+		F164205D2CC0A29D00E87F66 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F164205C2CC0A29D00E87F66 /* APIClient.swift */; };
 		F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */; };
 		F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEE12C371C71006BE3F9 /* MainView.swift */; };
 		F1EACEE62C371C73006BE3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1EACEE52C371C73006BE3F9 /* Assets.xcassets */; };
@@ -41,14 +43,16 @@
 
 /* Begin PBXFileReference section */
 		F101BD5C2C52034F00D91227 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		F10B6A982C508ABB001536B4 /* SearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchError.swift; sourceTree = "<group>"; };
+		F10B6A982C508ABB001536B4 /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
 		F10B6A9A2C508FA0001536B4 /* ReportList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportList.swift; sourceTree = "<group>"; };
 		F13860572C3CBCEC0052EBC8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		F13860592C3CBDF70052EBC8 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		F152C1312C3B3C120064F570 /* SocrataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClient.swift; sourceTree = "<group>"; };
+		F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataAPIClient.swift; sourceTree = "<group>"; };
 		F152C1372C3B482A0064F570 /* AtxHealthInspectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtxHealthInspectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F152C1402C3B48590064F570 /* SocrataClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClientTests.swift; sourceTree = "<group>"; };
 		F152C1422C3CAF990064F570 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		F164205A2CC09D2C00E87F66 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		F164205C2CC0A29D00E87F66 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		F1EACEDC2C371C71006BE3F9 /* AtxHealthInspection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtxHealthInspection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtxHealthInspectionApp.swift; sourceTree = "<group>"; };
 		F1EACEE12C371C71006BE3F9 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				F152C1402C3B48590064F570 /* SocrataClientTests.swift */,
+				F164205A2CC09D2C00E87F66 /* MockURLProtocol.swift */,
 			);
 			path = AtxHealthInspectionTests;
 			sourceTree = "<group>";
@@ -116,8 +121,9 @@
 				F1EACEF12C37368B006BE3F9 /* SearchView.swift */,
 				F10B6A9A2C508FA0001536B4 /* ReportList.swift */,
 				F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */,
-				F152C1312C3B3C120064F570 /* SocrataClient.swift */,
-				F10B6A982C508ABB001536B4 /* SearchError.swift */,
+				F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */,
+				F164205C2CC0A29D00E87F66 /* APIClient.swift */,
+				F10B6A982C508ABB001536B4 /* ClientError.swift */,
 				F1EACEF72C374B89006BE3F9 /* SearchViewModel.swift */,
 				F1EACEF32C373CF5006BE3F9 /* Report.swift */,
 				F1F55FAC2C38E632005C0F30 /* Extensions.swift */,
@@ -243,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */,
+				F164205B2CC09D2C00E87F66 /* MockURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,14 +266,15 @@
 				F101BD5D2C52034F00D91227 /* Util.swift in Sources */,
 				F10B6A9B2C508FA0001536B4 /* ReportList.swift in Sources */,
 				F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */,
-				F152C1322C3B3C120064F570 /* SocrataClient.swift in Sources */,
+				F152C1322C3B3C120064F570 /* SocrataAPIClient.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */,
 				F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */,
 				F13860582C3CBCEC0052EBC8 /* LocationModel.swift in Sources */,
-				F10B6A992C508ABB001536B4 /* SearchError.swift in Sources */,
+				F10B6A992C508ABB001536B4 /* ClientError.swift in Sources */,
 				F138605A2C3CBDF70052EBC8 /* MapViewModel.swift in Sources */,
 				F1F55FAD2C38E632005C0F30 /* Extensions.swift in Sources */,
 				F1F55FAB2C38680B005C0F30 /* FoodBackground.swift in Sources */,
+				F164205D2CC0A29D00E87F66 /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,7 +475,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -503,7 +511,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

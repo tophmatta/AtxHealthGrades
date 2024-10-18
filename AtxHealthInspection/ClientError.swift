@@ -1,5 +1,5 @@
 //
-//  SearchError.swift
+//  ClientError.swift
 //  AtxHealthInspection
 //
 //  Created by Toph Matta on 7/23/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SearchError: Error, LocalizedError {
+enum ClientError: Error, LocalizedError {
     case invalidUrl, decodingError, emptyValue, invalidLocation, invalidResponse, networkError, emptyResponse
     
     var errorDescription: String? {

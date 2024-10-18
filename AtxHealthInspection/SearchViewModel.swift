@@ -27,14 +27,9 @@ public enum SearchType: String, CaseIterable, Identifiable {
  - map search feature - search within a X mile radius
  */
 
-@MainActor
-protocol ISearchViewModel {
-    var client: ISocrataClient { get }
-    // TODO: -
-}
 
 @MainActor
-class SearchViewModel: ObservableObject, ISearchViewModel {
+class SearchViewModel: ObservableObject {
     let client: ISocrataClient
 
     @Published var searchType: SearchType = .Name
@@ -45,13 +40,17 @@ class SearchViewModel: ObservableObject, ISearchViewModel {
         self.client = client
     }
 
-    func triggerSearch(value: String) {
+    nonisolated func triggerSearch(value: String) {
         Task {
             do {
-                currentReports = try await client.searchByName(value).filterOldDuplicates()
+                let result = try await client.searchByName(value).filterOldDuplicates()
+                Task { @MainActor in
+                    currentReports = result
+                }
             } catch let searchError {
-                error = searchError
-                print(error?.localizedDescription ?? "No error description")
+                Task { @MainActor in
+                    error = searchError
+                }
             }
         }
     }

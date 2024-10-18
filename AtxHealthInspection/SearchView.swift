@@ -115,5 +115,5 @@ struct SearchView: View {
 
 #Preview {
     SearchView()
-        .environmentObject(SearchViewModel(SocrataClient()))
+        .environmentObject(SearchViewModel(SocrataAPIClient()))
 }

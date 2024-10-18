@@ -8,6 +8,7 @@
 import Combine
 import CoreLocation
 
+@MainActor
 class LocationModel: NSObject, ObservableObject {
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var lastLocation: CLLocation?
@@ -25,7 +26,6 @@ class LocationModel: NSObject, ObservableObject {
     }
     
     func checkStatus() {
-        // TODO: handle if user denies - show some kind of UI/modal
         if authorizationStatus.isNotAuthorized {
             requestAuthorisation()
         } else if lastLocation == nil && authorizationStatus.isAuthorized {
@@ -54,11 +54,9 @@ class LocationModel: NSObject, ObservableObject {
     }
 }
 
-extension LocationModel: CLLocationManagerDelegate {
+extension LocationModel: @preconcurrency CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        DispatchQueue.main.async {
-            self.authorizationStatus = status
-        }
+        self.authorizationStatus = status
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -66,9 +64,7 @@ extension LocationModel: CLLocationManagerDelegate {
             let location = locations.last,
             location.coordinate.isValid()
         else { return }
-        DispatchQueue.main.async {
-            self.lastLocation = location
-        }
+        self.lastLocation = location
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

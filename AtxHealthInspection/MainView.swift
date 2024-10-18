@@ -15,8 +15,8 @@ struct MainView: View {
         tabBarAppearance.backgroundColor = UIColor(Color("tabBarBackground"))
     }
 
-    @StateObject var searchViewModel = SearchViewModel(SocrataClient())
-    @StateObject var mapViewModel = MapViewModel(SocrataClient(), locationModel: LocationModel())
+    @StateObject var searchViewModel = SearchViewModel(SocrataAPIClient())
+    @StateObject var mapViewModel = MapViewModel(SocrataAPIClient(), locationModel: LocationModel())
 
     var body: some View {
         TabView {

@@ -51,7 +51,7 @@ extension Date {
 }
 
 extension Binding {
-    func isNotNil<T>() -> Binding<Bool> where Value == T? {
+    func isNotNil<T: Sendable>() -> Binding<Bool> where Value == T? {
         .init(get: {
             wrappedValue != nil
         }, set: { _ in
@@ -60,7 +60,7 @@ extension Binding {
     }
 }
 
-extension Binding where Value: Collection {
+extension Binding where Value: Collection, Value: Sendable {
     func isNotEmpty() -> Binding<Bool> {
         Binding<Bool>(
             get: {
