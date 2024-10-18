@@ -27,13 +27,13 @@ class LocationModel: NSObject, ObservableObject {
     
     func checkStatus() {
         if authorizationStatus.isNotAuthorized {
-            requestAuthorisation()
+            requestAuthorization()
         } else if lastLocation == nil && authorizationStatus.isAuthorized {
             startUpdatingLocation()
         }
     }
 
-    private func requestAuthorisation() {
+    private func requestAuthorization() {
         locationManager.requestWhenInUseAuthorization()
     }
         
@@ -54,6 +54,7 @@ class LocationModel: NSObject, ObservableObject {
     }
 }
 
+// Location manager inits on main thread so we can guarantee the callbacks will be on the same thread
 extension LocationModel: @preconcurrency CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.authorizationStatus = status
