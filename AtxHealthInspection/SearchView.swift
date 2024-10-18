@@ -22,10 +22,10 @@ struct SearchView: View {
                 .ignoresSafeArea(edges: [.top, .leading, .trailing])
                 .dismissKeyboardOnTap()
             VStack(alignment: .center) {
-                FilterControl()
                 Logo()
                 SearchBarAndButton()
             }
+            .offset(y: -80)
         }
         .sheet(isPresented: $viewModel.currentReports.isNotEmpty()) {
             ReportList(viewModel.currentReports)
@@ -64,24 +64,7 @@ struct SearchView: View {
         .foregroundColor(.green)
         .dismissKeyboardOnTap()
     }
-    
-    func FilterControl() -> some View {
-        HStack(alignment: .center) {
-            Spacer()
-            Picker("Filter", selection: $viewModel.searchType) {
-                ForEach(SearchType.allCases) {
-                    Text($0.rawValue)
-                }
-            }
-            .pickerStyle(.segmented)
-            .shadow(color: Color.gray, radius: 5.0)
-            .background(Color.systemBackground)
-            Spacer()
-        }
-        .padding([.top, .leading, .trailing])
-        .padding(.bottom, 45.0)
-    }
-    
+        
     func SearchBarAndButton() -> some View {
         VStack(spacing: 15.0) {
             TextField("Enter a Restaurant Name", text: $searchText)
@@ -108,7 +91,6 @@ struct SearchView: View {
             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
             .shadow(color: Color.gray, radius: 5.0)
             .padding(.top, 20.0)
-            Spacer()
         }
     }
 }

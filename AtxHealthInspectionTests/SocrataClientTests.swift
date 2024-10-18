@@ -14,7 +14,7 @@ final class SocrataClientTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        client = SocrataClient()
+        client = SocrataAPIClient()
     }
     
     override func tearDown() {
@@ -35,7 +35,7 @@ final class SocrataClientTests: XCTestCase {
         do {
             let result = try await client.searchByName("")
             XCTFail("Expected failure for empty input, but got success")
-        } catch let error as SearchError {
+        } catch let error as ClientError {
             XCTAssertEqual(error, .emptyValue)
         } catch {
             XCTFail("Expected SearchError.emptyValue, but got unexpected error: \(error)")

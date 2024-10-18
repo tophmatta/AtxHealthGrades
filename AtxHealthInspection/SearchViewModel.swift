@@ -7,10 +7,6 @@
 
 import Foundation
 
-public enum SearchType: String, CaseIterable, Identifiable {
-    case Name, ZipCode = "Zip Code"
-    public var id: Self { self }
-}
 
 /*
  TODO:
@@ -32,7 +28,6 @@ public enum SearchType: String, CaseIterable, Identifiable {
 class SearchViewModel: ObservableObject {
     let client: ISocrataClient
 
-    @Published var searchType: SearchType = .Name
     @Published var error: Error? = nil
     @Published var currentReports = [Report]()
     
