@@ -1,0 +1,29 @@
+[
+    {
+        "address" : {
+            "human_address" : "{\"address\": \"3808 S CONGRESS AVE\", \"city\": \"AUSTIN\", \"state\": \"TX\", \"zip\": \"78704\"}",
+            "longitude" : "-97.762768994",
+            "latitude" : "30.225655991"
+        },
+        "restaurant_name" : "04 Lounge, The",
+        "zip_code" : "78704",
+        "score" : "89",
+        "inspection_date" : "2024-08-07T00:00:00.000",
+        "facility_id" : "10179284",
+        "process_description" : "Routine Inspection"
+    },
+    {
+        "address" : {
+            "human_address" : "{\"address\": \"3808 S CONGRESS AVE\", \"city\": \"AUSTIN\", \"state\": \"TX\", \"zip\": \"78704\"}",
+            "longitude" : "-97.762768994",
+            "latitude" : "30.225655991"
+        },
+        "restaurant_name" : "04 Lounge, The",
+        "zip_code" : "78704",
+        "score" : "85",
+        "inspection_date" : "2022-05-23T00:00:00.000",
+        "facility_id" : "10179284",
+        "process_description" : "Routine Inspection"
+    }
+]
+

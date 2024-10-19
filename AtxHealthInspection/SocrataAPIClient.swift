@@ -10,7 +10,6 @@ import CoreLocation
 
 protocol ISocrataClient: Sendable {
     func searchByName(_ value: String) async throws -> [Report]
-    func prepareForRequest(_ value: String) -> String
 }
 
 struct SocrataAPIClient: ISocrataClient {
@@ -23,10 +22,11 @@ struct SocrataAPIClient: ISocrataClient {
     
     func searchByName(_ value: String) async throws -> [Report] {
         try await Task(priority: .background) {
-            guard value.isNotEmpty else { throw ClientError.emptyValue }
+            let str = value.trimForQuery()
             
-            let searchName = prepareForRequest(value)
-            let query = "lower(restaurant_name) like '%\(searchName)%'"
+            guard str.isNotEmpty else { throw ClientError.emptyValue }
+            
+            let query = "lower(restaurant_name) like '%\(str)%'"
             let result: [Report]
             
             do {
@@ -68,9 +68,11 @@ struct SocrataAPIClient: ISocrataClient {
         let query = "within_circle(null, \(location.latitude), \(location.longitude), 1000)"
         return try! await get(query).first
     }
-    
-    nonisolated func prepareForRequest(_ value: String) -> String {
-        return value
+}
+
+extension String {
+    func trimForQuery() -> Self {
+        return self
             .lowercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: "^the ", with: "", options: .regularExpression)

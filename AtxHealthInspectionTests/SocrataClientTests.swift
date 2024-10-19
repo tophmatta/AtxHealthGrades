@@ -10,22 +10,34 @@ import XCTest
 
 final class SocrataClientTests: XCTestCase {
 
-    var client: ISocrataClient!
+    var mockClient: ISocrataClient!
     
     override func setUp() {
         super.setUp()
-        client = SocrataAPIClient()
+        
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [MockURLProtocol.self]
+        let session = URLSession(configuration: configuration)
+        
+        mockClient = SocrataAPIClient(client: APIClient(session: session))
     }
     
     override func tearDown() {
-        client = nil
+        mockClient = nil
         super.tearDown()
     }
     
     func testGetWithValidInput() async throws {
+        let data = mockContentData
+
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, data)
+        }
+
         do {
-            let result = try await client.searchByName("The 04 Lounge")
-            XCTAssert(!result.isEmpty)
+            let result = try await mockClient.searchByName("The 04 Lounge")
+            XCTAssertFalse(result.isEmpty, "Result should not be empty")
         } catch {
             XCTFail("Expected success, but got failure with error: \(error)")
         }
@@ -33,42 +45,46 @@ final class SocrataClientTests: XCTestCase {
     
     func testGetWithEmptyInput() async throws {
         do {
-            let result = try await client.searchByName("")
+            _ = try await mockClient.searchByName("")
             XCTFail("Expected failure for empty input, but got success")
         } catch let error as ClientError {
             XCTAssertEqual(error, .emptyValue)
         } catch {
-            XCTFail("Expected SearchError.emptyValue, but got unexpected error: \(error)")
+            XCTFail("Expected ClientError.emptyValue, but got unexpected error: \(error)")
         }
     }
     
-    func testPrepareForRequestWithPrefixToTrim() {
-        let input = "The Vincent's Restaurant"
-        let expected = "vincent restaurant"
-        let result = client.prepareForRequest(input)
-        XCTAssertEqual(result, expected)
+    func testGetWithBlankInput() async throws {
+        do {
+            _ = try await mockClient.searchByName("    ")
+            XCTFail("Expected failure for blank input, but got success")
+        } catch let error as ClientError {
+            XCTAssertEqual(error, .emptyValue)
+        } catch {
+            XCTFail("Expected ClientError.emptyValue, but got unexpected error: \(error)")
+        }
     }
     
-    func testPrepareForRequestOneWord() {
-        let input = "Amy's "
-        let expected = "amy"
-        let result = client.prepareForRequest(input)
-        XCTAssertEqual(result, expected)
+    func testGetWithNonexistantPlace() async throws {
+        do {
+            _ = try await mockClient.searchByName("Casa Bonita de Toph")
+        } catch let error as ClientError {
+            XCTAssertEqual(error, .emptyResponse)
+        } catch {
+            XCTFail("Expected ClientError.emptyValue, but got unexpected error: \(error)")
+        }
     }
-    
-    func testPrepareForAnotherApostrophe() {
-        let input = "Fat Daddy's Chicken "
-        let expected = "fat daddy chicken"
-        let result = client.prepareForRequest(input)
-        XCTAssertEqual(result, expected)
+}
+
+extension XCTestCase {
+    var mockContentData: Data {
+        return getData(name: "test04loungedata")
     }
 
-    
-    func testPrepareAllCaps() {
-        let input = "ATX Cocina"
-        let expected = "atx cocina"
-        let result = client.prepareForRequest(input)
-        XCTAssertEqual(result, expected)
-
+    func getData(name: String, withExtension: String = "json") -> Data {
+        let bundle = Bundle(for: type(of: self))
+        let fileUrl = bundle.url(forResource: name, withExtension: withExtension)
+        let data = try! Data(contentsOf: fileUrl!)
+        return data
     }
 }

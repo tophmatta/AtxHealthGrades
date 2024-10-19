@@ -17,6 +17,8 @@
 		F152C1432C3CAF990064F570 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1422C3CAF990064F570 /* MapView.swift */; };
 		F164205B2CC09D2C00E87F66 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F164205A2CC09D2C00E87F66 /* MockURLProtocol.swift */; };
 		F164205D2CC0A29D00E87F66 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F164205C2CC0A29D00E87F66 /* APIClient.swift */; };
+		F16420642CC342C300E87F66 /* test04loungedata.json in Resources */ = {isa = PBXBuildFile; fileRef = F16420632CC342B200E87F66 /* test04loungedata.json */; };
+		F16420682CC344AD00E87F66 /* InputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16420672CC344AA00E87F66 /* InputTests.swift */; };
 		F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */; };
 		F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEE12C371C71006BE3F9 /* MainView.swift */; };
 		F1EACEE62C371C73006BE3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1EACEE52C371C73006BE3F9 /* Assets.xcassets */; };
@@ -53,6 +55,8 @@
 		F152C1422C3CAF990064F570 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		F164205A2CC09D2C00E87F66 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		F164205C2CC0A29D00E87F66 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		F16420632CC342B200E87F66 /* test04loungedata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test04loungedata.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
+		F16420672CC344AA00E87F66 /* InputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTests.swift; sourceTree = "<group>"; };
 		F1EACEDC2C371C71006BE3F9 /* AtxHealthInspection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtxHealthInspection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtxHealthInspectionApp.swift; sourceTree = "<group>"; };
 		F1EACEE12C371C71006BE3F9 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -89,8 +93,10 @@
 		F152C1382C3B482A0064F570 /* AtxHealthInspectionTests */ = {
 			isa = PBXGroup;
 			children = (
+				F16420672CC344AA00E87F66 /* InputTests.swift */,
 				F152C1402C3B48590064F570 /* SocrataClientTests.swift */,
 				F164205A2CC09D2C00E87F66 /* MockURLProtocol.swift */,
+				F16420632CC342B200E87F66 /* test04loungedata.json */,
 			);
 			path = AtxHealthInspectionTests;
 			sourceTree = "<group>";
@@ -229,6 +235,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F16420642CC342C300E87F66 /* test04loungedata.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F16420682CC344AD00E87F66 /* InputTests.swift in Sources */,
 				F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */,
 				F164205B2CC09D2C00E87F66 /* MockURLProtocol.swift in Sources */,
 			);
