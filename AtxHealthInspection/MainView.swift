@@ -22,6 +22,7 @@ struct MainView: View {
         TabView {
             SearchView()
                 .environmentObject(searchViewModel)
+                .environmentObject(mapViewModel)
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
                 }

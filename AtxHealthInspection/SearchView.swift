@@ -13,7 +13,7 @@ struct SearchView: View {
         UITextField.appearance().clearButtonMode = .always
     }
     
-    @EnvironmentObject var viewModel: SearchViewModel
+    @EnvironmentObject var searchViewModel: SearchViewModel
     @State private var searchText: String = ""
     
     var body: some View {
@@ -27,15 +27,15 @@ struct SearchView: View {
             }
             .offset(y: -80)
         }
-        .sheet(isPresented: $viewModel.currentReports.isNotEmpty()) {
-            ReportList(viewModel.currentReports)
+        .sheet(isPresented: $searchViewModel.currentReports.isNotEmpty()) {
+            ReportList(searchViewModel.currentReports)
                 .presentationDetents([.medium, .large])
                 .presentationCompactAdaptation(.none)
         }
         .alert(
             "Something went wrong...",
-            isPresented: $viewModel.error.isNotNil(),
-            presenting: viewModel.error,
+            isPresented: $searchViewModel.error.isNotNil(),
+            presenting: searchViewModel.error,
             actions: { _ in },
             message: { error in
                 Text(error.localizedDescription).padding(.top, 15)
@@ -78,7 +78,7 @@ struct SearchView: View {
                 .foregroundStyle(Color("searchTextColor"))
             
             Button {
-                viewModel.triggerSearch(value: searchText)
+                searchViewModel.triggerSearch(value: searchText)
             } label: {
                 Text("Search")
                     .font(.title2)

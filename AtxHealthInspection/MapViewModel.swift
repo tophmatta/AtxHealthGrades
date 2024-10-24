@@ -11,16 +11,9 @@ import CoreLocation
 import Foundation
 import MapKit
 
-@MainActor
-protocol IMapViewModel {
-    var client: ISocrataClient { get }
-    var locationModel: LocationModel { get }
-    
-    func checkLocationStatus()
-}
 
 @MainActor
-class MapViewModel: ObservableObject, IMapViewModel {
+class MapViewModel: ObservableObject {
     let client: ISocrataClient
     let locationModel: LocationModel
     var lastLocation: CLLocationCoordinate2D? {
