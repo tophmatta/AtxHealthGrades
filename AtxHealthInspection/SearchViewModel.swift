@@ -32,18 +32,11 @@ class SearchViewModel: ObservableObject {
         self.client = client
     }
 
-    nonisolated func triggerSearch(value: String) {
-        Task {
-            do {
-                let result = try await client.searchByName(value).filterOldDuplicates()
-                Task { @MainActor in
-                    currentReports = result
-                }
-            } catch let searchError {
-                Task { @MainActor in
-                    error = searchError
-                }
-            }
+    func triggerSearch(value: String) async {
+        do {
+            currentReports = try await client.searchByName(value).filterOldDuplicates()
+        } catch let searchError {
+            error = searchError
         }
     }
         

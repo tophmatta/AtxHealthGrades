@@ -13,6 +13,7 @@ struct SearchView: View {
     
     @Binding var selectedTab: Tab
     @State private var searchText: String = ""
+    @State private var showSheet = false
     
     init(_ selectedTab: Binding<Tab>) {
         _selectedTab = selectedTab
@@ -30,7 +31,7 @@ struct SearchView: View {
             }
             .offset(y: -80)
         }
-        .sheet(isPresented: $searchViewModel.currentReports.isNotEmpty()) {
+        .sheet(isPresented: $showSheet) {
             ReportList(searchViewModel.currentReports, selectedTab: $selectedTab)
                 .presentationDetents([.medium, .large])
                 .presentationCompactAdaptation(.none)
@@ -81,7 +82,10 @@ struct SearchView: View {
                 .foregroundStyle(Color("searchTextColor"))
             
             Button {
-                searchViewModel.triggerSearch(value: searchText)
+                Task {
+                    await searchViewModel.triggerSearch(value: searchText)
+                    showSheet = true
+                }
             } label: {
                 Text("Search")
                     .font(.title2)
