@@ -11,9 +11,11 @@ struct SearchView: View {
     @EnvironmentObject var searchViewModel: SearchViewModel
     @EnvironmentObject var mapViewModel: MapViewModel
     
+    @Binding var selectedTab: Tab
     @State private var searchText: String = ""
     
-    init() {
+    init(_ selectedTab: Binding<Tab>) {
+        _selectedTab = selectedTab
         UITextField.appearance().clearButtonMode = .always
     }
     
@@ -29,7 +31,7 @@ struct SearchView: View {
             .offset(y: -80)
         }
         .sheet(isPresented: $searchViewModel.currentReports.isNotEmpty()) {
-            ReportList(searchViewModel.currentReports)
+            ReportList(searchViewModel.currentReports, selectedTab: $selectedTab)
                 .presentationDetents([.medium, .large])
                 .presentationCompactAdaptation(.none)
         }
@@ -97,6 +99,6 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView()
+    SearchView(.constant(.search))
         .environmentObject(SearchViewModel(SocrataAPIClient()))
 }

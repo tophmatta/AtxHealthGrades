@@ -10,11 +10,13 @@ import SwiftUI
 struct ReportList: View {
     
     @EnvironmentObject var mapViewModel: MapViewModel
+    @Binding var selectedTab: Tab
     
     let reports: [Report]
     
-    init(_ reports: [Report]) {
+    init(_ reports: [Report], selectedTab: Binding<Tab>) {
         self.reports = reports
+        _selectedTab = selectedTab
     }
     
     var body: some View {
@@ -25,7 +27,7 @@ struct ReportList: View {
             .padding()
         Divider()
         List(reports) {
-            ReportItem($0)
+            ReportItem($0, selectedTab: $selectedTab)
         }
         .listStyle(.inset)
     }
@@ -33,11 +35,13 @@ struct ReportList: View {
 
 struct ReportItem: View {
     @EnvironmentObject var mapViewModel: MapViewModel
-
+    @Binding var selectedTab: Tab
+    
     let report: Report
     
-    init(_ report: Report) {
+    init(_ report: Report, selectedTab: Binding<Tab>) {
         self.report = report
+        _selectedTab = selectedTab
     }
     
     var body: some View {
@@ -51,8 +55,7 @@ struct ReportItem: View {
             .padding(.leading, 20)
             Spacer()
             Button {
-                //TODO: manually set tab appearance
-                //      send Report details to mapviewmodel
+                selectedTab = .map
             } label: {
                 Image(systemName: "map.fill")
                     .foregroundStyle(Color.green)
