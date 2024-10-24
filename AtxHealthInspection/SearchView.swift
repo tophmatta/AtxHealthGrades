@@ -25,12 +25,14 @@ struct SearchView: View {
             FoodBackground()
                 .ignoresSafeArea(edges: [.top, .leading, .trailing])
                 .dismissKeyboardOnTap()
-            VStack(alignment: .center) {
+            VStack(alignment: .center, spacing: 15.0) {
                 Logo()
-                SearchBarAndButton()
+                SearchBar()
+                SearchButton()
             }
             .offset(y: -80)
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .sheet(isPresented: $showSheet) {
             ReportList(searchViewModel.currentReports, selectedTab: $selectedTab)
                 .presentationDetents([.medium, .large])
@@ -69,36 +71,36 @@ struct SearchView: View {
         .dismissKeyboardOnTap()
     }
         
-    func SearchBarAndButton() -> some View {
-        VStack(spacing: 15.0) {
-            TextField("Enter a Restaurant Name", text: $searchText)
-                .padding()
-                .background(Color("tabBarBackground"))
-                .clipShape(
-                    RoundedRectangle(cornerSize: CGSize(width: 20, height: 20), style: .continuous)
-                )
-                .padding([.leading, .trailing], 10.0)
-                .shadow(color: Color.gray, radius: 5.0)
-                .foregroundStyle(Color("searchTextColor"))
-            
-            Button {
-                Task {
-                    await searchViewModel.triggerSearch(value: searchText)
-                    showSheet = true
-                }
-            } label: {
-                Text("Search")
-                    .font(.title2)
-                    .bold()
-            }
-            .frame(width: 80.0)
+    func SearchBar() -> some View {
+        TextField("Enter a Restaurant Name", text: $searchText)
             .padding()
-            .background(Color.green)
-            .tint(Color.white)
-            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+            .background(Color("tabBarBackground"))
+            .clipShape(
+                RoundedRectangle(cornerSize: CGSize(width: 20, height: 20), style: .continuous)
+            )
+            .padding([.leading, .trailing], 10.0)
             .shadow(color: Color.gray, radius: 5.0)
-            .padding(.top, 20.0)
+            .foregroundStyle(Color("searchTextColor"))
+    }
+    
+    func SearchButton() -> some View {
+        Button {
+            Task {
+                await searchViewModel.triggerSearch(value: searchText)
+                showSheet = true
+            }
+        } label: {
+            Text("Search")
+                .font(.title2)
+                .bold()
         }
+        .frame(width: 80.0)
+        .padding()
+        .background(Color.green)
+        .tint(Color.white)
+        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+        .shadow(color: Color.gray, radius: 5.0)
+        .padding(.top, 20.0)
     }
 }
 
