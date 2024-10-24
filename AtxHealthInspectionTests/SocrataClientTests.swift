@@ -66,6 +66,13 @@ final class SocrataClientTests: XCTestCase {
     }
     
     func testGetWithNonexistantPlace() async throws {
+        let data = mockContentData
+
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, data)
+        }
+
         do {
             _ = try await mockClient.searchByName("Casa Bonita de Toph")
         } catch let error as ClientError {
