@@ -10,9 +10,6 @@ import Foundation
 
 /*
  TODO:
- - testing response decoding
- - testing api requests
- - onSearchTypeChanged
  - show modal for errors
  - show list of results
     - design cell: show address, score, last inspection date
