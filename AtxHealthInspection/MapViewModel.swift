@@ -19,7 +19,7 @@ class MapViewModel: ObservableObject {
     var lastLocation: CLLocationCoordinate2D? {
         didSet {
             if oldValue == nil && lastLocation != nil {
-                zoomCameraToUser()
+                goToUserLocation()
             }
         }
     }
@@ -38,7 +38,7 @@ class MapViewModel: ObservableObject {
         locationModel.checkStatus()
     }
     
-    func zoomCameraToUser() {
+    func goToUserLocation() {
         cameraPosition = .userLocation(fallback: .automatic)
     }
     
