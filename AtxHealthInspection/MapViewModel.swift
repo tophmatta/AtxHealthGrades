@@ -28,7 +28,7 @@ class MapViewModel: ObservableObject {
     
     private var locationSubscriber: Set<AnyCancellable> = []
     
-    init(_ client: ISocrataClient, locationModel: LocationModel) {
+    init(_ client: ISocrataClient, locationModel: LocationModel = LocationModel()) {
         self.client = client
         self.locationModel = locationModel
         setupLocationObserver()

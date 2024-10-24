@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct SearchView: View {
+    @EnvironmentObject var searchViewModel: SearchViewModel
+    @EnvironmentObject var mapViewModel: MapViewModel
+    
+    @State private var searchText: String = ""
     
     init() {
         UITextField.appearance().clearButtonMode = .always
     }
-    
-    @EnvironmentObject var searchViewModel: SearchViewModel
-    @State private var searchText: String = ""
     
     var body: some View {
         ZStack {

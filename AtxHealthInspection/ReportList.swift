@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ReportList: View {
     
+    @EnvironmentObject var mapViewModel: MapViewModel
+    
     let reports: [Report]
     
     init(_ reports: [Report]) {
@@ -30,6 +32,8 @@ struct ReportList: View {
 }
 
 struct ReportItem: View {
+    @EnvironmentObject var mapViewModel: MapViewModel
+
     let report: Report
     
     init(_ report: Report) {
@@ -47,7 +51,8 @@ struct ReportItem: View {
             .padding(.leading, 20)
             Spacer()
             Button {
-                //TODO: button action
+                //TODO: manually set tab appearance
+                //      send Report details to mapviewmodel
             } label: {
                 Image(systemName: "map.fill")
                     .foregroundStyle(Color.green)

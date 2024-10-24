@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct MainView: View {
-    init() {
+    @StateObject private var searchViewModel: SearchViewModel
+    @StateObject private var mapViewModel: MapViewModel
+
+    init(client: ISocrataClient = SocrataAPIClient()) {
+        _searchViewModel = StateObject(wrappedValue: SearchViewModel(client))
+        _mapViewModel = StateObject(wrappedValue: MapViewModel(client))
+        
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.isTranslucent = false
         tabBarAppearance.barTintColor = UIColor.green
         tabBarAppearance.backgroundColor = UIColor(Color("tabBarBackground"))
     }
-
-    @StateObject var searchViewModel = SearchViewModel(SocrataAPIClient())
-    @StateObject var mapViewModel = MapViewModel(SocrataAPIClient(), locationModel: LocationModel())
-
+    
     var body: some View {
         TabView {
             SearchView()
@@ -28,7 +31,9 @@ struct MainView: View {
                 }
             MapView()
                 .environmentObject(mapViewModel)
-                .tabItem { Label("Map", systemImage: "map") }
+                .tabItem {
+                    Label("Map", systemImage: "map")
+                }
         }
         .tint(Color.green)
     }
