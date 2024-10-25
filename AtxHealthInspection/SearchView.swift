@@ -34,7 +34,7 @@ struct SearchView: View {
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .sheet(isPresented: $showSheet) {
-            ReportList(searchViewModel.currentReports, selectedTab: $selectedTab)
+            ReportList(searchViewModel.currentReports, selectedTab: $selectedTab, showSheet: $showSheet)
                 .presentationDetents([.medium, .large])
                 .presentationCompactAdaptation(.none)
         }

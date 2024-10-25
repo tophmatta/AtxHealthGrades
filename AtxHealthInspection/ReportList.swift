@@ -11,12 +11,14 @@ struct ReportList: View {
     
     @EnvironmentObject var mapViewModel: MapViewModel
     @Binding var selectedTab: Tab
+    @Binding var showSheet: Bool
     
     let reports: [Report]
     
-    init(_ reports: [Report], selectedTab: Binding<Tab>) {
+    init(_ reports: [Report], selectedTab: Binding<Tab>, showSheet: Binding<Bool>) {
         self.reports = reports
         _selectedTab = selectedTab
+        _showSheet = showSheet
     }
     
     var body: some View {
@@ -27,7 +29,7 @@ struct ReportList: View {
             .padding()
         Divider()
         List(reports) {
-            ReportItem($0, selectedTab: $selectedTab)
+            ReportItem($0, selectedTab: $selectedTab, showSheet: $showSheet)
         }
         .listStyle(.inset)
     }
@@ -36,12 +38,14 @@ struct ReportList: View {
 struct ReportItem: View {
     @EnvironmentObject var mapViewModel: MapViewModel
     @Binding var selectedTab: Tab
+    @Binding var showSheet: Bool
     
     let report: Report
     
-    init(_ report: Report, selectedTab: Binding<Tab>) {
+    init(_ report: Report, selectedTab: Binding<Tab>, showSheet: Binding<Bool>) {
         self.report = report
         _selectedTab = selectedTab
+        _showSheet = showSheet
     }
     
     var body: some View {
@@ -56,6 +60,7 @@ struct ReportItem: View {
             Spacer()
             Button {
                 selectedTab = .map
+                showSheet = false
             } label: {
                 Image(systemName: "map.fill")
                     .foregroundStyle(Color.green)
