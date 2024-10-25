@@ -18,6 +18,8 @@ enum ClientError: Error, LocalizedError {
             return "Your search did not yield any results. Try shortening the restuarant name or searching with fewer words"
         case .networkError:
             return "A network error occurred. Please check your connection and try again."
+        case .invalidLocation:
+            return "Something went wrong with getting the location."
         default:
             return "Unknown Error"
         }

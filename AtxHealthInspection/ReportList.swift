@@ -39,6 +39,7 @@ struct ReportItem: View {
     @EnvironmentObject var mapViewModel: MapViewModel
     @Binding var selectedTab: Tab
     @Binding var showSheet: Bool
+    @State private var showError = false
     
     let report: Report
     
@@ -59,13 +60,23 @@ struct ReportItem: View {
             .padding(.leading, 20)
             Spacer()
             Button {
-                selectedTab = .map
-                showSheet = false
+                if let location = report.coordinate {
+                    selectedTab = .map
+                    showSheet = false
+                    mapViewModel.displayLocation(PointOfInterest(name: report.restaurantName, address: report.address, coordinate: location))
+                } else {
+                    showError = true
+                }
             } label: {
                 Image(systemName: "map.fill")
                     .foregroundStyle(Color.green)
             }
             .padding(.trailing, 15)
+        }
+        .alert(isPresented: $showError, error: ClientError.invalidLocation) {
+            Button("OK") {
+                showError = false
+            }
         }
     }
     

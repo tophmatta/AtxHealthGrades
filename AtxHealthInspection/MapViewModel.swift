@@ -12,6 +12,12 @@ import Foundation
 import MapKit
 
 
+struct PointOfInterest {
+    let name: String
+    let address: String
+    let coordinate: CLLocationCoordinate2D
+}
+
 @MainActor
 class MapViewModel: ObservableObject {
     let client: ISocrataClient
@@ -24,6 +30,7 @@ class MapViewModel: ObservableObject {
         }
     }
     
+    @Published var currentPOI: PointOfInterest? = nil
     @Published var cameraPosition: MapCameraPosition = .automatic
     
     private var locationSubscriber: Set<AnyCancellable> = []
@@ -32,6 +39,10 @@ class MapViewModel: ObservableObject {
         self.client = client
         self.locationModel = locationModel
         setupLocationObserver()
+    }
+    
+    func displayLocation(_ poi: PointOfInterest) {
+        currentPOI = poi
     }
     
     func checkLocationStatus() {
