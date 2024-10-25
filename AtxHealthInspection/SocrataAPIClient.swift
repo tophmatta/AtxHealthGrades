@@ -21,22 +21,17 @@ struct SocrataAPIClient: ISocrataClient {
     }
     
     func searchByName(_ value: String) async throws -> [Report] {
-        try await Task(priority: .background) {
-            let str = value.trimForQuery()
-            
-            guard str.isNotEmpty else { throw ClientError.emptyValue }
-            
-            let query = "lower(restaurant_name) like '%\(str)%'"
-            let result: [Report]
-            
-            do {
-                result = try await get(query)
-            } catch {
-                throw error
-            }
-            
-            return result
-        }.value
+        let str = value.trimForQuery()
+        
+        guard str.isNotEmpty else { throw ClientError.emptyValue }
+        
+        let query = "lower(restaurant_name) like '%\(str)%'"
+        
+        do {
+            return try await get(query)
+        } catch {
+            throw error
+        }
     }
     
     private func get(_ rawQuery: String) async throws -> [Report] {
@@ -46,20 +41,21 @@ struct SocrataAPIClient: ISocrataClient {
                 .create()
                 .addQuery(rawQuery)
                 .build()
-        else { throw ClientError.invalidUrl }
-        
-        let result: [Report]
-        
+        else {
+            throw ClientError.invalidUrl
+        }
+                
         do {
-            result = try await client.get(url, forType: [Report].self)
+            let result = try await client.get(url, forType: [Report].self)
             
             guard !result.isEmpty else {
                 throw ClientError.emptyResponse
             }
+            
+            return result
         } catch {
             throw error
         }
-        return result
     }
     
     func searchByLocation(_ location: CLLocationCoordinate2D) async throws -> Report? {
