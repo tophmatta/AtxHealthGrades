@@ -91,19 +91,6 @@ extension Report {
         self.coordinate = coordinate
         self.date = date
     }
-    
-    static var empty: Report {
-        Report()
-    }
-    
-    static var sample: Report {
-        Report(
-            restaurantName: "Toph's Delight",
-            score: 99,
-            address: "123 Cucumber Lane",
-            coordinate: CLLocationCoordinate2D(latitude: 30.194818005, longitude: -97.843463001)
-        )
-    }
 }
 
 extension Report: Hashable {
@@ -117,6 +104,7 @@ extension Report: Hashable {
     }
 }
 
+#if DEBUG
 extension Report: CustomStringConvertible {
     var description: String {
         var desc = "Restaurant Name: \(restaurantName)\n"
@@ -132,4 +120,9 @@ extension Report: CustomStringConvertible {
         
         return desc
     }
+    
+    static let empty = Report()
+    
+    static let sample = Report(restaurantName: "Toph's Delight", score: 99, address: "123 Cucumber Lane", coordinate: CLLocationCoordinate2D(latitude: 30.194818005,longitude: -97.843463001))
 }
+#endif
