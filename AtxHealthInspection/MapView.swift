@@ -37,7 +37,7 @@ struct MapView: View {
                                             .foregroundColor(.green)
                                     }
                                     Button {
-                                        // TODO show directions in external app
+                                        viewModel.openInMaps(coordinate: poi.coordinate, placeName: poi.name)
                                     } label: {
                                         Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
                                             .resizable()

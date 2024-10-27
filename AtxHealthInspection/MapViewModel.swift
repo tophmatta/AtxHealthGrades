@@ -59,7 +59,16 @@ class MapViewModel: ObservableObject {
     
     func checkLocationStatus() {
         locationModel.checkStatus()
-    }    
+    }
+    
+    func openInMaps(coordinate: CLLocationCoordinate2D, placeName: String? = nil) {
+        let destination = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+        destination.name = placeName
+        
+        destination.openInMaps(launchOptions: [
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+        ])
+    }
 }
 
 struct PointOfInterest: Identifiable {
