@@ -12,6 +12,10 @@ import Foundation
 import MapKit
 
 
+/*
+ - search radius of 1 mile and display tappable POIs to review health grade and get directions
+ */
+
 @MainActor
 class MapViewModel: ObservableObject {
     let client: ISocrataClient
@@ -24,15 +28,17 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    @Published var currentPOI: PointOfInterest?
+    @Published var currentPOIs: [PointOfInterest] = []
     @Published var cameraPosition: MapCameraPosition = .automatic
     
     private var locationSubscriber: Set<AnyCancellable> = []
     
-    init(_ client: ISocrataClient, locationModel: LocationModel = LocationModel(), currentPoi: PointOfInterest? = nil) {
+    init(_ client: ISocrataClient, locationModel: LocationModel = LocationModel(), poi: PointOfInterest? = nil) {
         self.client = client
         self.locationModel = locationModel
-        self.currentPOI = currentPoi
+        if let poi {
+            self.currentPOIs.append(poi)
+        }
         
         locationModel.$lastLocation
             .throttle(for: .seconds(3), scheduler: DispatchQueue.main, latest: true)
@@ -44,17 +50,22 @@ class MapViewModel: ObservableObject {
     }
     
     func clear() {
-        currentPOI = nil
+        currentPOIs.removeAll()
     }
     
     func displayLocation(_ poi: PointOfInterest) {
-        currentPOI = poi
+        clear()
+        currentPOIs = [poi]
         goToPoiLocation()
     }
     
+    func triggerProximitySearch() {
+        //TODO implement api call
+    }
+    
     func goToPoiLocation() {
-        guard let loc = currentPOI?.coordinate else { return }
-        cameraPosition = .camera(.init(centerCoordinate: loc, distance: 1000))
+        guard let first = currentPOIs.first else { return }
+        cameraPosition = .camera(.init(centerCoordinate: first.coordinate, distance: 1000))
     }
     
     func goToUserLocation() {

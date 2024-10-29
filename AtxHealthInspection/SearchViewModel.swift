@@ -7,16 +7,6 @@
 
 import Foundation
 
-
-/*
- TODO:
- - show list of results
- - Show look around view when tap on result on map
- - show look around view if user taps specific result from list
- - map search feature - search within a X mile radius
- */
-
-
 @MainActor
 class SearchViewModel: ObservableObject {
     let client: ISocrataClient
