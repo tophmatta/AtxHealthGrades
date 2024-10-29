@@ -10,8 +10,7 @@ import MapKit
 
 struct MapView: View {
     @EnvironmentObject var viewModel: MapViewModel
-    @State private var selectedPOI: PointOfInterest.ID?
-    @FocusState private var focusedPOI: PointOfInterest.ID?
+    @State private var selectedPoi: PointOfInterest.ID?
     
     var body: some View {
         ZStack {
@@ -19,13 +18,13 @@ struct MapView: View {
                 UserAnnotation()
                 ForEach(viewModel.currentPOIs) { poi in
                     Annotation("", coordinate: poi.coordinate) {
-                        PoiMarker(poi: poi, isFocused: focusedPOI == poi.id || viewModel.currentPOIs.count == 1)
-                            .focused($focusedPOI, equals: poi.id)
+                        PoiMarker(poi: poi, isFocused: selectedPoi == poi.id || viewModel.currentPOIs.count == 1)
                             .onTapGesture {
-                                focusedPOI = (focusedPOI == poi.id) ? nil : poi.id
+                                //FIXME: why tap no work
+                                selectedPoi = selectedPoi == poi.id ? nil : poi.id
                             }
                     }
-                }	
+                }
             }
             .overlay(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
@@ -56,26 +55,25 @@ struct PoiMarker: View {
     
     var body: some View {
         VStack {
-            if isFocused {
-                VStack(spacing: 10) {
-                    Text(poi.name)
-                        .font(.callout)
-                        .foregroundStyle(Color("searchTextColor"))
-                    Divider()
-                    Button {
-                        viewModel.openInMaps(coordinate: poi.coordinate, placeName: poi.name)
-                    } label: {
-                        Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
-                            .resizable()
-                            .buttonSize()
-                            .foregroundColor(.green)
-                    }
+            VStack(spacing: 10) {
+                Text(poi.name)
+                    .font(.callout)
+                    .foregroundStyle(Color("searchTextColor"))
+                Divider()
+                Button {
+                    viewModel.openInMaps(coordinate: poi.coordinate, placeName: poi.name)
+                } label: {
+                    Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
+                        .resizable()
+                        .buttonSize()
+                        .foregroundColor(.green)
                 }
-                .padding()
-                .background(Color("tabBarBackground"))
-                .cornerRadius(8)
-                .shadow(radius: 4)
             }
+            .padding()
+            .background(Color("tabBarBackground"))
+            .cornerRadius(8)
+            .shadow(radius: 4)
+            .opacity(isFocused ? 1 : 0)
 
             Circle()
                 .annotationSize()
@@ -87,7 +85,6 @@ struct PoiMarker: View {
                         .foregroundColor(.yellow)
                 }
         }
-
     }
 }
 

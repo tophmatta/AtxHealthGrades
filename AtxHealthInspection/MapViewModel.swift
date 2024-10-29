@@ -60,7 +60,15 @@ class MapViewModel: ObservableObject {
     }
     
     func triggerProximitySearch() {
-        //TODO implement api call
+        Task {
+            guard let lastLocation else { return }
+            let results = try await client.searchByLocation(lastLocation)
+            results.forEach { report in
+                if let loc = report.coordinate {
+                    currentPOIs.append(PointOfInterest(name: report.restaurantName, address: report.address, coordinate: loc))
+                }
+            }
+        }
     }
     
     func goToPoiLocation() {

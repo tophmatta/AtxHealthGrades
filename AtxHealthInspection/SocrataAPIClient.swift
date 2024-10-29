@@ -10,6 +10,7 @@ import CoreLocation
 
 protocol ISocrataClient: Sendable {
     func searchByName(_ value: String) async throws -> [Report]
+    func searchByLocation(_ location: CLLocationCoordinate2D) async throws -> [Report]
 }
 
 struct SocrataAPIClient: ISocrataClient {
@@ -58,12 +59,18 @@ struct SocrataAPIClient: ISocrataClient {
         }
     }
     
-    func searchByLocation(_ location: CLLocationCoordinate2D) async throws -> Report? {
+    func searchByLocation(_ location: CLLocationCoordinate2D) async throws -> [Report] {
         guard location.isValid() else { throw ClientError.invalidLocation }
         
-        let query = "within_circle(null, \(location.latitude), \(location.longitude), 1000)"
-        return try! await get(query).first
+        let query = "within_circle(address, \(location.latitude), \(location.longitude), \(oneMileInMeters))"
+        do {
+            return try await get(query)
+        } catch {
+            throw error
+        }
     }
+    
+    private let oneMileInMeters = 1609
 }
 
 extension String {
