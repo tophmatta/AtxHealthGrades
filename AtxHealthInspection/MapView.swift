@@ -12,7 +12,7 @@ struct MapView: View {
     @EnvironmentObject var viewModel: MapViewModel
     
     private let ButtonSize: CGFloat = 30.0
-    private let AnnotationSize: CGFloat = 30
+    private let AnnotationSize: CGFloat = 30.0
 
     var body: some View {
         ZStack {
@@ -26,24 +26,13 @@ struct MapView: View {
                                     .font(.callout)
                                     .foregroundStyle(Color("searchTextColor"))
                                 Divider()
-                                HStack(spacing: 20) {
-                                    Button {
-                                        // TODO show street view
-                                    } label: {
-                                        Image(systemName: "eye.fill")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: ButtonSize, height: ButtonSize)
-                                            .foregroundColor(.green)
-                                    }
-                                    Button {
-                                        viewModel.openInMaps(coordinate: poi.coordinate, placeName: poi.name)
-                                    } label: {
-                                        Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
-                                            .resizable()
-                                            .frame(width: ButtonSize, height: ButtonSize)
-                                            .foregroundColor(.green)
-                                    }
+                                Button {
+                                    viewModel.openInMaps(coordinate: poi.coordinate, placeName: poi.name)
+                                } label: {
+                                    Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
+                                        .resizable()
+                                        .frame(width: ButtonSize, height: ButtonSize)
+                                        .foregroundColor(.green)
                                 }
                             }
                             .padding()
@@ -55,7 +44,7 @@ struct MapView: View {
                                 .frame(width: AnnotationSize, height: AnnotationSize)
                                 .foregroundStyle(.white)
                                 .overlay {
-                                    Image(systemName: "star.circle.fill")
+                                    Image(systemName: "mappin.square.fill")
                                         .resizable()
                                         .frame(width: AnnotationSize, height: AnnotationSize)
                                         .foregroundColor(.yellow)
@@ -67,11 +56,38 @@ struct MapView: View {
             .overlay(alignment: .bottomTrailing) {
                 LocationButton()
             }
+            .overlay(alignment: .topTrailing) {
+                if viewModel.currentPOI != nil {
+                    ClearButton()
+                }
+            }
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .onAppear {
             viewModel.checkLocationStatus()
         }
+    }
+}
+
+private struct ClearButton: View {
+    @EnvironmentObject var viewModel: MapViewModel
+    
+    var body: some View {
+        Button {
+            viewModel.clear()
+        } label: {
+            Text("Clear")
+                .foregroundStyle(.green)
+                .padding(.horizontal, 15)
+                .padding(.vertical, 7)
+        }
+        .background(
+            Capsule()
+                .fill(Color("tabBarBackground"))
+                .shadow(radius: 5)
+        )
+        .padding(.trailing)
+
     }
 }
 
@@ -87,7 +103,7 @@ private struct LocationButton: View {
             Image(systemName: "location.fill")
                 .frame(width: 10, height: 10)
                 .padding()
-                .background(Rectangle().fill(Color("tabBarBackground").opacity(0.8)))
+                .background(Rectangle().fill(Color("tabBarBackground")))
                 .clipShape(
                     RoundedRectangle(cornerSize: CGSize(width: 10, height: 10), style: .continuous)
                 )

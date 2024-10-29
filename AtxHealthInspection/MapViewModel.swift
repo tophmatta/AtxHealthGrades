@@ -42,7 +42,11 @@ class MapViewModel: ObservableObject {
                 lastLocation = location.coordinate
             }.store(in: &locationSubscriber)
     }
-        
+    
+    func clear() {
+        currentPOI = nil
+    }
+    
     func displayLocation(_ poi: PointOfInterest) {
         currentPOI = poi
         goToPoiLocation()
