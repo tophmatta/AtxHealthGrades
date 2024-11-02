@@ -60,6 +60,7 @@ class MapViewModel: ObservableObject {
     }
     
     func triggerProximitySearch() {
+        clear()
         Task {
             guard let lastLocation else { return }
             let results = try await client.searchByLocation(lastLocation)
