@@ -10,7 +10,7 @@ import MapKit
 
 struct MapView: View {
     @EnvironmentObject var viewModel: MapViewModel
-    @State private var selectedPoi: PointOfInterest.ID?
+    @State private var selectedPoi: PointOfInterest?
     
     var body: some View {
         Map(position: $viewModel.cameraPosition) {
@@ -35,14 +35,14 @@ struct MapView: View {
                         .padding()
                         .background(Color("tabBarBackground"))
                         .clipShape(RoundedRectangle(cornerSize: CGSize(width: 5, height: 5)))
-                        .opacity(selectedPoi == poi.id ? 1 : 0)
+                        .opacity(selectedPoi == poi ? 1 : 0)
                         
                         Image(systemName: "mappin.square.fill")
                             .resizable()
                             .annotationSize()
                             .foregroundStyle(.white, .yellow)
                             .onTapGesture {
-                                selectedPoi = selectedPoi == poi.id ? nil : poi.id
+                                selectedPoi = selectedPoi == poi ? nil : poi
                             }
                     }
                 }
