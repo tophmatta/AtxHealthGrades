@@ -63,12 +63,13 @@ class MapViewModel: ObservableObject {
         clear()
         Task {
             guard let lastLocation else { return }
-            let results = try await client.searchByLocation(lastLocation)
-            results.forEach { report in
-                if let loc = report.coordinate {
-                    currentPOIs.append(PointOfInterest(name: report.restaurantName, address: report.address, coordinate: loc))
-                }
-            }
+            
+            currentPOIs = try await client.searchByLocation(lastLocation)
+                                            .filterOldDuplicates()
+                                            .compactMap { result in
+                                                guard let loc = result.coordinate else { return nil }
+                                                return PointOfInterest(name: result.restaurantName, address: result.address, coordinate: loc)
+                                            }
         }
     }
     
@@ -102,9 +103,23 @@ struct PointOfInterest: Identifiable {
     let coordinate: CLLocationCoordinate2D
 }
 
-extension PointOfInterest: Equatable {
+//extension PointOfInterest: Equatable {
+//    static func == (lhs: PointOfInterest, rhs: PointOfInterest) -> Bool {
+//        lhs.id == rhs.id && lhs.coordinate.latitude == rhs.coordinate.latitude && rhs.coordinate.longitude == lhs.coordinate.longitude
+//    }
+//}
+
+extension PointOfInterest: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(coordinate.latitude)
+        hasher.combine(coordinate.longitude)
+    }
+
     static func == (lhs: PointOfInterest, rhs: PointOfInterest) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.coordinate.latitude == rhs.coordinate.latitude &&
+        lhs.coordinate.longitude == rhs.coordinate.longitude
     }
 }
 

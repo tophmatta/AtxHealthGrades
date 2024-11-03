@@ -17,10 +17,34 @@ struct MapView: View {
             UserAnnotation()
             ForEach(viewModel.currentPOIs) { poi in
                 Annotation("", coordinate: poi.coordinate) {
-                    PoiMarker(result: poi, isFocused: selectedPoi == poi.id || viewModel.currentPOIs.count == 1) {
-                        selectedPoi = selectedPoi == poi.id ? nil : poi.id
+                    VStack {
+                        VStack(spacing: 10) {
+                            Text(poi.name)
+                                .font(.callout)
+                                .foregroundStyle(Color("searchTextColor"))
+                            Divider()
+                            Button {
+                                viewModel.openInMaps(coordinate: poi.coordinate, placeName: poi.name)
+                            } label: {
+                                Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
+                                    .resizable()
+                                    .buttonSize()
+                                    .foregroundColor(.green)
+                            }
+                        }
+                        .padding()
+                        .background(Color("tabBarBackground"))
+                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 5, height: 5)))
+                        .opacity(selectedPoi == poi.id ? 1 : 0)
+                        
+                        Image(systemName: "mappin.square.fill")
+                            .resizable()
+                            .annotationSize()
+                            .foregroundStyle(.white, .yellow)
+                            .onTapGesture {
+                                selectedPoi = selectedPoi == poi.id ? nil : poi.id
+                            }
                     }
-                    .tag(poi.id)
                 }
             }
         }
@@ -43,55 +67,6 @@ struct MapView: View {
         }
         .onAppear {
             viewModel.checkLocationStatus()
-        }
-    }
-}
-
-struct PoiMarker: View {
-    @EnvironmentObject var viewModel: MapViewModel
-    
-    let result: PointOfInterest
-    var isFocused: Bool
-    let onTap: () -> ()
-    
-    var body: some View {
-        VStack {
-            VStack(spacing: 10) {
-                Text(result.name)
-                    .font(.callout)
-                    .foregroundStyle(Color("searchTextColor"))
-                Divider()
-                Button {
-                    viewModel.openInMaps(coordinate: result.coordinate, placeName: result.name)
-                } label: {
-                    Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
-                        .resizable()
-                        .buttonSize()
-                        .foregroundColor(.green)
-                }
-            }
-            .padding()
-            .background(Color("tabBarBackground"))
-            .cornerRadius(8)
-            .shadow(radius: 4)
-            .opacity(isFocused ? 1 : 0)
-            
-            ZStack {
-                Circle()
-                    .frame(width: 20, height: 20)
-                    .foregroundStyle(.white)
-                Image(systemName: "mappin.square.fill")
-                    .resizable()
-                    .annotationSize()
-                    .foregroundColor(.yellow)
-            }
-            .contentShape(Rectangle())
-            .padding()
-            .border(.blue)
-            .onTapGesture {
-                onTap()
-                print("tap: \(result.name)")
-            }
         }
     }
 }
