@@ -28,7 +28,7 @@ private struct ButtonSize: ViewModifier {
 }
 
 private struct AnnoationSize: ViewModifier {
-    private let constant: CGFloat = 30.0
+    private let constant: CGFloat = 35.0
     
     func body(content: Content) -> some View {
         content
