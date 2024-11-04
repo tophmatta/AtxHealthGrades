@@ -62,11 +62,15 @@ struct MapView: View {
             ClearButton()
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .onChange(of: viewModel.currentPOIs) {
-            viewModel.cameraPosition = .automatic
+        .onChange(of: viewModel.currentPOIs) { _, new in
+            if new.count == 1 {
+                viewModel.cameraPosition = .camera(.init(centerCoordinate: new.first!.coordinate, distance: 1000))
+            } else {
+                viewModel.cameraPosition = .automatic
+            }
         }
         .onAppear {
-            viewModel.checkLocationStatus()
+            viewModel.checkLocationAuthorization()
         }
     }
 }

@@ -12,9 +12,6 @@ import Foundation
 import MapKit
 
 
-/*
- - search radius of 1 mile and display tappable POIs to review health grade and get directions
- */
 
 @MainActor
 class MapViewModel: ObservableObject {
@@ -31,7 +28,7 @@ class MapViewModel: ObservableObject {
     @Published var currentPOIs: [PointOfInterest] = []
     @Published var cameraPosition: MapCameraPosition = .automatic
     
-    private var locationSubscriber: Set<AnyCancellable> = []
+    private var subs: Set<AnyCancellable> = []
     
     init(_ client: ISocrataClient, locationModel: LocationModel = LocationModel(), poi: PointOfInterest? = nil) {
         self.client = client
@@ -46,30 +43,30 @@ class MapViewModel: ObservableObject {
             .sink { [weak self] location in
                 guard let self else { return }
                 lastLocation = location.coordinate
-            }.store(in: &locationSubscriber)
+            }.store(in: &subs)
     }
     
     func clear() {
         currentPOIs.removeAll()
     }
     
-    func displayLocation(_ poi: PointOfInterest) {
+    func updatePOIs(_ pois: [PointOfInterest]) {
         clear()
-        currentPOIs = [poi]
-        goToPoiLocation()
+        currentPOIs = pois
     }
     
     func triggerProximitySearch() {
-        clear()
         Task {
             guard let lastLocation else { return }
             
-            currentPOIs = try await client.searchByLocation(lastLocation)
+            let result: [PointOfInterest] = try await client.searchByLocation(lastLocation)
                                             .filterOldDuplicates()
                                             .compactMap { result in
                                                 guard let loc = result.coordinate else { return nil }
                                                 return PointOfInterest(name: result.restaurantName, address: result.address, coordinate: loc)
                                             }
+            
+            updatePOIs(result)
         }
     }
     
@@ -82,8 +79,8 @@ class MapViewModel: ObservableObject {
         cameraPosition = .userLocation(fallback: .automatic)
     }
     
-    func checkLocationStatus() {
-        locationModel.checkStatus()
+    func checkLocationAuthorization() {
+        locationModel.checkAuthorization()
     }
     
     func openInMaps(coordinate: CLLocationCoordinate2D, placeName: String? = nil) {
@@ -102,12 +99,6 @@ struct PointOfInterest: Identifiable {
     let address: String
     let coordinate: CLLocationCoordinate2D
 }
-
-//extension PointOfInterest: Equatable {
-//    static func == (lhs: PointOfInterest, rhs: PointOfInterest) -> Bool {
-//        lhs.id == rhs.id && lhs.coordinate.latitude == rhs.coordinate.latitude && rhs.coordinate.longitude == lhs.coordinate.longitude
-//    }
-//}
 
 extension PointOfInterest: Hashable {
     func hash(into hasher: inout Hasher) {

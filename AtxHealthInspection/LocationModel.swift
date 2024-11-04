@@ -25,7 +25,7 @@ class LocationModel: NSObject, ObservableObject {
         observerAuthorizationStatus()
     }
     
-    func checkStatus() {
+    func checkAuthorization() {
         if authorizationStatus.isNotAuthorized {
             requestAuthorization()
         } else if lastLocation == nil && authorizationStatus.isAuthorized {

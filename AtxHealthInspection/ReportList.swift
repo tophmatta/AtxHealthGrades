@@ -63,7 +63,8 @@ struct ReportItem: View {
                 if let location = report.coordinate {
                     selectedTab = .map
                     showSheet = false
-                    mapViewModel.displayLocation(PointOfInterest(name: report.restaurantName, address: report.address, coordinate: location))
+                    let result = [PointOfInterest(name: report.restaurantName, address: report.address, coordinate: location)]
+                    mapViewModel.updatePOIs(result)
                 } else {
                     showError = true
                 }
