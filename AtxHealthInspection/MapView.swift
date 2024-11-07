@@ -71,7 +71,7 @@ private struct MapSheet: View {
             }
             Divider()
             Button {
-                viewModel.openInMaps(coordinate: group.coordinate)
+                viewModel.openInMaps(coordinate: group.coordinate, placeName: group.address)
             } label: {
                 Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
                     .resizable()
