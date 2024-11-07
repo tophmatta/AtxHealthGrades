@@ -10,11 +10,13 @@ import Combine
 import CoreLocation
 import Foundation
 import MapKit
-
+import OrderedCollections
 
 
 @MainActor
 class MapViewModel: ObservableObject {
+    typealias AddressKey = String
+    
     let client: ISocrataClient
     let locationModel: LocationModel
     var lastLocation: CLLocationCoordinate2D? {
@@ -25,16 +27,17 @@ class MapViewModel: ObservableObject {
         }
     }
     
-    @Published var currentPOIs: [PointOfInterest] = []
+    // Use ordered dictionary for displaying annotations
+    @Published var currentPOIs: OrderedDictionary<AddressKey, LocationReportGroup> = [:]
     @Published var cameraPosition: MapCameraPosition = .automatic
     
     private var subs: Set<AnyCancellable> = []
     
-    init(_ client: ISocrataClient, locationModel: LocationModel = LocationModel(), poi: PointOfInterest? = nil) {
+    init(_ client: ISocrataClient, locationModel: LocationModel = LocationModel(), poiGroup: LocationReportGroup? = nil) {
         self.client = client
         self.locationModel = locationModel
-        if let poi {
-            self.currentPOIs.append(poi)
+        if let poiGroup {
+            self.currentPOIs[poiGroup.id] = poiGroup
         }
         
         locationModel.$lastLocation
@@ -50,31 +53,29 @@ class MapViewModel: ObservableObject {
         currentPOIs.removeAll()
     }
     
-    func updatePOIs(_ pois: [PointOfInterest]) {
+    func updatePOIs(_ pois: [String : LocationReportGroup]) {
         clear()
-        currentPOIs = pois
+        currentPOIs = pois.toOrderedDictionary()
     }
     
     func triggerProximitySearch() {
         Task {
             guard let lastLocation else { return }
             
-            let result: [PointOfInterest] = try await client.searchByLocation(lastLocation)
+            let results: [Report] = try await client.searchByLocation(lastLocation)
                                             .filterOldDuplicates()
-                                            .compactMap { result in
-                                                guard let loc = result.coordinate else { return nil }
-                                                return PointOfInterest(name: result.restaurantName, address: result.address, coordinate: loc)
-                                            }
             
-            updatePOIs(result)
+            let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
+                guard let coordinate = result.coordinate else { return }
+                
+                let data = ReportData(name: result.restaurantName, score: result.score, date: result.date)
+                dict[result.address, default: LocationReportGroup(data: [], address: result.address, coordinate: coordinate)].data.append(data)
+            }
+            
+            updatePOIs(poiGroup)
         }
     }
-    
-    func goToPoiLocation() {
-        guard let first = currentPOIs.first else { return }
-        cameraPosition = .camera(.init(centerCoordinate: first.coordinate, distance: 1000))
-    }
-    
+        
     func goToUserLocation() {
         cameraPosition = .userLocation(fallback: .automatic)
     }
@@ -93,34 +94,54 @@ class MapViewModel: ObservableObject {
     }
 }
 
-struct PointOfInterest: Identifiable {
-    let id = UUID()
-    let name: String
+// Multiple restaurants can have same address/coordinate
+struct LocationReportGroup: Identifiable {
+    var data: [ReportData]
     let address: String
     let coordinate: CLLocationCoordinate2D
+    var id: String { "\(address)-\(coordinate.latitude)-\(coordinate.longitude)" }
 }
 
-extension PointOfInterest: Hashable {
+extension LocationReportGroup: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-        hasher.combine(coordinate.latitude)
-        hasher.combine(coordinate.longitude)
     }
 
-    static func == (lhs: PointOfInterest, rhs: PointOfInterest) -> Bool {
-        lhs.id == rhs.id &&
-        lhs.coordinate.latitude == rhs.coordinate.latitude &&
-        lhs.coordinate.longitude == rhs.coordinate.longitude
+    static func == (lhs: LocationReportGroup, rhs: LocationReportGroup) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+struct ReportData: Identifiable {
+    let id = UUID()
+    let name: String
+    let score: Int
+    let date: Date
+}
+
+extension ReportData: Hashable {
+    static func == (lhs: ReportData, rhs: ReportData) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+private extension Dictionary {
+    func toOrderedDictionary() -> OrderedDictionary<Key, Value> {
+        OrderedDictionary(uniqueKeysWithValues: self)
     }
 }
 
 #if DEBUG
-extension PointOfInterest {
+extension LocationReportGroup {
     static let test =
-    PointOfInterest(
-        name: "Apple Park",
+    LocationReportGroup(
+        data: [ReportData.test],
         address: "One Apple Park Way, Cupertino, CA 95014",
         coordinate: CLLocationCoordinate2D(latitude: 37.334643800000016, longitude: -122.00912193752882)
     )
+}
+
+extension ReportData {
+    static let test = ReportData(name: "Apple Park", score: 0, date: Date.now)
 }
 #endif

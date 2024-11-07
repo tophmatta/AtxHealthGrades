@@ -54,13 +54,13 @@ struct SearchView: View {
     func SearchBar() -> some View {
         TextField("Enter a Restaurant Name", text: $searchText)
             .padding()
-            .background(Color("tabBarBackground"))
+            .background(.surface)
             .clipShape(
                 RoundedRectangle(cornerSize: CGSize(width: 20, height: 20), style: .continuous)
             )
             .padding([.leading, .trailing], 10.0)
-            .shadow(color: Color.gray, radius: 5.0)
-            .foregroundStyle(Color("searchTextColor"))
+            .shadow(color: .gray, radius: 5.0)
+            .foregroundStyle(.onSurface)
             .focused($isFocused)
     }
     
@@ -78,10 +78,10 @@ struct SearchView: View {
         }
         .frame(width: 80.0)
         .padding()
-        .background(Color.green)
-        .tint(Color.white)
+        .background(.green)
+        .tint(.white)
         .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
-        .shadow(color: Color.gray, radius: 5.0)
+        .shadow(color: .gray, radius: 5.0)
         .padding(.top, 20.0)
     }
 
@@ -96,7 +96,7 @@ struct SearchView: View {
                     .clipShape(Circle())
             }
             .padding([.top], 2.0)
-            .shadow(color: Color.gray, radius: 5.0)
+            .shadow(color: .gray, radius: 5.0)
             
             Text("ATX Safe Eats")
                 .font(.system(.largeTitle, design: .rounded, weight: .semibold))

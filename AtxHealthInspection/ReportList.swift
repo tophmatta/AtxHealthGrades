@@ -51,7 +51,7 @@ struct ReportItem: View {
     
     var body: some View {
         HStack {
-            CircleForScore(report.score)
+            ScoreItem(report.score)
             VStack(alignment: .leading) {
                 Text(report.restaurantName)
                 Text(report.address)
@@ -63,7 +63,8 @@ struct ReportItem: View {
                 if let location = report.coordinate {
                     selectedTab = .map
                     showSheet = false
-                    let result = [PointOfInterest(name: report.restaurantName, address: report.address, coordinate: location)]
+                    let data = ReportData(name: report.restaurantName, score: report.score, date: report.date)
+                    let result = [report.address : LocationReportGroup(data: [data], address: report.address, coordinate: location)]
                     mapViewModel.updatePOIs(result)
                 } else {
                     showError = true
@@ -80,38 +81,4 @@ struct ReportItem: View {
             }
         }
     }
-    
-    func CircleForScore(_ score: Int) -> some View {
-        let values: (letter: String, color: Color) = {
-            switch score {
-            case 90...100:
-                return ("A", Color.green)
-            case 80...89:
-                return ("B", Color.blue)
-            case 70...79:
-                return ("C", Color.orange)
-            case 60...69:
-                return ("D", Color.indigo)
-            case 0...59:
-                return ("F", Color.red)
-            default:
-                return ("?", Color.gray)
-            }
-        }()
-        
-        return ZStack {
-            Circle()
-                .frame(width: 50, height: 50)
-                .foregroundStyle(values.color)
-            Text(values.letter)
-                .foregroundStyle(Color.white)
-                .fontWeight(.bold)
-                .fontDesign(.rounded)
-                .font(.title)
-        }
-    }
 }
-
-//#Preview {
-//    ReportList()
-//}

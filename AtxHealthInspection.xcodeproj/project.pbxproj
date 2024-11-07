@@ -13,6 +13,7 @@
 		F11C8CB82CD072A700409F83 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11C8CB72CD072A300409F83 /* Modifiers.swift */; };
 		F13860582C3CBCEC0052EBC8 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860572C3CBCEC0052EBC8 /* LocationModel.swift */; };
 		F138605A2C3CBDF70052EBC8 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860592C3CBDF70052EBC8 /* MapViewModel.swift */; };
+		F14FA4232CDC52940011B10A /* ScoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14FA4222CDC52940011B10A /* ScoreItem.swift */; };
 		F152C1322C3B3C120064F570 /* SocrataAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */; };
 		F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1402C3B48590064F570 /* SocrataClientTests.swift */; };
 		F152C1432C3CAF990064F570 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1422C3CAF990064F570 /* MapView.swift */; };
@@ -20,6 +21,7 @@
 		F164205D2CC0A29D00E87F66 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F164205C2CC0A29D00E87F66 /* APIClient.swift */; };
 		F16420642CC342C300E87F66 /* test04loungedata.json in Resources */ = {isa = PBXBuildFile; fileRef = F16420632CC342B200E87F66 /* test04loungedata.json */; };
 		F16420682CC344AD00E87F66 /* InputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16420672CC344AA00E87F66 /* InputTests.swift */; };
+		F17D9F042CD91B0B0014851D /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = F17D9F032CD91B0B0014851D /* Collections */; };
 		F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */; };
 		F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEE12C371C71006BE3F9 /* MainView.swift */; };
 		F1EACEE62C371C73006BE3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1EACEE52C371C73006BE3F9 /* Assets.xcassets */; };
@@ -50,6 +52,7 @@
 		F11C8CB72CD072A300409F83 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		F13860572C3CBCEC0052EBC8 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		F13860592C3CBDF70052EBC8 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		F14FA4222CDC52940011B10A /* ScoreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreItem.swift; sourceTree = "<group>"; };
 		F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataAPIClient.swift; sourceTree = "<group>"; };
 		F152C1372C3B482A0064F570 /* AtxHealthInspectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtxHealthInspectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F152C1402C3B48590064F570 /* SocrataClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClientTests.swift; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F17D9F042CD91B0B0014851D /* Collections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +130,7 @@
 				F1EACEE12C371C71006BE3F9 /* MainView.swift */,
 				F1EACEF12C37368B006BE3F9 /* SearchView.swift */,
 				F10B6A9A2C508FA0001536B4 /* ReportList.swift */,
+				F14FA4222CDC52940011B10A /* ScoreItem.swift */,
 				F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */,
 				F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */,
 				F164205C2CC0A29D00E87F66 /* APIClient.swift */,
@@ -220,6 +225,9 @@
 				Base,
 			);
 			mainGroup = F1EACED32C371C71006BE3F9;
+			packageReferences = (
+				F17D9F022CD91B0B0014851D /* XCRemoteSwiftPackageReference "swift-collections" */,
+			);
 			productRefGroup = F1EACEDD2C371C71006BE3F9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -275,6 +283,7 @@
 				F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */,
 				F152C1322C3B3C120064F570 /* SocrataAPIClient.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */,
+				F14FA4232CDC52940011B10A /* ScoreItem.swift in Sources */,
 				F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */,
 				F13860582C3CBCEC0052EBC8 /* LocationModel.swift in Sources */,
 				F10B6A992C508ABB001536B4 /* ClientError.swift in Sources */,
@@ -555,6 +564,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F17D9F022CD91B0B0014851D /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F17D9F032CD91B0B0014851D /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F17D9F022CD91B0B0014851D /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F1EACED42C371C71006BE3F9 /* Project object */;
 }

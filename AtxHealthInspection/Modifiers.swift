@@ -10,7 +10,7 @@ import SwiftUICore
 
 extension View {
     func annotationSize() -> some View {
-        modifier(AnnoationSize())
+        modifier(AnnotationSize())
     }
     
     func buttonSize() -> some View {
@@ -19,7 +19,7 @@ extension View {
 }
 
 private struct ButtonSize: ViewModifier {
-    private let constant: CGFloat = 30.0
+    private let constant: CGFloat = 50.0
     
     func body(content: Content) -> some View {
         content
@@ -27,7 +27,7 @@ private struct ButtonSize: ViewModifier {
     }
 }
 
-private struct AnnoationSize: ViewModifier {
+private struct AnnotationSize: ViewModifier {
     private let constant: CGFloat = 35.0
     
     func body(content: Content) -> some View {
