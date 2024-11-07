@@ -13,42 +13,63 @@ struct MapView: View {
     @EnvironmentObject var viewModel: MapViewModel
     @State private var selected: LocationReportGroup?
     @State private var showDetail = false
+    @State private var isSearching = false
     
     var body: some View {
-        Map(position: $viewModel.cameraPosition) {
-            UserAnnotation()
-            ForEach(viewModel.currentPOIs.elements, id: \.key) { element in
-                Annotation("", coordinate: element.value.coordinate) {
-                    MapMarker(group: element.value, selected: $selected)
+        ZStack {
+            Map(position: $viewModel.cameraPosition) {
+                UserAnnotation()
+                ForEach(viewModel.currentPOIs.elements, id: \.key) { element in
+                    Annotation("", coordinate: element.value.coordinate) {
+                        MapMarker(group: element.value, selected: $selected)
+                    }
                 }
             }
-        }
-        .sheet(item: $selected) {
-            MapSheet(group: $0)
-        }
-        .overlay(alignment: .bottomTrailing) {
-            VStack(spacing: 0) {
-                MapActionButton(type: .radius) {
-                    viewModel.triggerProximitySearch()
-                }
-                MapActionButton(type: .location) {
-                    viewModel.goToUserLocation()
+            .sheet(item: $selected) {
+                MapSheet(group: $0)
+            }
+            .overlay(alignment: .bottomTrailing) {
+                VStack(spacing: 0) {
+                    MapActionButton(type: .radius) {
+                        launchProximitySearch()
+                    }
+                    MapActionButton(type: .location) {
+                        viewModel.goToUserLocation()
+                    }
                 }
             }
-        }
-        .overlay(alignment: .topTrailing) {
-            ClearButton()
-        }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
-        .onChange(of: viewModel.currentPOIs) { _, new in
-            if new.count == 1 {
-                viewModel.cameraPosition = .camera(.init(centerCoordinate: new.values.first!.coordinate, distance: 1000))
-            } else {
-                viewModel.cameraPosition = .automatic
+            .overlay(alignment: .topTrailing) {
+                ClearButton()
+            }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+            .onChange(of: viewModel.currentPOIs) { _, new in
+                if new.count == 1 {
+                    viewModel.cameraPosition = .camera(.init(centerCoordinate: new.values.first!.coordinate, distance: 1000))
+                } else {
+                    viewModel.cameraPosition = .automatic
+                }
+            }
+            .onAppear {
+                viewModel.checkLocationAuthorization()
+            }
+            
+            if isSearching {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                ProgressView("Searching area...")
+                    .progressViewStyle(CircularProgressViewStyle(tint: .onSurface))
+                    .padding()
+                    .background(.surface.opacity(0.7))
+                    .cornerRadius(8)
             }
         }
-        .onAppear {
-            viewModel.checkLocationAuthorization()
+    }
+    
+    private func launchProximitySearch() {
+        isSearching = true
+        Task {
+            await viewModel.triggerProximitySearch()
+            isSearching = false
         }
     }
 }

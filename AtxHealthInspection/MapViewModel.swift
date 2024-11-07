@@ -13,6 +13,15 @@ import MapKit
 import OrderedCollections
 
 
+
+/*
+ TODO:
+ - explore mklocalsearch to see what other details i can pull up on a place and perhaps use a built in detail accessory view to show
+ - on tap of location row - query restauarnt for all health inspections and show a list from most to lest recent
+ - decouple radius search from user location - show trans circle that can be moved around to perform search and display annotations for that area
+ - proper error handling in proximity search - no internet, no results, etc.
+ */
+
 @MainActor
 class MapViewModel: ObservableObject {
     typealias AddressKey = String
@@ -58,22 +67,20 @@ class MapViewModel: ObservableObject {
         currentPOIs = pois.toOrderedDictionary()
     }
     
-    func triggerProximitySearch() {
-        Task {
-            guard let lastLocation else { return }
+    func triggerProximitySearch() async {
+        guard let lastLocation else { return }
+        
+        let results: [Report] = try! await client.searchByLocation(lastLocation)
+                                                        .filterOldDuplicates()
+        
+        let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
+            guard let coordinate = result.coordinate else { return }
             
-            let results: [Report] = try await client.searchByLocation(lastLocation)
-                                            .filterOldDuplicates()
-            
-            let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
-                guard let coordinate = result.coordinate else { return }
-                
-                let data = ReportData(name: result.restaurantName, score: result.score, date: result.date)
-                dict[result.address, default: LocationReportGroup(data: [], address: result.address, coordinate: coordinate)].data.append(data)
-            }
-            
-            updatePOIs(poiGroup)
+            let data = ReportData(name: result.restaurantName, score: result.score, date: result.date)
+            dict[result.address, default: LocationReportGroup(data: [], address: result.address, coordinate: coordinate)].data.append(data)
         }
+        
+        updatePOIs(poiGroup)
     }
         
     func goToUserLocation() {
