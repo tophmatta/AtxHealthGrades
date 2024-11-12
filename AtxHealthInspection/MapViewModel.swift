@@ -22,6 +22,7 @@ import OrderedCollections
  - proper error handling in proximity search - no internet, no results, etc.
  */
 
+
 @MainActor
 class MapViewModel: ObservableObject {
     typealias AddressKey = String
@@ -30,14 +31,18 @@ class MapViewModel: ObservableObject {
     let locationModel: LocationModel
     var lastLocation: CLLocationCoordinate2D? {
         didSet {
-            if oldValue == nil && lastLocation != nil {
+            if oldValue == nil && lastLocation != nil && currentPOIs.isEmpty {
                 goToUserLocation()
             }
         }
     }
     
     // Use ordered dictionary for displaying annotations
-    @Published var currentPOIs: OrderedDictionary<AddressKey, LocationReportGroup> = [:]
+    @Published var currentPOIs: OrderedDictionary<AddressKey, LocationReportGroup> = [:] {
+        willSet {
+            updateCameraPosition(for: newValue)
+        }
+    }
     @Published var cameraPosition: MapCameraPosition = .automatic
     
     private var subs: Set<AnyCancellable> = []
@@ -67,11 +72,11 @@ class MapViewModel: ObservableObject {
         currentPOIs = pois.toOrderedDictionary()
     }
     
-    func triggerProximitySearch() async {
-        guard let lastLocation else { return }
+    func triggerProximitySearch(at location: CLLocationCoordinate2D?) async {
+        guard let location else { return }
         
-        let results: [Report] = try! await client.searchByLocation(lastLocation)
-                                                        .filterOldDuplicates()
+        let results: [Report] = try! await client.search(inRadiusOf: location)
+            .filterOldDuplicates()
         
         let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
             guard let coordinate = result.coordinate else { return }
@@ -82,7 +87,7 @@ class MapViewModel: ObservableObject {
         
         updatePOIs(poiGroup)
     }
-        
+    
     func goToUserLocation() {
         cameraPosition = .userLocation(fallback: .automatic)
     }
@@ -99,6 +104,14 @@ class MapViewModel: ObservableObject {
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
         ])
     }
+    
+    private func updateCameraPosition(for results: OrderedDictionary<AddressKey, LocationReportGroup>) {
+        if results.elements.count == 1 {
+            cameraPosition = .camera(.init(centerCoordinate: results.values.first!.coordinate, distance: 1000))
+        } else if results.elements.count > 1  {
+            cameraPosition = .automatic
+        }
+    }
 }
 
 // Multiple restaurants can have same address/coordinate
@@ -113,7 +126,7 @@ extension LocationReportGroup: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-
+    
     static func == (lhs: LocationReportGroup, rhs: LocationReportGroup) -> Bool {
         lhs.id == rhs.id
     }

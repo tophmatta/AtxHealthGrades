@@ -9,8 +9,8 @@ import Foundation
 import CoreLocation
 
 protocol ISocrataClient: Sendable {
-    func searchByName(_ value: String) async throws -> [Report]
-    func searchByLocation(_ location: CLLocationCoordinate2D) async throws -> [Report]
+    func search(byName value: String) async throws -> [Report]
+    func search(inRadiusOf location: CLLocationCoordinate2D) async throws -> [Report]
 }
 
 struct SocrataAPIClient: ISocrataClient {
@@ -21,7 +21,7 @@ struct SocrataAPIClient: ISocrataClient {
         self.client = client
     }
     
-    func searchByName(_ value: String) async throws -> [Report] {
+    func search(byName value: String) async throws -> [Report] {
         let str = value.trimForQuery()
         
         guard str.isNotEmpty else { throw ClientError.emptyValue }
@@ -59,18 +59,16 @@ struct SocrataAPIClient: ISocrataClient {
         }
     }
     
-    func searchByLocation(_ location: CLLocationCoordinate2D) async throws -> [Report] {
+    func search(inRadiusOf location: CLLocationCoordinate2D) async throws -> [Report] {
         guard location.isValid() else { throw ClientError.invalidLocation }
         
-        let query = "within_circle(address, \(location.latitude), \(location.longitude), \(oneMileInMeters))"
+        let query = "within_circle(address, \(location.latitude), \(location.longitude), \(Constants.Distance.oneMileInMeters))"
         do {
             return try await get(query)
         } catch {
             throw error
         }
     }
-    
-    private let oneMileInMeters = 1609
 }
 
 extension String {

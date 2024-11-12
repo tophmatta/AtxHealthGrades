@@ -20,7 +20,7 @@ class SearchViewModel: ObservableObject {
 
     func triggerSearch(value: String) async {
         do {
-            currentReports = try await client.searchByName(value).filterOldDuplicates()
+            currentReports = try await client.search(byName: value).filterOldDuplicates()
         } catch let searchError {
             error = searchError
         }

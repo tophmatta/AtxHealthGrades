@@ -12,8 +12,8 @@ extension Color {
     static let systemBackground = Color(UIColor.systemBackground)
 }
 
+#if DEBUG
 extension Data {
-    #if DEBUG
     func prettyPrint() {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: self, options: []),
               let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]),
@@ -21,8 +21,8 @@ extension Data {
         else { return }
         print(prettyString)
     }
-    #endif
 }
+#endif
 
 extension String {
     var isNotEmpty: Bool {
@@ -96,5 +96,12 @@ extension Collection where Element == Report {
         }
         
         return filterNewest
+    }
+}
+
+extension Double {
+    func rounded(toPlaces places: Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
     }
 }

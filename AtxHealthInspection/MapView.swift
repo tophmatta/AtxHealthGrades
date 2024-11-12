@@ -12,6 +12,8 @@ import Collections
 struct MapView: View {
     @EnvironmentObject var viewModel: MapViewModel
     @State private var selected: LocationReportGroup?
+    @State private var mapCenter: CLLocationCoordinate2D?
+    
     @State private var showDetail = false
     @State private var isSearching = false
     
@@ -26,7 +28,7 @@ struct MapView: View {
                 }
             }
             .sheet(item: $selected) {
-                MapSheet(group: $0)
+                ResultsSheet(group: $0)
             }
             .overlay(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
@@ -42,39 +44,43 @@ struct MapView: View {
                 ClearButton()
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
-            .onChange(of: viewModel.currentPOIs) { _, new in
-                if new.count == 1 {
-                    viewModel.cameraPosition = .camera(.init(centerCoordinate: new.values.first!.coordinate, distance: 1000))
-                } else {
-                    viewModel.cameraPosition = .automatic
-                }
-            }
             .onAppear {
                 viewModel.checkLocationAuthorization()
             }
-            
-            if isSearching {
-                Color.black.opacity(0.4)
-                    .edgesIgnoringSafeArea(.all)
-                ProgressView("Searching area...")
-                    .progressViewStyle(CircularProgressViewStyle(tint: .onSurface))
-                    .padding()
-                    .background(.surface.opacity(0.7))
-                    .cornerRadius(8)
+            .onMapCameraChange(frequency: .onEnd) { mapCameraUpdateContext in
+                mapCenter = mapCameraUpdateContext.camera.centerCoordinate
             }
+            AppProgressView(isEnabled: $isSearching)
         }
     }
     
     private func launchProximitySearch() {
         isSearching = true
         Task {
-            await viewModel.triggerProximitySearch()
+            await viewModel.triggerProximitySearch(at: mapCenter)
             isSearching = false
+        }
+    }    
+}
+
+struct AppProgressView: View {
+    @Binding var isEnabled: Bool
+    
+    var body: some View {
+        if isEnabled {
+            Color.black.opacity(0.4)
+                .edgesIgnoringSafeArea(.all)
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .onSurface))
+                .controlSize(.large)
+                .padding()
+                .background(.surface.opacity(0.7))
+                .cornerRadius(8)
         }
     }
 }
 
-private struct MapSheet: View {
+private struct ResultsSheet: View {
     @EnvironmentObject var viewModel: MapViewModel
     
     let group: LocationReportGroup
@@ -122,18 +128,18 @@ private struct MapMarker: View {
 }
 
 private struct LocationReportRow: View {
-        let data: ReportData
-        
-        var body: some View {
-            HStack {
-                ScoreItem(data.score)
-                    .padding(.trailing)
-                Text(data.name)
-                    .font(.title3)
-                Spacer()
-            }
+    let data: ReportData
+    
+    var body: some View {
+        HStack {
+            ScoreItem(data.score)
+                .padding(.trailing)
+            Text(data.name)
+                .font(.title3)
+            Spacer()
         }
     }
+}
 
 private struct LocationReportDetail: View {
     let data: ReportData
