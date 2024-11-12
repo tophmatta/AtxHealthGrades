@@ -32,16 +32,16 @@ class LocationModel: NSObject, ObservableObject {
             startUpdatingLocation()
         }
     }
-
+    
     private func requestAuthorization() {
         locationManager.requestWhenInUseAuthorization()
     }
-        
+    
     private func startUpdatingLocation() {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.startUpdatingLocation()
     }
-        
+    
     private func observerAuthorizationStatus() {
         $authorizationStatus
             .sink { [weak self] newStatus in
@@ -61,7 +61,7 @@ extension LocationModel: @preconcurrency CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard 
+        guard
             let location = locations.last,
             location.coordinate.isValid()
         else { return }

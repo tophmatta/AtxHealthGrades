@@ -15,7 +15,7 @@ struct Report: Decodable, Identifiable {
     let address: String
     var coordinate: CLLocationCoordinate2D? = nil
     let date: Date
-        
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -32,7 +32,7 @@ struct Report: Decodable, Identifiable {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-
+        
         if let date = dateFormatter.date(from: dateString) {
             self.date = date
         } else {
@@ -40,7 +40,7 @@ struct Report: Decodable, Identifiable {
                                                    in: container,
                                                    debugDescription: "Date string does not match format")
         }
-
+        
         let addressContainer = try container.nestedContainer(keyedBy: CodingKeys.Address.self, forKey: .address)
         
         let humanAddressString = try addressContainer.decode(String.self, forKey: .humanAddress)
@@ -78,7 +78,7 @@ struct Report: Decodable, Identifiable {
 extension Report {
     private enum CodingKeys: String, CodingKey {
         case restaurantName, score, address, inspectionDate
-         
+        
         enum Address: CodingKey {
             case latitude, longitude, humanAddress
         }
