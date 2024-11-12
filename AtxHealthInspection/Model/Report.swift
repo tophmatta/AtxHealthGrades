@@ -11,6 +11,7 @@ struct Report: Decodable, Identifiable {
     var id = UUID()
     
     let restaurantName: String
+    let facilityId: Int
     let score: Int
     let address: String
     var coordinate: CLLocationCoordinate2D? = nil
@@ -20,6 +21,13 @@ struct Report: Decodable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.restaurantName = try container.decode(String.self, forKey: .restaurantName)
+        
+        let facilityIdString = try container.decode(String.self, forKey: .facilityId)
+        if let id = Int(facilityIdString) {
+            self.facilityId = id
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .facilityId, in: container, debugDescription: "facility id is not a valid integer")
+        }
         
         let scoreString = try container.decode(String.self, forKey: .score)
         if let score = Int(scoreString) {
@@ -77,15 +85,16 @@ struct Report: Decodable, Identifiable {
 
 extension Report {
     private enum CodingKeys: String, CodingKey {
-        case restaurantName, score, address, inspectionDate
+        case restaurantName, score, address, inspectionDate, facilityId
         
         enum Address: CodingKey {
             case latitude, longitude, humanAddress
         }
     }
     
-    private init(restaurantName: String = "N/A", score: Int = 99, address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(), date: Date = Date()) {
+    private init(restaurantName: String = "N/A", facilityId: Int = 12345, score: Int = 99, address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(), date: Date = Date()) {
         self.restaurantName = restaurantName
+        self.facilityId = facilityId
         self.score = score
         self.address = address
         self.coordinate = coordinate
