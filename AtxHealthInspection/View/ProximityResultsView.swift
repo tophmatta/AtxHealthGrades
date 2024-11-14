@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProximityResultsView: View {
     @EnvironmentObject var viewModel: MapViewModel
-
+    
     let group: LocationReportGroup
     
     var body: some View {
@@ -55,38 +55,27 @@ struct ProximityReportRow: View {
 
 struct ProximityReportDetail: View {
     @EnvironmentObject var viewModel: MapViewModel
-    @State private var isFetching: Bool = false
     let data: ReportData
     
     var body: some View {
-        ZStack(alignment: .center) {
-            VStack(spacing: 0) {
-                Text("Report History")
-                    .font(.title)
-                List(viewModel.historicalReports) { result in
-                    HStack {
-                        ScoreItem(result.score)
-                        Spacer()
-                        Text(result.date.toReadable())
-                            .font(.title3)
-                            .foregroundStyle(.onSurface)
-                    }
+        VStack(spacing: 0) {
+            Text("Report History")
+                .font(.title)
+            List(viewModel.historicalReports) { result in
+                HStack {
+                    ScoreItem(result.score)
+                    Spacer()
+                    Text(result.date.toReadable())
+                        .font(.title3)
+                        .foregroundStyle(.onSurface)
                 }
             }
         }
         .task {
-            getAllReportsForRestaurant()
+            await viewModel.getAllReports(with: data.facilityId)
         }
         .onDisappear {
             viewModel.clearHistorical()
-        }
-    }
-    
-    private func getAllReportsForRestaurant() {
-        isFetching = true
-        Task {
-            await viewModel.getAllReports(with: data.facilityId)
-            isFetching = false
         }
     }
 }
