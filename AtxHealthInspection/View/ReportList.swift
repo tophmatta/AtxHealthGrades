@@ -63,7 +63,7 @@ struct ReportItem: View {
                 if let location = report.coordinate {
                     selectedTab = .map
                     showSheet = false
-                    let data = ReportData(name: report.restaurantName, score: report.score, date: report.date)
+                    let data = ReportData(name: report.restaurantName, facilityId: report.facilityId, score: report.score, date: report.date)
                     let result = [report.address : LocationReportGroup(data: [data], address: report.address, coordinate: location)]
                     mapViewModel.updatePOIs(result)
                 } else {

@@ -13,7 +13,7 @@ struct ClearButton: View {
     var body: some View {
         if !viewModel.currentPOIs.isEmpty {
             Button {
-                viewModel.clear()
+                viewModel.clearPOIs()
             } label: {
                 Text("Clear")
                     .foregroundStyle(.green)

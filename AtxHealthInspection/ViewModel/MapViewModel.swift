@@ -20,6 +20,9 @@ import OrderedCollections
  - on tap of location row - query restauarnt for all health inspections and show a list from most to lest recent
  - decouple radius search from user location - show trans circle that can be moved around to perform search and display annotations for that area
  - proper error handling in proximity search - no internet, no results, etc.
+ - list top restaurants in an area that have had consistent high scores
+ - insights button in history detail view interpretting the data
+ - consolidate text search and map search into one page
  */
 
 
@@ -43,6 +46,7 @@ class MapViewModel: ObservableObject {
             updateCameraPosition(for: newValue)
         }
     }
+    @Published var historicalReports = [Report]()
     @Published var cameraPosition: MapCameraPosition = .automatic
     
     private var subs: Set<AnyCancellable> = []
@@ -63,12 +67,16 @@ class MapViewModel: ObservableObject {
             }.store(in: &subs)
     }
     
-    func clear() {
+    func clearPOIs() {
         currentPOIs.removeAll()
     }
     
+    func clearHistorical() {
+        historicalReports.removeAll()
+    }
+    
     func updatePOIs(_ pois: [String : LocationReportGroup]) {
-        clear()
+        clearPOIs()
         currentPOIs = pois.toOrderedDictionary()
     }
     
@@ -81,11 +89,15 @@ class MapViewModel: ObservableObject {
         let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
             guard let coordinate = result.coordinate else { return }
             
-            let data = ReportData(name: result.restaurantName, score: result.score, date: result.date)
+            let data = ReportData(name: result.restaurantName, facilityId: result.facilityId, score: result.score, date: result.date)
             dict[result.address, default: LocationReportGroup(data: [], address: result.address, coordinate: coordinate)].data.append(data)
         }
         
         updatePOIs(poiGroup)
+    }
+    
+    func getAllReports(with facilityId: Int) async {
+        historicalReports = try! await client.getReports(forRestaurantWith: facilityId).sorted { $0.date > $1.date }
     }
     
     func goToUserLocation() {
@@ -135,6 +147,7 @@ extension LocationReportGroup: Hashable {
 struct ReportData: Identifiable {
     let id = UUID()
     let name: String
+    let facilityId: Int
     let score: Int
     let date: Date
 }
@@ -162,6 +175,6 @@ extension LocationReportGroup {
 }
 
 extension ReportData {
-    static let test = ReportData(name: "Apple Park", score: 0, date: Date.now)
+    static let test = ReportData(name: "Apple Park", facilityId: 123456, score: 0, date: Date.now)
 }
 #endif
