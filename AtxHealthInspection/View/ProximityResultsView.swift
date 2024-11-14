@@ -61,6 +61,8 @@ struct ProximityReportDetail: View {
         VStack(spacing: 0) {
             Text("Report History")
                 .font(.title)
+            ReportChart(data: viewModel.historicalReports.toPlottableData())
+            Divider()
             List(viewModel.historicalReports) { result in
                 HStack {
                     ScoreItem(result.score)

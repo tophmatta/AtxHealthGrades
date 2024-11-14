@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F10706222CE5B618005B3399 /* ReportChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10706212CE5B612005B3399 /* ReportChart.swift */; };
 		F10B6A992C508ABB001536B4 /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B6A982C508ABB001536B4 /* ClientError.swift */; };
 		F10B6A9B2C508FA0001536B4 /* ReportList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B6A9A2C508FA0001536B4 /* ReportList.swift */; };
 		F11C8CB82CD072A700409F83 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11C8CB72CD072A300409F83 /* Modifiers.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F10706212CE5B612005B3399 /* ReportChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportChart.swift; sourceTree = "<group>"; };
 		F10B6A982C508ABB001536B4 /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
 		F10B6A9A2C508FA0001536B4 /* ReportList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportList.swift; sourceTree = "<group>"; };
 		F11C8CB72CD072A300409F83 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		F1609A3B2CE301F600988712 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F10706212CE5B612005B3399 /* ReportChart.swift */,
 				F1EACEE12C371C71006BE3F9 /* MainView.swift */,
 				F1EACEF12C37368B006BE3F9 /* SearchView.swift */,
 				F10B6A9A2C508FA0001536B4 /* ReportList.swift */,
@@ -313,6 +316,7 @@
 			files = (
 				F1EACEF22C37368B006BE3F9 /* SearchView.swift in Sources */,
 				F1609A352CE300BE00988712 /* AppProgressView.swift in Sources */,
+				F10706222CE5B618005B3399 /* ReportChart.swift in Sources */,
 				F152C1432C3CAF990064F570 /* MapView.swift in Sources */,
 				F1EACEF82C374B89006BE3F9 /* SearchViewModel.swift in Sources */,
 				F1EACEF42C373CF5006BE3F9 /* Report.swift in Sources */,

@@ -15,7 +15,7 @@ import OrderedCollections
 
 
 /*
- TODO:
+ TODO: -
  - explore mklocalsearch to see what other details i can pull up on a place and perhaps use a built in detail accessory view to show
  - on tap of location row - query restauarnt for all health inspections and show a list from most to lest recent
  - decouple radius search from user location - show trans circle that can be moved around to perform search and display annotations for that area
