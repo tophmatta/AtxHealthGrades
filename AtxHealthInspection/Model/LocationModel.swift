@@ -39,6 +39,8 @@ class LocationModel: NSObject, ObservableObject {
     
     private func startUpdatingLocation() {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 10
+        locationManager.allowsBackgroundLocationUpdates = false
         locationManager.startUpdatingLocation()
     }
     
