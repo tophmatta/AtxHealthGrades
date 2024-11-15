@@ -59,7 +59,6 @@ class MapViewModel: ObservableObject {
         }
         
         locationModel.$lastLocation
-            .throttle(for: .seconds(3), scheduler: DispatchQueue.main, latest: true)
             .compactMap { $0 }
             .sink { [weak self] location in
                 guard let self else { return }
