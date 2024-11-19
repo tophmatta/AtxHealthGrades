@@ -9,14 +9,12 @@ import SwiftUI
 
 struct ReportList: View {
     @Binding var selectedTab: Tab
-    @Binding var showSheet: Bool
     
     let reports: [Report]
     
-    init(_ reports: [Report], selectedTab: Binding<Tab>, showSheet: Binding<Bool>) {
+    init(_ reports: [Report], selectedTab: Binding<Tab>) {
         self.reports = reports
         _selectedTab = selectedTab
-        _showSheet = showSheet
     }
     
     var body: some View {
@@ -27,7 +25,7 @@ struct ReportList: View {
             .padding()
         Divider()
         List(reports) {
-            ReportItem($0, selectedTab: $selectedTab, showSheet: $showSheet)
+            ReportItem($0, selectedTab: $selectedTab)
         }
         .listStyle(.inset)
     }
@@ -35,16 +33,15 @@ struct ReportList: View {
 
 struct ReportItem: View {
     @EnvironmentObject var mapViewModel: MapViewModel
+    @EnvironmentObject var searchViewModel: SearchViewModel
     @Binding var selectedTab: Tab
-    @Binding var showSheet: Bool
     @State private var showError = false
     
     let report: Report
     
-    init(_ report: Report, selectedTab: Binding<Tab>, showSheet: Binding<Bool>) {
+    init(_ report: Report, selectedTab: Binding<Tab>) {
         self.report = report
         _selectedTab = selectedTab
-        _showSheet = showSheet
     }
     
     var body: some View {
@@ -60,7 +57,7 @@ struct ReportItem: View {
             Button {
                 if let location = report.coordinate {
                     selectedTab = .map
-                    showSheet = false
+                    searchViewModel.clear()
                     let data = ReportData(name: report.restaurantName, facilityId: report.facilityId, score: report.score, date: report.date)
                     let result = [report.address : LocationReportGroup(data: [data], address: report.address, coordinate: location)]
                     mapViewModel.updatePOIs(result)

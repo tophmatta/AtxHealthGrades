@@ -17,8 +17,7 @@ import OrderedCollections
 /*
  TODO: -
  - BUGFIX
- - additional name searches after initial one fail
- - put app in background and return - tab bar is light mode
+    - put app in background and return - tab bar is light mode
  - explore mklocalsearch to see what other details i can pull up on a place and perhaps use a built in detail accessory view to show
  - proper error handling in proximity search - no internet, no results, etc.
  - list top restaurants in an area that have had consistent high scores

@@ -18,6 +18,10 @@ class SearchViewModel: ObservableObject {
         self.client = client
     }
 
+    func clear() {
+        currentReports = [Report]()
+    }
+    
     func triggerSearch(value: String) async {
         do {
             currentReports = try await client.search(byName: value).filterOldDuplicates()

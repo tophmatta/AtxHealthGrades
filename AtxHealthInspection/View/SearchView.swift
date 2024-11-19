@@ -13,7 +13,6 @@ struct SearchView: View {
     
     @Binding var selectedTab: Tab
     @State private var searchText: String = ""
-    @State private var showSheet = false
     
     @FocusState private var isFocused: Bool
     
@@ -35,8 +34,8 @@ struct SearchView: View {
             .offset(y: -80)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .sheet(isPresented: $showSheet) {
-            ReportList(searchViewModel.currentReports, selectedTab: $selectedTab, showSheet: $showSheet)
+        .sheet(isPresented: $searchViewModel.currentReports.isNotEmpty()) {
+            ReportList(searchViewModel.currentReports, selectedTab: $selectedTab)
                 .presentationDetents([.medium, .large])
                 .presentationCompactAdaptation(.none)
         }
@@ -69,7 +68,6 @@ struct SearchView: View {
             Task {
                 await searchViewModel.triggerSearch(value: searchText)
                 isFocused = false
-                showSheet = true
             }
         } label: {
             Text("Search")
