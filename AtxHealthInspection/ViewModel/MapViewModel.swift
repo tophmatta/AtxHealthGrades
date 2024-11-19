@@ -16,9 +16,10 @@ import OrderedCollections
 
 /*
  TODO: -
+ - BUGFIX
+ - additional name searches after initial one fail
+ - put app in background and return - tab bar is light mode
  - explore mklocalsearch to see what other details i can pull up on a place and perhaps use a built in detail accessory view to show
- - on tap of location row - query restauarnt for all health inspections and show a list from most to lest recent
- - decouple radius search from user location - show trans circle that can be moved around to perform search and display annotations for that area
  - proper error handling in proximity search - no internet, no results, etc.
  - list top restaurants in an area that have had consistent high scores
  - insights button in history detail view interpretting the data
@@ -32,6 +33,7 @@ class MapViewModel: ObservableObject {
     
     let client: ISocrataClient
     let locationModel: LocationModel
+    
     var lastLocation: CLLocationCoordinate2D? {
         didSet {
             if oldValue == nil && lastLocation != nil && currentPOIs.isEmpty {
@@ -95,7 +97,7 @@ class MapViewModel: ObservableObject {
         updatePOIs(poiGroup)
     }
     
-    func getAllReports(with facilityId: Int) async {
+    func getAllReports(with facilityId: String) async {
         historicalReports = try! await client.getReports(forRestaurantWith: facilityId).sorted { $0.date > $1.date }
     }
     
@@ -144,9 +146,9 @@ extension LocationReportGroup: Hashable {
 }
 
 struct ReportData: Identifiable {
-    let id = UUID()
+    var id: String { facilityId }
     let name: String
-    let facilityId: Int
+    let facilityId: String
     let score: Int
     let date: Date
 }
@@ -174,6 +176,6 @@ extension LocationReportGroup {
 }
 
 extension ReportData {
-    static let test = ReportData(name: "Apple Park", facilityId: 123456, score: 0, date: Date.now)
+    static let test = ReportData(name: "Apple Park", facilityId: "123456", score: 0, date: Date.now)
 }
 #endif

@@ -11,7 +11,7 @@ import CoreLocation
 protocol ISocrataClient: Sendable {
     func search(byName value: String) async throws -> [Report]
     func search(inRadiusOf location: CLLocationCoordinate2D) async throws -> [Report]
-    func getReports(forRestaurantWith facilityId: Int) async throws -> [Report]
+    func getReports(forRestaurantWith facilityId: String) async throws -> [Report]
 }
 
 struct SocrataAPIClient: ISocrataClient {
@@ -71,8 +71,8 @@ struct SocrataAPIClient: ISocrataClient {
         }
     }
     
-    func getReports(forRestaurantWith facilityId: Int) async throws -> [Report] {
-        let query = "facility_id=\(facilityId)"
+    func getReports(forRestaurantWith facilityId: String) async throws -> [Report] {
+        let query = "facility_id=" + facilityId
         
         do {
             return try await get(query)

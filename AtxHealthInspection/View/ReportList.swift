@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ReportList: View {
-    
-    @EnvironmentObject var mapViewModel: MapViewModel
     @Binding var selectedTab: Tab
     @Binding var showSheet: Bool
     
@@ -72,8 +70,12 @@ struct ReportItem: View {
             } label: {
                 Image(systemName: "map.fill")
                     .foregroundStyle(Color.green)
+                    .contentShape(Rectangle()) // makes only the button (not row) tappable
             }
-            .padding(.trailing, 15)
+            .buttonStyle(PlainButtonStyle()) // makes only the button (not row) tappable
+            Spacer()
+            FavoriteButton(id: report.favoriteId)
+                .padding(.trailing, 15)
         }
         .alert(isPresented: $showError, error: ClientError.invalidLocation) {
             Button("OK") {

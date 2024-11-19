@@ -7,6 +7,7 @@ ATX Health Inspection is a mobile app designed to help users access restaurant h
 - **Search by Restaurant Name**: Easily find health scores and inspection details by searching a restaurant's name.
 - **Map-Based Browsing**: Explore nearby restaurants based on the map center location and view inspection details for each location.
 - **Health Inspection Reports**: View detailed health inspection grades and scores for each restaurant, sourced from the City of Austin's open data platform.
+- **Dark Mode**: Use the app in dark mode so it's easier on your eyes or just for a cool vibe.
 - **Favorites**: Save frequently viewed restaurants for easy access. (WIP)
 
 ## Technology Stack
