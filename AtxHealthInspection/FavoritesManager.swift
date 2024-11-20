@@ -10,7 +10,20 @@ import Combine
 
 
 actor FavoritesManager {
-    private let defaults = UserDefaults.standard
+    private let defaults: UserDefaults
+    
+    init() {
+        // Set this up here bc Swift 6 was complaining about UserDefaults being non-sendable in test class
+        if isTesting {
+            guard let userDefaults = UserDefaults(suiteName: #file) else {
+                fatalError("failed to setup test user defaults")
+            }
+            userDefaults.removePersistentDomain(forName: #file)
+            self.defaults = userDefaults
+        } else {
+            self.defaults = UserDefaults.standard
+        }
+    }
     
     func toggleValue(id: String) {
         if getValues().contains(id) {

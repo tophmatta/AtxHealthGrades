@@ -26,7 +26,7 @@ struct MainView: View {
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.isTranslucent = false
         tabBarAppearance.barTintColor = .green
-        tabBarAppearance.backgroundColor = UIColor(.surface)
+        tabBarAppearance.backgroundColor = .systemBackground
     }
     
     var body: some View {

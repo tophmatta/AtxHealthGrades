@@ -17,6 +17,7 @@
 		F152C1322C3B3C120064F570 /* SocrataAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */; };
 		F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1402C3B48590064F570 /* SocrataClientTests.swift */; };
 		F152C1432C3CAF990064F570 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1422C3CAF990064F570 /* MapView.swift */; };
+		F15471BC2CED718B00F65095 /* FavoritesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15471BB2CED717600F65095 /* FavoritesTests.swift */; };
 		F1609A352CE300BE00988712 /* AppProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1609A342CE300BE00988712 /* AppProgressView.swift */; };
 		F1609A372CE300D200988712 /* ProximityResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1609A362CE300D200988712 /* ProximityResultsView.swift */; };
 		F1609A392CE3015600988712 /* MapButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1609A382CE3015200988712 /* MapButtons.swift */; };
@@ -64,6 +65,7 @@
 		F152C1372C3B482A0064F570 /* AtxHealthInspectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtxHealthInspectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F152C1402C3B48590064F570 /* SocrataClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClientTests.swift; sourceTree = "<group>"; };
 		F152C1422C3CAF990064F570 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		F15471BB2CED717600F65095 /* FavoritesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTests.swift; sourceTree = "<group>"; };
 		F1609A342CE300BE00988712 /* AppProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProgressView.swift; sourceTree = "<group>"; };
 		F1609A362CE300D200988712 /* ProximityResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityResultsView.swift; sourceTree = "<group>"; };
 		F1609A382CE3015200988712 /* MapButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtons.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				F16420672CC344AA00E87F66 /* InputTests.swift */,
+				F15471BB2CED717600F65095 /* FavoritesTests.swift */,
 				F152C1402C3B48590064F570 /* SocrataClientTests.swift */,
 				F164205A2CC09D2C00E87F66 /* MockURLProtocol.swift */,
 				F16420632CC342B200E87F66 /* test04loungedata.json */,
@@ -318,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F16420682CC344AD00E87F66 /* InputTests.swift in Sources */,
+				F15471BC2CED718B00F65095 /* FavoritesTests.swift in Sources */,
 				F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */,
 				F164205B2CC09D2C00E87F66 /* MockURLProtocol.swift in Sources */,
 			);

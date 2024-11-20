@@ -16,3 +16,7 @@ struct AtxHealthInspectionApp: App {
         }
     }
 }
+
+var isTesting: Bool {
+    ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+}
