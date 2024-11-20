@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import SwiftUICore
 
 @MainActor
-class SearchViewModel: ObservableObject {
+@Observable class SearchViewModel {
     let client: ISocrataClient
 
-    @Published var error: Error? = nil
-    @Published var currentReports = [Report]()
+    var error: Error? = nil
+    var currentReports = [Report]()
     
     init(_ client: ISocrataClient) {
         self.client = client

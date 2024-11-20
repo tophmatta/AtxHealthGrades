@@ -33,7 +33,7 @@ struct ReportList: View {
 
 struct ReportItem: View {
     @EnvironmentObject var mapViewModel: MapViewModel
-    @EnvironmentObject var searchViewModel: SearchViewModel
+    @Environment(SearchViewModel.self) var searchViewModel: SearchViewModel
     @Binding var selectedTab: Tab
     @State private var showError = false
     

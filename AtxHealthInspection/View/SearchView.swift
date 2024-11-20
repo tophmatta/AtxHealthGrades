@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @EnvironmentObject var searchViewModel: SearchViewModel
+    @Environment(SearchViewModel.self) var searchViewModel: SearchViewModel
     @EnvironmentObject var mapViewModel: MapViewModel
     
     @Binding var selectedTab: Tab
@@ -22,6 +22,8 @@ struct SearchView: View {
     }
     
     var body: some View {
+        @Bindable var bindableSearchViewModel = searchViewModel
+        
         ZStack {
             FoodBackground()
                 .ignoresSafeArea(edges: [.top, .leading, .trailing])
@@ -34,14 +36,14 @@ struct SearchView: View {
             .offset(y: -80)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .sheet(isPresented: $searchViewModel.currentReports.isNotEmpty()) {
+        .sheet(isPresented: $bindableSearchViewModel.currentReports.isNotEmpty()) {
             ReportList(searchViewModel.currentReports, selectedTab: $selectedTab)
                 .presentationDetents([.medium, .large])
                 .presentationCompactAdaptation(.none)
         }
         .alert(
             "Something went wrong...",
-            isPresented: $searchViewModel.error.isNotNil(),
+            isPresented: $bindableSearchViewModel.error.isNotNil(),
             presenting: searchViewModel.error,
             actions: { _ in },
             message: { error in
@@ -108,5 +110,5 @@ struct SearchView: View {
 
 #Preview {
     SearchView(.constant(.search))
-        .environmentObject(SearchViewModel(SocrataAPIClient()))
+        .environment(SearchViewModel(SocrataAPIClient()))
 }

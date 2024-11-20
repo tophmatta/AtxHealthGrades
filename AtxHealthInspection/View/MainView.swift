@@ -12,27 +12,27 @@ enum Tab {
 }
 
 struct MainView: View {
-    @StateObject private var searchViewModel: SearchViewModel
+    @State private var searchViewModel: SearchViewModel
     @StateObject private var mapViewModel: MapViewModel
     @StateObject private var favoritesViewModel: FavoritesViewModel
     
     @State private var selectedTab: Tab = .search
     
     init(client: ISocrataClient = SocrataAPIClient()) {
-        _searchViewModel = StateObject(wrappedValue: SearchViewModel(client))
+        _searchViewModel = State(wrappedValue: SearchViewModel(client))
         _mapViewModel = StateObject(wrappedValue: MapViewModel(client))
         _favoritesViewModel = StateObject(wrappedValue: FavoritesViewModel())
         
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.isTranslucent = false
         tabBarAppearance.barTintColor = .green
-        tabBarAppearance.backgroundColor = .systemBackground
+        tabBarAppearance.backgroundColor = .surface
     }
     
     var body: some View {
         TabView(selection: $selectedTab) {
             SearchView($selectedTab)
-                .environmentObject(searchViewModel)
+                .environment(searchViewModel)
                 .environmentObject(mapViewModel)
                 .environmentObject(favoritesViewModel)
                 .tabItem {
