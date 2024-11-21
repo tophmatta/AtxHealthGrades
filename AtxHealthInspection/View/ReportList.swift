@@ -32,8 +32,8 @@ struct ReportList: View {
 }
 
 struct ReportItem: View {
-    @EnvironmentObject var mapViewModel: MapViewModel
-    @Environment(SearchViewModel.self) var searchViewModel: SearchViewModel
+    @Environment(MapViewModel.self) var mapViewModel
+    @Environment(SearchViewModel.self) var searchViewModel
     @Binding var selectedTab: Tab
     @State private var showError = false
     

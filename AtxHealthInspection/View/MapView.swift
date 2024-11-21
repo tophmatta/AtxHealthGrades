@@ -10,7 +10,7 @@ import MapKit
 import Collections
 
 struct MapView: View {
-    @EnvironmentObject var viewModel: MapViewModel
+    @Environment(MapViewModel.self) var viewModel
     @State private var selected: LocationReportGroup?
     @State private var mapCenter: CLLocationCoordinate2D?
     
@@ -18,8 +18,9 @@ struct MapView: View {
     @State private var isSearching = false
     
     var body: some View {
+        @Bindable var bindableViewModel = viewModel
         ZStack {
-            Map(position: $viewModel.cameraPosition) {
+            Map(position: $bindableViewModel.cameraPosition) {
                 UserAnnotation()
                 ForEach(viewModel.currentPOIs.elements, id: \.key) { element in
                     Annotation("", coordinate: element.value.coordinate) {
@@ -83,5 +84,5 @@ private struct MapMarker: View {
 
 #Preview {
     MapView()
-        .environmentObject(MapViewModel(SocrataAPIClient(), locationModel: LocationModel(), poiGroup: LocationReportGroup.test))
+        .environment(MapViewModel(SocrataAPIClient(), locationModel: LocationModel(), poiGroup: LocationReportGroup.test))
 }

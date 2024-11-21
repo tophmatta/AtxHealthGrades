@@ -27,7 +27,7 @@ import OrderedCollections
 
 
 @MainActor
-class MapViewModel: ObservableObject {
+@Observable class MapViewModel {
     typealias AddressKey = String
     
     let client: ISocrataClient
@@ -42,13 +42,13 @@ class MapViewModel: ObservableObject {
     }
     
     // Use ordered dictionary for displaying annotations
-    @Published var currentPOIs: OrderedDictionary<AddressKey, LocationReportGroup> = [:] {
+    var currentPOIs: OrderedDictionary<AddressKey, LocationReportGroup> = [:] {
         willSet {
             updateCameraPosition(for: newValue)
         }
     }
-    @Published var historicalReports = [Report]()
-    @Published var cameraPosition: MapCameraPosition = .automatic
+    var historicalReports = [Report]()
+    var cameraPosition: MapCameraPosition = .automatic
     
     private var subs: Set<AnyCancellable> = []
     

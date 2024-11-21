@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SearchView: View {
-    @Environment(SearchViewModel.self) var searchViewModel: SearchViewModel
-    @EnvironmentObject var mapViewModel: MapViewModel
+    @Environment(SearchViewModel.self) var searchViewModel
+    @Environment(MapViewModel.self) var mapViewModel
     
     @Binding var selectedTab: Tab
     @State private var searchText: String = ""

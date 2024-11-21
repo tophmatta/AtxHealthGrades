@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct ProximityResultsView: View {
-    @EnvironmentObject var viewModel: MapViewModel
+    @Environment(MapViewModel.self) var viewModel
     
     let group: LocationReportGroup
     
@@ -54,7 +54,7 @@ struct ProximityReportRow: View {
 }
 
 struct ProximityReportDetail: View {
-    @EnvironmentObject var viewModel: MapViewModel
+    @Environment(MapViewModel.self) var viewModel
     let data: ReportData
     
     var body: some View {
