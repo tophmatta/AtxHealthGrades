@@ -27,7 +27,7 @@ import OrderedCollections
 
 
 @MainActor
-@Observable class MapViewModel {
+@Observable final class MapViewModel {
     typealias AddressKey = String
     
     let client: ISocrataClient

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteButton: View {
-    @EnvironmentObject var favoritesViewModel: FavoritesViewModel
+    @Environment(FavoritesViewModel.self) var favoritesViewModel: FavoritesViewModel
     let id: String
     
     var body: some View {

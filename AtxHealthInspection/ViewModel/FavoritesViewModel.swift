@@ -5,11 +5,11 @@
 //  Created by Toph Matta on 11/18/24.
 //
 
-import Combine
+import SwiftUICore
 
 @MainActor
-final class FavoritesViewModel: ObservableObject {
-    @Published var favorites: Set<String> = []
+@Observable final class FavoritesViewModel {
+    var favorites: Set<String> = []
     private let manager: FavoritesManager
     
     init(_ manager: FavoritesManager = FavoritesManager()) {

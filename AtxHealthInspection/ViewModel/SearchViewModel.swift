@@ -9,7 +9,7 @@ import Foundation
 import SwiftUICore
 
 @MainActor
-@Observable class SearchViewModel {
+@Observable final class SearchViewModel {
     let client: ISocrataClient
 
     var error: Error? = nil
