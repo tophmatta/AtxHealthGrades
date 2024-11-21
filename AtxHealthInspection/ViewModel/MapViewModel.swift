@@ -83,8 +83,9 @@ import OrderedCollections
     func triggerProximitySearch(at location: CLLocationCoordinate2D?) async {
         guard let location else { return }
         
-        let results: [Report] = try! await client.search(inRadiusOf: location)
-            .filterOldDuplicates()
+        let results = try? await client.search(inRadiusOf: location).filterOldDuplicates()
+        
+        guard let results else { return }
         
         let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
             guard let coordinate = result.coordinate else { return }
