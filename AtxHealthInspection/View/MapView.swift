@@ -26,6 +26,7 @@ struct MapView: View {
                     Annotation("", coordinate: element.value.coordinate) {
                         MapMarker(group: element.value, selected: $selected)
                     }
+                    .annotationTitles(.hidden)
                 }
             }
             .sheet(item: $selected) {

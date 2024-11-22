@@ -90,8 +90,7 @@ import OrderedCollections
         let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
             guard let coordinate = result.coordinate else { return }
             
-            let data = ReportData(name: result.restaurantName, facilityId: result.facilityId, score: result.score, date: result.date)
-            dict[result.address, default: LocationReportGroup(data: [], address: result.address, coordinate: coordinate)].data.append(data)
+            dict[result.parentId, default: LocationReportGroup(data: [], address: result.address, coordinate: coordinate)].data.append(result)
         }
         
         updatePOIs(poiGroup)
@@ -129,10 +128,10 @@ import OrderedCollections
 
 // Multiple restaurants can have same address/coordinate
 struct LocationReportGroup: Identifiable {
-    var data: [ReportData]
+    var data: [Report]
     let address: String
     let coordinate: CLLocationCoordinate2D
-    var id: String { "\(address)-\(coordinate.latitude)-\(coordinate.longitude)" }
+    var id: String { address }
 }
 
 extension LocationReportGroup: Hashable {
@@ -145,19 +144,6 @@ extension LocationReportGroup: Hashable {
     }
 }
 
-struct ReportData: Identifiable {
-    var id: String { facilityId }
-    let name: String
-    let facilityId: String
-    let score: Int
-    let date: Date
-}
-
-extension ReportData: Hashable {
-    static func == (lhs: ReportData, rhs: ReportData) -> Bool {
-        lhs.id == rhs.id
-    }
-}
 
 private extension Dictionary {
     func toOrderedDictionary() -> OrderedDictionary<Key, Value> {
@@ -169,13 +155,9 @@ private extension Dictionary {
 extension LocationReportGroup {
     static let test =
     LocationReportGroup(
-        data: [ReportData.test],
+        data: [Report.test],
         address: "One Apple Park Way, Cupertino, CA 95014",
         coordinate: CLLocationCoordinate2D(latitude: 37.334643800000016, longitude: -122.00912193752882)
     )
-}
-
-extension ReportData {
-    static let test = ReportData(name: "Apple Park", facilityId: "123456", score: 0, date: Date.now)
 }
 #endif

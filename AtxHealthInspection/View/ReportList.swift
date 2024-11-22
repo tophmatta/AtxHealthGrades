@@ -58,8 +58,7 @@ struct ReportItem: View {
                 if let location = report.coordinate {
                     selectedTab = .map
                     searchViewModel.clear()
-                    let data = ReportData(name: report.restaurantName, facilityId: report.facilityId, score: report.score, date: report.date)
-                    let result = [report.address : LocationReportGroup(data: [data], address: report.address, coordinate: location)]
+                    let result = [report.parentId : LocationReportGroup(data: [report], address: report.address, coordinate: location)]
                     mapViewModel.updatePOIs(result)
                 } else {
                     showError = true

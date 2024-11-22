@@ -40,13 +40,13 @@ struct ProximityResultsView: View {
 }
 
 struct ProximityReportRow: View {
-    let data: ReportData
+    let data: Report
     
     var body: some View {
         HStack {
             ScoreItem(data.score)
                 .padding(.trailing)
-            Text(data.name)
+            Text(data.restaurantName)
                 .font(.title3)
             Spacer()
         }
@@ -55,7 +55,7 @@ struct ProximityReportRow: View {
 
 struct ProximityReportDetail: View {
     @Environment(MapViewModel.self) var viewModel
-    let data: ReportData
+    let data: Report
     
     var body: some View {
         VStack(spacing: 0) {

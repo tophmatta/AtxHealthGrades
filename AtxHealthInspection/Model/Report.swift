@@ -21,6 +21,10 @@ struct Report: Decodable, Identifiable {
         facilityId
     }
     
+    var parentId: String {
+        address
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -130,6 +134,6 @@ extension Report: CustomStringConvertible {
     
     static let empty = Report()
     
-    static let sample = Report(restaurantName: "Toph's Delight", score: 99, address: "123 Cucumber Lane", coordinate: CLLocationCoordinate2D(latitude: 30.194818005,longitude: -97.843463001))
+    static let test = Report(restaurantName: "Toph's Delight", score: 99, address: "123 Cucumber Lane", coordinate: CLLocationCoordinate2D(latitude: 30.194818005,longitude: -97.843463001))
 }
 #endif
