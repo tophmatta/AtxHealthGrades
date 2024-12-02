@@ -10,7 +10,7 @@ import XCTest
 
 final class SocrataClientTests: XCTestCase {
 
-    var mockClient: ISocrataClient!
+    var mockClient: SocrataClientProtocol!
     
     override func setUp() {
         super.setUp()

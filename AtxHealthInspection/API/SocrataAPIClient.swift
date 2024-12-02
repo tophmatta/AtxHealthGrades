@@ -8,15 +8,15 @@
 import Foundation
 import CoreLocation
 
-protocol ISocrataClient: Sendable {
+protocol SocrataClientProtocol: Sendable {
     func search(byName value: String) async throws -> [Report]
     func search(inRadiusOf location: CLLocationCoordinate2D) async throws -> [Report]
     func getReports(forRestaurantWith facilityId: String) async throws -> [Report]
 }
 
-struct SocrataAPIClient: ISocrataClient {
+struct SocrataAPIClient: SocrataClientProtocol {
     
-    let client: APIClientProtocol
+    private let client: APIClientProtocol
     
     init(client: APIClientProtocol = APIClient()) {
         self.client = client

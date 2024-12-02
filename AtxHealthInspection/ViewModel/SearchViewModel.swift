@@ -10,12 +10,12 @@ import SwiftUICore
 
 @MainActor
 @Observable final class SearchViewModel {
-    let client: ISocrataClient
+    let client: SocrataClientProtocol
 
     var error: Error? = nil
     var currentReports = [Report]()
     
-    init(_ client: ISocrataClient) {
+    init(_ client: SocrataClientProtocol) {
         self.client = client
     }
 

@@ -18,7 +18,7 @@ struct MainView: View {
     
     @State private var selectedTab: Tab = .search
     
-    init(client: ISocrataClient = SocrataAPIClient()) {
+    init(client: SocrataClientProtocol = SocrataAPIClient()) {
         _searchViewModel = State(wrappedValue: SearchViewModel(client))
         _mapViewModel = State(wrappedValue: MapViewModel(client))
         _favoritesViewModel = State(wrappedValue: FavoritesViewModel())

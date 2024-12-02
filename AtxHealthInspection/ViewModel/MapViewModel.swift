@@ -16,13 +16,11 @@ import OrderedCollections
 
 /*
  TODO: -
- - BUGFIX
-    - put app in background and return - tab bar is light mode
  - explore mklocalsearch to see what other details i can pull up on a place and perhaps use a built in detail accessory view to show
  - proper error handling in proximity search - no internet, no results, etc.
  - list top restaurants in an area that have had consistent high scores
  - insights button in history detail view interpretting the data
- - consolidate text search and map search into one page
+ - segmented control - search by: name, radius, top
  */
 
 
@@ -30,8 +28,8 @@ import OrderedCollections
 @Observable final class MapViewModel {
     typealias AddressKey = String
     
-    let client: ISocrataClient
-    let locationModel: LocationModel
+    private let client: SocrataClientProtocol
+    private let locationModel: LocationModel
     
     var lastLocation: CLLocationCoordinate2D? {
         didSet {
@@ -52,7 +50,7 @@ import OrderedCollections
     
     private var subs: Set<AnyCancellable> = []
     
-    init(_ client: ISocrataClient, locationModel: LocationModel = LocationModel(), poiGroup: LocationReportGroup? = nil) {
+    init(_ client: SocrataClientProtocol, locationModel: LocationModel = LocationModel(), poiGroup: LocationReportGroup? = nil) {
         self.client = client
         self.locationModel = locationModel
         if let poiGroup {
