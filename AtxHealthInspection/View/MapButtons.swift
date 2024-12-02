@@ -17,15 +17,13 @@ struct ClearButton: View {
             } label: {
                 Text("Clear")
                     .foregroundStyle(.green)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 7)
+                    .padding(10)
             }
             .background(
                 Capsule()
                     .fill(.surface)
                     .shadow(radius: 5)
             )
-            .padding(.trailing)
         }
     }
 }

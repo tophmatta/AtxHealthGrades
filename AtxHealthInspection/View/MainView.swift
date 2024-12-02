@@ -31,16 +31,10 @@ struct MainView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            SearchView($selectedTab)
-                .environment(searchViewModel)
-                .environment(mapViewModel)
-                .environment(favoritesViewModel)
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass")
-                }
-                .tag(Tab.search)
             MapView()
                 .environment(mapViewModel)
+                .environment(searchViewModel)
+                .environment(favoritesViewModel)
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }

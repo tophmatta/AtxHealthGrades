@@ -10,48 +10,71 @@ import MapKit
 import Collections
 
 struct MapView: View {
-    @Environment(MapViewModel.self) var viewModel
-    @State private var selected: LocationReportGroup?
+    @Environment(MapViewModel.self) var mapViewModel
+    @Environment(SearchViewModel.self) var searchViewModel
+    @State private var poiSelected: LocationReportGroup?
     @State private var mapCenter: CLLocationCoordinate2D?
     
+    @State private var isKeyboardVisible = false
     @State private var showDetail = false
     @State private var isSearching = false
     
     var body: some View {
-        @Bindable var bindableViewModel = viewModel
+        @Bindable var bindableMapViewModel = mapViewModel
+        @Bindable var bindableSearchViewModel = searchViewModel
+
         ZStack {
-            Map(position: $bindableViewModel.cameraPosition) {
+            Map(position: $bindableMapViewModel.cameraPosition) {
                 UserAnnotation()
-                ForEach(viewModel.currentPOIs.elements, id: \.key) { element in
+                ForEach(mapViewModel.currentPOIs.elements, id: \.key) { element in
                     Annotation("", coordinate: element.value.coordinate) {
-                        MapMarker(group: element.value, selected: $selected)
+                        MapMarker(group: element.value, selected: $poiSelected)
                     }
                     .annotationTitles(.hidden)
                 }
             }
-            .sheet(item: $selected) {
+            .sheet(item: $poiSelected) {
                 ProximityResultsView(group: $0)
             }
+            .sheet(isPresented: $bindableSearchViewModel.currentReports.isNotEmpty()) {
+                ReportList(reports: searchViewModel.currentReports)
+                    .presentationDetents([.medium, .large])
+                    .presentationCompactAdaptation(.none)
+            }
+            .alert(
+                "Something went wrong...",
+                isPresented: $bindableSearchViewModel.error.isNotNil(),
+                presenting: searchViewModel.error,
+                actions: { _ in },
+                message: { error in
+                    Text(error.localizedDescription).padding(.top, 15)
+                }
+            )
             .overlay(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
                     MapActionButton(type: .radius) {
                         launchProximitySearch()
                     }
                     MapActionButton(type: .location) {
-                        viewModel.goToUserLocation()
+                        mapViewModel.goToUserLocation()
                     }
                 }
             }
-            .overlay(alignment: .topTrailing) {
-                ClearButton()
+            .overlay(alignment: .top) {
+                HStack(alignment: .center) {
+                    SearchBar()
+                    ClearButton()
+                }
+                .padding(15)
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
             .onAppear {
-                viewModel.checkLocationAuthorization()
+                mapViewModel.checkLocationAuthorization()
+                UITextField.appearance().clearButtonMode = .always
             }
             .onMapCameraChange(frequency: .onEnd) { mapCameraUpdateContext in
                 mapCenter = mapCameraUpdateContext.camera.centerCoordinate
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
             
             AppProgressView(isEnabled: $isSearching)
         }
@@ -60,7 +83,7 @@ struct MapView: View {
     private func launchProximitySearch() {
         isSearching = true
         Task {
-            await viewModel.triggerProximitySearch(at: mapCenter)
+            await mapViewModel.triggerProximitySearch(at: mapCenter)
             isSearching = false
         }
     }    

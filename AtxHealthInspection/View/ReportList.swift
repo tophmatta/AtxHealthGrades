@@ -8,14 +8,7 @@
 import SwiftUI
 
 struct ReportList: View {
-    @Binding var selectedTab: Tab
-    
     let reports: [Report]
-    
-    init(_ reports: [Report], selectedTab: Binding<Tab>) {
-        self.reports = reports
-        _selectedTab = selectedTab
-    }
     
     var body: some View {
         Spacer()
@@ -25,7 +18,7 @@ struct ReportList: View {
             .padding()
         Divider()
         List(reports) {
-            ReportItem($0, selectedTab: $selectedTab)
+            ReportItem(report: $0)
         }
         .listStyle(.inset)
     }
@@ -34,16 +27,10 @@ struct ReportList: View {
 struct ReportItem: View {
     @Environment(MapViewModel.self) var mapViewModel
     @Environment(SearchViewModel.self) var searchViewModel
-    @Binding var selectedTab: Tab
     @State private var showError = false
     
     let report: Report
-    
-    init(_ report: Report, selectedTab: Binding<Tab>) {
-        self.report = report
-        _selectedTab = selectedTab
-    }
-    
+        
     var body: some View {
         HStack {
             ScoreItem(report.score)
@@ -56,7 +43,6 @@ struct ReportItem: View {
             Spacer()
             Button {
                 if let location = report.coordinate {
-                    selectedTab = .map
                     searchViewModel.clear()
                     let result = [report.parentId : LocationReportGroup(data: [report], address: report.address, coordinate: location)]
                     mapViewModel.updatePOIs(result)

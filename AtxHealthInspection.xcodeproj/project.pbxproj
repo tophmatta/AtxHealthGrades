@@ -18,6 +18,7 @@
 		F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1402C3B48590064F570 /* SocrataClientTests.swift */; };
 		F152C1432C3CAF990064F570 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1422C3CAF990064F570 /* MapView.swift */; };
 		F15471BC2CED718B00F65095 /* FavoritesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15471BB2CED717600F65095 /* FavoritesTests.swift */; };
+		F15471C22CF0F21F00F65095 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15471C12CF0F21F00F65095 /* SearchBar.swift */; };
 		F1609A352CE300BE00988712 /* AppProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1609A342CE300BE00988712 /* AppProgressView.swift */; };
 		F1609A372CE300D200988712 /* ProximityResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1609A362CE300D200988712 /* ProximityResultsView.swift */; };
 		F1609A392CE3015600988712 /* MapButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1609A382CE3015200988712 /* MapButtons.swift */; };
@@ -35,7 +36,6 @@
 		F1EACEE62C371C73006BE3F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1EACEE52C371C73006BE3F9 /* Assets.xcassets */; };
 		F1EACEE92C371C73006BE3F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1EACEE82C371C73006BE3F9 /* Preview Assets.xcassets */; };
 		F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEEF2C371DED006BE3F9 /* Constants.swift */; };
-		F1EACEF22C37368B006BE3F9 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEF12C37368B006BE3F9 /* SearchView.swift */; };
 		F1EACEF42C373CF5006BE3F9 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEF32C373CF5006BE3F9 /* Report.swift */; };
 		F1EACEF82C374B89006BE3F9 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEF72C374B89006BE3F9 /* SearchViewModel.swift */; };
 		F1F55FAB2C38680B005C0F30 /* FoodBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */; };
@@ -66,6 +66,7 @@
 		F152C1402C3B48590064F570 /* SocrataClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataClientTests.swift; sourceTree = "<group>"; };
 		F152C1422C3CAF990064F570 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		F15471BB2CED717600F65095 /* FavoritesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTests.swift; sourceTree = "<group>"; };
+		F15471C12CF0F21F00F65095 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		F1609A342CE300BE00988712 /* AppProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProgressView.swift; sourceTree = "<group>"; };
 		F1609A362CE300D200988712 /* ProximityResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityResultsView.swift; sourceTree = "<group>"; };
 		F1609A382CE3015200988712 /* MapButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtons.swift; sourceTree = "<group>"; };
@@ -83,7 +84,6 @@
 		F1EACEE52C371C73006BE3F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F1EACEE82C371C73006BE3F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F1EACEEF2C371DED006BE3F9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		F1EACEF12C37368B006BE3F9 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		F1EACEF32C373CF5006BE3F9 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		F1EACEF72C374B89006BE3F9 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBackground.swift; sourceTree = "<group>"; };
@@ -128,7 +128,7 @@
 				F1D5F5292CE7D22200CE7B0C /* FavoritesButton.swift */,
 				F10706212CE5B612005B3399 /* ReportChart.swift */,
 				F1EACEE12C371C71006BE3F9 /* MainView.swift */,
-				F1EACEF12C37368B006BE3F9 /* SearchView.swift */,
+				F15471C12CF0F21F00F65095 /* SearchBar.swift */,
 				F10B6A9A2C508FA0001536B4 /* ReportList.swift */,
 				F14FA4222CDC52940011B10A /* ScoreItem.swift */,
 				F1609A342CE300BE00988712 /* AppProgressView.swift */,
@@ -331,7 +331,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1EACEF22C37368B006BE3F9 /* SearchView.swift in Sources */,
 				F1609A352CE300BE00988712 /* AppProgressView.swift in Sources */,
 				F10706222CE5B618005B3399 /* ReportChart.swift in Sources */,
 				F152C1432C3CAF990064F570 /* MapView.swift in Sources */,
@@ -344,6 +343,7 @@
 				F152C1322C3B3C120064F570 /* SocrataAPIClient.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */,
 				F14FA4232CDC52940011B10A /* ScoreItem.swift in Sources */,
+				F15471C22CF0F21F00F65095 /* SearchBar.swift in Sources */,
 				F1609A392CE3015600988712 /* MapButtons.swift in Sources */,
 				F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */,
 				F13860582C3CBCEC0052EBC8 /* LocationModel.swift in Sources */,
