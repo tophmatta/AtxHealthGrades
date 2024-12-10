@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Tab {
-    case search, map
+    case map
 }
 
 struct MainView: View {
@@ -16,7 +16,7 @@ struct MainView: View {
     @State private var mapViewModel: MapViewModel
     @State private var favoritesViewModel: FavoritesViewModel
     
-    @State private var selectedTab: Tab = .search
+    @State private var selectedTab: Tab = .map
     
     init(client: SocrataClientProtocol = SocrataAPIClient()) {
         _searchViewModel = State(wrappedValue: SearchViewModel(client))

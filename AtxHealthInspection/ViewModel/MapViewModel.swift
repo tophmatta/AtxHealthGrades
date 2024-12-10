@@ -78,9 +78,7 @@ import OrderedCollections
         currentPOIs = pois.toOrderedDictionary()
     }
     
-    func triggerProximitySearch(at location: CLLocationCoordinate2D?) async {
-        guard let location else { return }
-        
+    func triggerProximitySearch(at location: CLLocationCoordinate2D) async {        
         let results = try? await client.search(inRadiusOf: location).filterOldDuplicates()
         
         guard let results else { return }
@@ -121,6 +119,10 @@ import OrderedCollections
         } else if results.elements.count > 1  {
             cameraPosition = .automatic
         }
+    }
+    
+    func updateCameraPosition(to center: CLLocationCoordinate2D) {
+        cameraPosition = .camera(.init(centerCoordinate: center, distance: 15000))
     }
 }
 
