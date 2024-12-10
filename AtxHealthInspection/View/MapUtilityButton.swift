@@ -7,28 +7,7 @@
 
 import SwiftUI
 
-struct ClearButton: View {
-    @Environment(MapViewModel.self) var viewModel
-    
-    var body: some View {
-        if !viewModel.currentPOIs.isEmpty {
-            Button {
-                viewModel.clearPOIs()
-            } label: {
-                Text("Clear")
-                    .foregroundStyle(.green)
-                    .padding(10)
-            }
-            .background(
-                Capsule()
-                    .fill(.surface)
-                    .shadow(radius: 5)
-            )
-        }
-    }
-}
-
-struct MapActionButton: View {
+struct MapUtilityButton: View {
     let type: ActionButtonType
     let action: () -> ()
     

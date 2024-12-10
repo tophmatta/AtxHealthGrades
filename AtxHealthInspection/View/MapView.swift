@@ -20,11 +20,11 @@ struct MapView: View {
     @State private var isSearching = false
     
     @State private var circleOverlay: MapCircle?
-        
+    
     var body: some View {
         @Bindable var bindableMapViewModel = mapViewModel
         @Bindable var bindableSearchViewModel = searchViewModel
-
+        
         ZStack {
             Map(position: $bindableMapViewModel.cameraPosition) {
                 UserAnnotation()
@@ -57,7 +57,7 @@ struct MapView: View {
             )
             .overlay(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
-                    MapActionButton(type: .radius) {
+                    MapUtilityButton(type: .radius) {
                         Task {
                             guard let mapCenter else { return }
                             mapViewModel.clearPOIs()
@@ -67,17 +67,13 @@ struct MapView: View {
                             circleOverlay = nil
                         }
                     }
-                    MapActionButton(type: .location) {
+                    MapUtilityButton(type: .location) {
                         mapViewModel.goToUserLocation()
                     }
                 }
             }
             .overlay(alignment: .top) {
-                HStack(alignment: .center) {
-                    SearchBar()
-                    ClearButton()
-                }
-                .padding(15)
+                SearchBar()
             }
             .onAppear {
                 mapViewModel.checkLocationAuthorization()
