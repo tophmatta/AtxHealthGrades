@@ -113,7 +113,7 @@ private struct MapMarker: View {
         Image(systemName: "mappin.square.fill")
             .resizable()
             .annotationSize()
-            .foregroundStyle(.white, .yellow)
+            .foregroundStyle(.white, .green)
             .onTapGesture {
                 selected = selected == group ? nil : group
             }
