@@ -105,3 +105,19 @@ extension Double {
         return (self * divisor).rounded() / divisor
     }
 }
+
+extension CLLocationCoordinate2D {
+    static private let austinBounds = (
+        minLat: 30.093, // Approximate southern boundary
+        maxLat: 30.507, // Approximate northern boundary
+        minLon: -97.917, // Approximate western boundary
+        maxLon: -97.586  // Approximate eastern boundary
+    )
+
+    func isInAustin() -> Bool {
+        self.latitude >= CLLocationCoordinate2D.austinBounds.minLat &&
+        self.latitude <= CLLocationCoordinate2D.austinBounds.maxLat &&
+        self.longitude >= CLLocationCoordinate2D.austinBounds.minLon &&
+        self.longitude <= CLLocationCoordinate2D.austinBounds.maxLon
+    }
+}
