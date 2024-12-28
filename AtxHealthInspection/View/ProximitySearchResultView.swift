@@ -24,15 +24,6 @@ struct ProximityResultsListView: View {
                     }
                 }
             }
-            Divider()
-            Button {
-                viewModel.openInMaps(coordinate: group.coordinate, placeName: group.address)
-            } label: {
-                Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
-                    .resizable()
-                    .buttonSize()
-                    .foregroundColor(.green)
-            }
         }
         .presentationDetents([.medium, .large])
         .presentationCompactAdaptation(.none)
@@ -70,6 +61,19 @@ struct ProximityReportDetail: View {
                     Text(result.date.toReadable())
                         .font(.title3)
                         .foregroundStyle(.onSurface)
+                }
+            }
+        }
+        .toolbarRole(.automatic)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                if let coord = data.coordinate {
+                    Button {
+                        viewModel.openInMaps(coordinate: coord, placeName: data.address)
+                    } label: {
+                        Text("Open in Maps")
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
             }
         }
