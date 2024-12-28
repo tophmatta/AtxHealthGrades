@@ -1,5 +1,5 @@
 //
-//  ProximityResultsView.swift
+//  ProximityResultsListView.swift
 //  AtxHealthInspection
 //
 //  Created by Toph Matta on 11/11/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct ProximityResultsView: View {
+struct ProximityResultsListView: View {
     @Environment(MapViewModel.self) var viewModel
     
     let group: LocationReportGroup

@@ -1,5 +1,5 @@
 //
-//  ReportList.swift
+//  TextSearchResultView.swift
 //  AtxHealthInspection
 //
 //  Created by Toph Matta on 7/23/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ReportList: View {
+struct TextSearchResultView: View {
     let reports: [Report]
     
     var body: some View {

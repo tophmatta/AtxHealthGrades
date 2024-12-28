@@ -39,10 +39,10 @@ struct MapView: View {
                 }
             }
             .sheet(item: $poiSelected) {
-                ProximityResultsView(group: $0)
+                ProximityResultsListView(group: $0)
             }
             .sheet(isPresented: $bindableSearchViewModel.currentReports.isNotEmpty()) {
-                ReportList(reports: searchViewModel.currentReports)
+                TextSearchResultView(reports: searchViewModel.currentReports)
                     .presentationDetents([.medium, .large])
                     .presentationCompactAdaptation(.none)
             }
