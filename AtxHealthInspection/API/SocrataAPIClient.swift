@@ -51,7 +51,7 @@ struct SocrataAPIClient: SocrataClientProtocol {
             let result = try await client.get(url, forType: [Report].self)
             
             guard !result.isEmpty else {
-                throw ClientError.emptyResponse
+                throw ClientError.emptyTextSearchResponse
             }
             
             return result
