@@ -5,7 +5,7 @@
 //  Created by Toph Matta on 11/18/24.
 //
 
-import SwiftUICore
+import SwiftUI
 
 @MainActor
 @Observable final class FavoritesViewModel {

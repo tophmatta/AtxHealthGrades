@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct SearchBar: View {
+    @Binding var error: Error?
+    @Binding var isSearching: Bool
     @Environment(SearchViewModel.self) var searchViewModel
     @State private var text: String = ""
     @FocusState private var isFocused: Bool
@@ -34,8 +36,14 @@ struct SearchBar: View {
             .focused($isFocused)
             .onSubmit {
                 Task {
-                    await searchViewModel.triggerSearch(value: text)
+                    isSearching = true
+                    do {
+                        try await searchViewModel.triggerSearch(value: text)
+                    } catch let clientError {
+                        error = clientError
+                    }
                     isFocused = false
+                    isSearching = false
                 }
             }
             .keyboardType(.webSearch)
@@ -78,7 +86,7 @@ struct ClearButton: View {
 
 #Preview {
     HStack {
-        SearchBar()
+        SearchBar(error: .constant(nil), isSearching: .constant(false))
             .environment(SearchViewModel(SocrataAPIClient()))
         ClearButton()
             .environment(MapViewModel(SocrataAPIClient(), locationModel: LocationModel(), poiGroup: LocationReportGroup.test))

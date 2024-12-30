@@ -78,10 +78,16 @@ import OrderedCollections
         currentPOIs = pois.toOrderedDictionary()
     }
     
-    func triggerProximitySearch(at location: CLLocationCoordinate2D) async {        
-        let results = try? await client.search(inRadiusOf: location).filterOldDuplicates()
+    func triggerProximitySearch(at location: CLLocationCoordinate2D) async throws {
+        guard location.isInAustin() else {
+            throw ClientError.notInBounds
+        }
         
-        guard let results else { return }
+        let results = try await client.search(inRadiusOf: location).filterOldDuplicates()
+        
+        guard !results.isEmpty else {
+            throw ClientError.emptyProximitySearchResponse
+        }
         
         let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
             guard let coordinate = result.coordinate else { return }

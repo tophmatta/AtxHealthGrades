@@ -6,13 +6,11 @@
 //
 
 import Foundation
-import SwiftUICore
+import SwiftUI
 
 @MainActor
 @Observable final class SearchViewModel {
     let client: SocrataClientProtocol
-
-    var error: Error? = nil
     var currentReports = [Report]()
     
     init(_ client: SocrataClientProtocol) {
@@ -23,11 +21,7 @@ import SwiftUICore
         currentReports = [Report]()
     }
     
-    func triggerSearch(value: String) async {
-        do {
-            currentReports = try await client.search(byName: value).filterOldDuplicates()
-        } catch let searchError {
-            error = searchError
-        }
+    func triggerSearch(value: String) async throws {
+        currentReports = try await client.search(byName: value).filterOldDuplicates()
     }
 }

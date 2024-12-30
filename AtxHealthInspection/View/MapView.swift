@@ -18,6 +18,7 @@ struct MapView: View {
     @State private var isKeyboardVisible = false
     @State private var showDetail = false
     @State private var isSearching = false
+    @State private var error: Swift.Error?
     
     @State private var circleOverlay: MapCircle?
     
@@ -46,15 +47,7 @@ struct MapView: View {
                     .presentationDetents([.medium, .large])
                     .presentationCompactAdaptation(.none)
             }
-            .alert(
-                "Something went wrong...",
-                isPresented: $bindableSearchViewModel.error.isNotNil(),
-                presenting: searchViewModel.error,
-                actions: { _ in },
-                message: { error in
-                    Text(error.localizedDescription).padding(.top, 15)
-                }
-            )
+            .errorAlert(error: $error)
             .overlay(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
                     MapUtilityButton(type: .radius) {
@@ -63,7 +56,9 @@ struct MapView: View {
                             mapViewModel.clearPOIs()
                             mapViewModel.updateCameraPosition(to: mapCenter)
                             await animateCircle(at: mapCenter)
+                            isSearching = true
                             await launchProximitySearch(with: mapCenter)
+                            isSearching = false
                             circleOverlay = nil
                         }
                     }
@@ -73,7 +68,7 @@ struct MapView: View {
                 }
             }
             .overlay(alignment: .top) {
-                SearchBar()
+                SearchBar(error: $error, isSearching: $isSearching)
             }
             .onAppear {
                 mapViewModel.checkLocationAuthorization()
@@ -98,9 +93,11 @@ struct MapView: View {
     }
     
     private func launchProximitySearch(with center: CLLocationCoordinate2D) async {
-        isSearching = true
-        await mapViewModel.triggerProximitySearch(at: center)
-        isSearching = false
+        do {
+            try await mapViewModel.triggerProximitySearch(at: center)
+        } catch let clientError {
+            error = clientError
+        }
     }
 }
 

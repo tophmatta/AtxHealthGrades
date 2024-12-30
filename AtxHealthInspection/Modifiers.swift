@@ -5,7 +5,7 @@
 //  Created by Toph Matta on 10/28/24.
 //
 
-import SwiftUICore
+import SwiftUI
 import UIKit
 
 

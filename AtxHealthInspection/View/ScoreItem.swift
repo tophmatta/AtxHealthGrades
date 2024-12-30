@@ -5,7 +5,7 @@
 //  Created by Toph Matta on 11/6/24.
 //
 
-import SwiftUICore
+import SwiftUI
 
 
 struct ScoreItem: View {
