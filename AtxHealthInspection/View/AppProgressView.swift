@@ -14,7 +14,7 @@ struct AppProgressView: View {
     var body: some View {
         if isEnabled {
             Color.black.opacity(0.4)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea(.all)
             ProgressView()
                 .progressViewStyle(CircularProgressViewStyle(tint: .onSurface))
                 .controlSize(.large)

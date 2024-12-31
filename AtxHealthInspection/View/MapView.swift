@@ -77,10 +77,10 @@ struct MapView: View {
             .onMapCameraChange(frequency: .continuous) { mapCameraUpdateContext in
                 mapCenter = mapCameraUpdateContext.camera.centerCoordinate
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
             
             AppProgressView(isEnabled: $isSearching)
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     private func animateCircle(at center: CLLocationCoordinate2D) async {
