@@ -70,7 +70,7 @@ struct ClearButton: View {
             Button {
                 viewModel.clearPOIs()
             } label: {
-                Text("Clear")
+                Text("Clear Map")
                     .foregroundStyle(.green)
                     .padding(10)
             }

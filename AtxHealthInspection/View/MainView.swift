@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Tab {
-    case map
+    case map, favorites
 }
 
 struct MainView: View {
@@ -39,6 +39,12 @@ struct MainView: View {
                     Label("Map", systemImage: "map")
                 }
                 .tag(Tab.map)
+            FavoritesView()
+                .environment(favoritesViewModel)
+                .tabItem {
+                    Label("Favorites", systemImage: "star")
+                }
+                .tag(Tab.favorites)
         }
         .tint(Color.green)
     }
