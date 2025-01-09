@@ -29,7 +29,7 @@
 		F16420682CC344AD00E87F66 /* InputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16420672CC344AA00E87F66 /* InputTests.swift */; };
 		F17D9F042CD91B0B0014851D /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = F17D9F032CD91B0B0014851D /* Collections */; };
 		F1D5F5262CE6FDDA00CE7B0C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F1D5F5252CE6FDDA00CE7B0C /* README.md */; };
-		F1D5F5282CE7BE7C00CE7B0C /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D5F5272CE7BE7400CE7B0C /* FavoritesManager.swift */; };
+		F1D5F5282CE7BE7C00CE7B0C /* FavoritesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D5F5272CE7BE7400CE7B0C /* FavoritesStore.swift */; };
 		F1D5F52A2CE7D22800CE7B0C /* FavoritesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D5F5292CE7D22200CE7B0C /* FavoritesButton.swift */; };
 		F1D5F52C2CEC399000CE7B0C /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D5F52B2CEC398B00CE7B0C /* FavoritesViewModel.swift */; };
 		F1EACEE02C371C71006BE3F9 /* AtxHealthInspectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EACEDF2C371C71006BE3F9 /* AtxHealthInspectionApp.swift */; };
@@ -78,7 +78,7 @@
 		F16420632CC342B200E87F66 /* test04loungedata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test04loungedata.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		F16420672CC344AA00E87F66 /* InputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTests.swift; sourceTree = "<group>"; };
 		F1D5F5252CE6FDDA00CE7B0C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		F1D5F5272CE7BE7400CE7B0C /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
+		F1D5F5272CE7BE7400CE7B0C /* FavoritesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesStore.swift; sourceTree = "<group>"; };
 		F1D5F5292CE7D22200CE7B0C /* FavoritesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesButton.swift; sourceTree = "<group>"; };
 		F1D5F52B2CEC398B00CE7B0C /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		F1EACEDC2C371C71006BE3F9 /* AtxHealthInspection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtxHealthInspection.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,7 +203,7 @@
 				F1609A3B2CE301F600988712 /* View */,
 				F1609A3D2CE3022B00988712 /* ViewModel */,
 				F1609A3E2CE3027000988712 /* Model */,
-				F1D5F5272CE7BE7400CE7B0C /* FavoritesManager.swift */,
+				F1D5F5272CE7BE7400CE7B0C /* FavoritesStore.swift */,
 				F1F55FAC2C38E632005C0F30 /* Extensions.swift */,
 				F11C8CB72CD072A300409F83 /* Modifiers.swift */,
 				F1EACEEF2C371DED006BE3F9 /* Constants.swift */,
@@ -360,7 +360,7 @@
 				F10B6A992C508ABB001536B4 /* ClientError.swift in Sources */,
 				F138605A2C3CBDF70052EBC8 /* MapViewModel.swift in Sources */,
 				F1F55FAD2C38E632005C0F30 /* Extensions.swift in Sources */,
-				F1D5F5282CE7BE7C00CE7B0C /* FavoritesManager.swift in Sources */,
+				F1D5F5282CE7BE7C00CE7B0C /* FavoritesStore.swift in Sources */,
 				F1F55FAB2C38680B005C0F30 /* FoodBackground.swift in Sources */,
 				F11C8CB82CD072A700409F83 /* Modifiers.swift in Sources */,
 				F164205D2CC0A29D00E87F66 /* APIClient.swift in Sources */,

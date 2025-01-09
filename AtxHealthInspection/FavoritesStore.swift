@@ -6,10 +6,8 @@
 //
 
 import Foundation
-import Combine
 
-
-actor FavoritesManager {
+actor FavoritesStore {
     private let defaults: UserDefaults
     
     init() {

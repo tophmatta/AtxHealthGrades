@@ -10,30 +10,30 @@ import XCTest
 
 final class FavoritesTests: XCTestCase {
     
-    var mgr: FavoritesManager!
+    var store: FavoritesStore!
     
     override func setUp() {
         super.setUp()
-        mgr = FavoritesManager()
+        store = FavoritesStore()
     }
     
     override func tearDown() {
         super.tearDown()
-        mgr = nil
+        store = nil
     }
     
     func testToggleValueAddsToFavorites() async {
         let report = Report.test
-        await mgr.toggleValue(report: report)
-        let values = await mgr.getValues()
+        await store.toggleValue(report: report)
+        let values = await store.getValues()
         XCTAssertEqual(values["123"], "Test Restaurant")
     }
     
     func testRemoveFavorite() async throws {
         let report = Report.test
-        await mgr.toggleValue(report: report)
-        await mgr.toggleValue(report: report)
-        let isFavorite = await mgr.getValues().values.contains("Test Restaurant")
+        await store.toggleValue(report: report)
+        await store.toggleValue(report: report)
+        let isFavorite = await store.getValues().values.contains("Test Restaurant")
         XCTAssertFalse(isFavorite, "Expected 'test-id' to be removed from favorites.")
     }
 }

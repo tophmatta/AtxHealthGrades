@@ -10,19 +10,19 @@ import SwiftUI
 @MainActor
 @Observable final class FavoritesViewModel {
     var favoritesNames: Set<String> = []
-    private let manager: FavoritesManager
+    private let store: FavoritesStore
     
-    init(_ manager: FavoritesManager = FavoritesManager()) {
-        self.manager = manager
+    init(_ store: FavoritesStore = FavoritesStore()) {
+        self.store = store
         
         Task {
-            favoritesNames = await Set(manager.getValues().values)
+            favoritesNames = await Set(store.getValues().values)
         }
     }
     
     func toggleFavorite(report: Report) async {
-        await manager.toggleValue(report: report)
-        favoritesNames = await Set(manager.getValues().values)
+        await store.toggleValue(report: report)
+        favoritesNames = await Set(store.getValues().values)
     }
     
     func isFavorite(_ report: Report) async -> Bool {
