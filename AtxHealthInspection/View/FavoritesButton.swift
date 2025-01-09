@@ -9,21 +9,24 @@ import SwiftUI
 
 struct FavoriteButton: View {
     @Environment(FavoritesViewModel.self) var favoritesViewModel
-    let id: String
+    @State private var isFavorite: Bool = false
+    let report: Report
     
     var body: some View {
         Button {
-            favoritesViewModel.toggleFavorite(id: id)
+            Task {
+                await favoritesViewModel.toggleFavorite(report: report)
+                isFavorite = await favoritesViewModel.isFavorite(report)
+            }
         } label: {
-            Label("Toggle Favorite", systemImage: isSet(id) ? "star.fill" : "star")
+            Label("Toggle Favorite", systemImage: isFavorite ? "star.fill" : "star")
                 .labelStyle(.iconOnly)
-                .foregroundStyle(isSet(id) ? .green : .gray)
+                .foregroundStyle(isFavorite ? .green : .gray)
                 .contentShape(Rectangle()) // makes only the button (not row) tappable
         }
         .buttonStyle(PlainButtonStyle()) // makes only the button (not row) tappable
-    }
-    
-    private func isSet(_ id: String) -> Bool {
-        favoritesViewModel.isFavorite(id)
+        .task {
+            isFavorite = await favoritesViewModel.isFavorite(report)
+        }
     }
 }

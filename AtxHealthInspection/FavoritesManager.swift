@@ -25,36 +25,37 @@ actor FavoritesManager {
         }
     }
     
-    func toggleValue(id: String) {
-        if getValues().contains(id) {
-            remove(id)
+    func toggleValue(report: Report) {
+        let values = getValues()
+        let favoriteExists = values[report.facilityId] != nil
+        if favoriteExists {
+            remove(report)
         } else {
-            add(id)
+            add(report)
         }
     }
     
-    private func add(_ id: String) {
+    private func add(_ report: Report) {
         var values = getValues()
-        values.insert(id)
+        values[report.facilityId] = report.restaurantName
         persist(values)
     }
     
-    private func remove(_ id: String) {
+    private func remove(_ report: Report) {
         var values = getValues()
-        values.remove(id)
+        values.removeValue(forKey: report.facilityId)
         persist(values)
     }
     
-    private func persist(_ favoriteIDs: Set<String>) {
-        defaults.set(Array(favoriteIDs), forKey: UserDefaultsKeys.favoriteIDs)
+    private func persist(_ values: [String: String]) {
+        defaults.set(values, forKey: UserDefaultsKeys.favorites)
     }
     
-    func getValues() -> Set<String> {
-        let array = defaults.array(forKey: UserDefaultsKeys.favoriteIDs) as? [String] ?? []
-        return Set(array)
+    func getValues() -> [String: String] {
+        defaults.dictionary(forKey: UserDefaultsKeys.favorites) as? [String : String] ?? [:]
     }
 }
 
 private struct UserDefaultsKeys {
-    static let favoriteIDs = "favoriteIDs"
+    static let favorites = "favoriteIDs"
 }

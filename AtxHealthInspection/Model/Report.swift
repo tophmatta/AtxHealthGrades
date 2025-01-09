@@ -94,7 +94,7 @@ extension Report {
         }
     }
     
-    private init(restaurantName: String = "N/A", facilityId: String = "12345", score: Int = 99, address: String = "N/A", coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(), date: Date = Date()) {
+    private init(restaurantName: String, facilityId: String, score: Int, address: String, coordinate: CLLocationCoordinate2D, date: Date) {
         self.restaurantName = restaurantName
         self.facilityId = facilityId
         self.score = score
@@ -132,8 +132,6 @@ extension Report: CustomStringConvertible {
         return desc
     }
     
-    static let empty = Report()
-    
-    static let test = Report(restaurantName: "Toph's Delight", score: 99, address: "123 Cucumber Lane", coordinate: CLLocationCoordinate2D(latitude: 30.194818005,longitude: -97.843463001))
+    static let test = Report(restaurantName: "Test Restaurant", facilityId: "123", score: 99, address: "123 Cucumber Lane", coordinate: CLLocationCoordinate2D(latitude: 30.194818005, longitude: -97.843463001), date: Date())
 }
 #endif

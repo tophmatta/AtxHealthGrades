@@ -56,7 +56,7 @@ struct ReportItem: View {
             }
             .buttonStyle(PlainButtonStyle()) // makes only the button (not row) tappable
             Spacer()
-            FavoriteButton(id: report.favoriteId)
+            FavoriteButton(report: report)
                 .padding(.trailing, 15)
         }
         .alert(isPresented: $showError, error: ClientError.invalidLocation) {

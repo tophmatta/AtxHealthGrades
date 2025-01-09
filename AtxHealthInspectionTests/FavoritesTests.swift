@@ -22,16 +22,18 @@ final class FavoritesTests: XCTestCase {
         mgr = nil
     }
     
-    func testAddFavorite() async throws {
-        await mgr.toggleValue(id: "test-id")
-        let isFavorite = await mgr.getValues().contains("test-id")
-        XCTAssertTrue(isFavorite, "Expected 'test-id' to be a favorite.")
+    func testToggleValueAddsToFavorites() async {
+        let report = Report.test
+        await mgr.toggleValue(report: report)
+        let values = await mgr.getValues()
+        XCTAssertEqual(values["123"], "Test Restaurant")
     }
     
     func testRemoveFavorite() async throws {
-        await mgr.toggleValue(id: "test-id")
-        await mgr.toggleValue(id: "test-id")
-        let isFavorite = await mgr.getValues().contains("test-id")
+        let report = Report.test
+        await mgr.toggleValue(report: report)
+        await mgr.toggleValue(report: report)
+        let isFavorite = await mgr.getValues().values.contains("Test Restaurant")
         XCTAssertFalse(isFavorite, "Expected 'test-id' to be removed from favorites.")
     }
 }
