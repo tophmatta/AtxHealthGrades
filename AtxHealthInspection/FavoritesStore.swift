@@ -25,9 +25,9 @@ actor FavoritesStore {
     
     func toggleValue(report: Report) {
         let values = getValues()
-        let favoriteExists = values[report.facilityId] != nil
+        let favoriteExists = values[report.favoriteId] != nil
         if favoriteExists {
-            remove(report)
+            remove(by: report.favoriteId)
         } else {
             add(report)
         }
@@ -39,9 +39,9 @@ actor FavoritesStore {
         persist(values)
     }
     
-    private func remove(_ report: Report) {
+    func remove(by id: String) {
         var values = getValues()
-        values.removeValue(forKey: report.facilityId)
+        values.removeValue(forKey: id)
         persist(values)
     }
     
