@@ -30,7 +30,7 @@ struct ReportItem: View {
     @State private var showError = false
     
     let report: Report
-        
+    
     var body: some View {
         HStack {
             ScoreItem(report.score)
@@ -55,7 +55,7 @@ struct ReportItem: View {
                     .contentShape(Rectangle()) // makes only the button (not row) tappable
             }
             .buttonStyle(PlainButtonStyle()) // makes only the button (not row) tappable
-            Spacer()
+            .padding(.trailing, 30)
             FavoriteButton(report: report)
                 .padding(.trailing, 15)
         }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import OrderedCollections
 
 @MainActor
 @Observable final class FavoritesViewModel {
