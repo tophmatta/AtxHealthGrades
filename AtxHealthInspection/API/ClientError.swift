@@ -8,13 +8,13 @@
 import Foundation
 
 enum ClientError: Error, LocalizedError {
-    case invalidUrl, decodingError, emptyValue, invalidLocation, invalidResponse, networkError, emptyTextSearchResponse, emptyProximitySearchResponse, notInBounds
+    case invalidUrl, decodingError, emptyInputValue, invalidLocation, invalidResponse, networkError, emptyResponse, emptyTextSearchResponse, emptyProximitySearchResponse, notInBounds
     
     var errorDescription: String? {
         switch self {
-        case .emptyValue:
+        case .emptyInputValue:
             return "Empty Text"
-        case .emptyTextSearchResponse, .emptyProximitySearchResponse:
+        case .emptyResponse, .emptyTextSearchResponse, .emptyProximitySearchResponse:
             return "No Results"
         case .networkError:
             return "Network Issue"
@@ -29,8 +29,10 @@ enum ClientError: Error, LocalizedError {
 
     var recoverySuggestion: String? {
         switch self {
-        case .emptyValue:
+        case .emptyInputValue:
             return "The search value cannot be empty. Please enter a value."
+        case .emptyResponse:
+            return "Your search did not yield any results. Please try again."
         case .emptyTextSearchResponse:
             return "Your search did not yield any results. Try searching with fewer words or perform a map radius search."
         case .emptyProximitySearchResponse:
@@ -44,6 +46,5 @@ enum ClientError: Error, LocalizedError {
         default:
             return "Unknown Error"
         }
-
     }
 }

@@ -26,8 +26,14 @@ struct APIClient: APIClientProtocol {
                   (200...299).contains(httpResponse.statusCode) else {
                 throw ClientError.invalidResponse
             }
+            
+            guard !data.isEmpty else {
+                throw ClientError.emptyResponse
+            }
+            
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
             return try decoder.decode(type, from: data)
         } catch is DecodingError {
             throw ClientError.decodingError

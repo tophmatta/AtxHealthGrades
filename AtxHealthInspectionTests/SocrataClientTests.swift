@@ -43,14 +43,31 @@ final class SocrataClientTests: XCTestCase {
         }
     }
     
+    func testGetWithInvalidInput() async throws {
+        let data = emptyData
+        
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, data)
+        }
+        
+        do {
+            _ = try await mockClient.search(byName: "!@#$%^&*")
+        } catch let error as ClientError {
+            XCTAssertEqual(error, .emptyTextSearchResponse)
+        } catch {
+            XCTFail("Expected ClientError.emptyTextSearchResponse, but got unexpected error: \(error)")
+        }
+    }
+    
     func testGetWithEmptyInput() async throws {
         do {
             _ = try await mockClient.search(byName: "")
             XCTFail("Expected failure for empty input, but got success")
         } catch let error as ClientError {
-            XCTAssertEqual(error, .emptyValue)
+            XCTAssertEqual(error, .emptyInputValue)
         } catch {
-            XCTFail("Expected ClientError.emptyValue, but got unexpected error: \(error)")
+            XCTFail("Expected ClientError.emptyInputValue, but got unexpected error: \(error)")
         }
     }
     
@@ -59,14 +76,14 @@ final class SocrataClientTests: XCTestCase {
             _ = try await mockClient.search(byName: "    ")
             XCTFail("Expected failure for blank input, but got success")
         } catch let error as ClientError {
-            XCTAssertEqual(error, .emptyValue)
+            XCTAssertEqual(error, .emptyInputValue)
         } catch {
-            XCTFail("Expected ClientError.emptyValue, but got unexpected error: \(error)")
+            XCTFail("Expected ClientError.emptyInputValue, but got unexpected error: \(error)")
         }
     }
     
     func testGetWithNonexistantPlace() async throws {
-        let data = mockContentData
+        let data = emptyData
 
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
@@ -78,14 +95,18 @@ final class SocrataClientTests: XCTestCase {
         } catch let error as ClientError {
             XCTAssertEqual(error, .emptyTextSearchResponse)
         } catch {
-            XCTFail("Expected ClientError.emptyValue, but got unexpected error: \(error)")
+            XCTFail("Expected ClientError.emptyTextSearchResponse, but got unexpected error: \(error)")
         }
     }
 }
 
 extension XCTestCase {
     var mockContentData: Data {
-        return getData(name: "test04loungedata")
+        getData(name: "test04loungedata")
+    }
+    
+    var emptyData: Data {
+        "".data(using: .utf8)!
     }
 
     func getData(name: String, withExtension: String = "json") -> Data {

@@ -25,12 +25,14 @@ struct SocrataAPIClient: SocrataClientProtocol {
     func search(byName value: String) async throws -> [Report] {
         let str = value.trimForQuery()
         
-        guard str.isNotEmpty else { throw ClientError.emptyValue }
+        guard str.isNotEmpty else { throw ClientError.emptyInputValue }
         
         let query = "lower(restaurant_name) like '%\(str)%'"
         
         do {
             return try await get(query)
+        } catch ClientError.emptyResponse {
+            throw ClientError.emptyTextSearchResponse
         } catch {
             throw error
         }
@@ -43,18 +45,10 @@ struct SocrataAPIClient: SocrataClientProtocol {
                 .create()
                 .addQuery(rawQuery)
                 .build()
-        else {
-            throw ClientError.invalidUrl
-        }
+        else { throw ClientError.invalidUrl }
                 
         do {
-            let result = try await client.get(url, forType: [Report].self)
-            
-            guard !result.isEmpty else {
-                throw ClientError.emptyTextSearchResponse
-            }
-            
-            return result
+            return try await client.get(url, forType: [Report].self)
         } catch {
             throw error
         }
@@ -66,6 +60,8 @@ struct SocrataAPIClient: SocrataClientProtocol {
         let query = "within_circle(address, \(location.latitude), \(location.longitude), \(Constants.Distance.oneMileInMeters))"
         do {
             return try await get(query)
+        } catch ClientError.emptyResponse {
+            throw ClientError.emptyProximitySearchResponse
         } catch {
             throw error
         }
