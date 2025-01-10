@@ -32,7 +32,7 @@ enum ClientError: Error, LocalizedError {
         case .emptyValue:
             return "The search value cannot be empty. Please enter a value."
         case .emptyTextSearchResponse:
-            return "Your search did not yield any results. Try shortening the restaurant name or searching with fewer words."
+            return "Your search did not yield any results. Try searching with fewer words or perform a map radius search."
         case .emptyProximitySearchResponse:
             return "Your search area did not yield any results. Please move the map and try again."
         case .networkError:
