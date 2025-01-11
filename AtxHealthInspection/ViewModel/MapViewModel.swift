@@ -12,18 +12,6 @@ import Foundation
 import MapKit
 import OrderedCollections
 
-
-
-/*
- TODO: -
- - explore mklocalsearch to see what other details i can pull up on a place and perhaps use a built in detail accessory view to show
- - proper error handling in proximity search - no internet, no results, etc.
- - list top restaurants in an area that have had consistent high scores
- - insights button in history detail view interpretting the data
- - segmented control - search by: name, radius, top
- */
-
-
 @MainActor
 @Observable final class MapViewModel {
     typealias AddressKey = String
