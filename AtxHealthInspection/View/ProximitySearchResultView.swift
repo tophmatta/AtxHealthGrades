@@ -83,14 +83,7 @@ struct ProximityReportDetail: View {
         .toolbarRole(.automatic)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                if let coord = data.coordinate {
-                    Button {
-                        viewModel.openInMaps(coordinate: coord, placeName: data.address)
-                    } label: {
-                        Text("Open in Maps")
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
+                FavoriteButton(report: data)
             }
         }
         .task {

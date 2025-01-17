@@ -97,16 +97,7 @@ import OrderedCollections
     func checkLocationAuthorization() {
         locationModel.checkAuthorization()
     }
-    
-    func openInMaps(coordinate: CLLocationCoordinate2D, placeName: String? = nil) {
-        let destination = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
-        destination.name = placeName
         
-        destination.openInMaps(launchOptions: [
-            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-        ])
-    }
-    
     private func updateCameraPosition(for results: OrderedDictionary<AddressKey, LocationReportGroup>) {
         if results.elements.count == 1 {
             cameraPosition = .camera(.init(centerCoordinate: results.values.first!.coordinate, distance: 1000))
