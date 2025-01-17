@@ -8,7 +8,7 @@ ATX Health Inspection is a mobile app designed to help users access restaurant h
 - **Map-Based Browsing**: Explore nearby restaurants based on the map center location and view inspection details for each location.
 - **Health Inspection Reports**: View detailed health inspection grades and scores for each restaurant, sourced from the City of Austin's open data platform.
 - **Dark Mode**: Use the app in dark mode so it's easier on your eyes or just for a cool vibe.
-- **Favorites**: Save frequently viewed restaurants for easy access. (WIP)
+- **Favorites**: Save frequently viewed restaurants for easy access.
 
 ## Technology Stack
 
@@ -17,7 +17,7 @@ ATX Health Inspection is a mobile app designed to help users access restaurant h
 - **Combine Framework**: Real-time data updates are powered by Apple's Combine framework, enabling reactive programming patterns.
 - **MapKit**: The interactive map leverages MapKit to display restaurant locations.
 - **Socrata Open Data API**: The City of Austin's public health data is accessed using Socrata's Open Data API, making it easy to keep health scores current and reliable.
-- **Swift Concurrency**: Modern concurrency in Swift, including `async/await` and structured concurrency, is used to handle API calls and asynchronous tasks, improving app performance and responsiveness.
+- **Swift Concurrency**: Modern concurrency in Swift, including `async/await` and structured concurrency, is used to handle API calls and asynchronous tasks, improving app performance and responsiveness. Actors are used to ensure synchronous read and write operations to UserDefaults when persisting favorited items.
 - **Unit Testing**: The app is tested with unit tests to ensure data integrity, maintain quality, and verify UI logic through MVVM.
 
 ## API Reference
