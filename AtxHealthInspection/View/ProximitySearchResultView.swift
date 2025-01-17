@@ -52,7 +52,21 @@ struct ProximityReportDetail: View {
         VStack(spacing: 0) {
             Text("Report History")
                 .font(.title)
-            ReportChart(data: viewModel.historicalReports.toPlottableData())
+            ZStack {
+                ReportChart(data: viewModel.historicalReports.toPlottableData())
+                if viewModel.historicalReports.count < 2 {
+                    Text("Not enough data")
+                        .foregroundStyle(.onSurface)
+                        .padding()
+                        .background {
+                            Rectangle().fill(.surface)
+                        }
+                        .clipShape(
+                            RoundedRectangle(cornerSize: CGSize(width: 10, height: 10), style: .continuous)
+                        )
+                }
+                
+            }
             Divider()
             List(viewModel.historicalReports) { result in
                 HStack {
