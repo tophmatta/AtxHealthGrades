@@ -46,6 +46,7 @@ struct ProximityReportRow: View {
 
 struct ProximityReportDetail: View {
     @Environment(MapViewModel.self) var viewModel
+    @State private var isLoading = true
     let data: Report
     
     var body: some View {
@@ -54,7 +55,8 @@ struct ProximityReportDetail: View {
                 .font(.title)
             ZStack {
                 ReportChart(data: viewModel.historicalReports.toPlottableData())
-                if viewModel.historicalReports.count < 2 {
+                AppProgressView(isEnabled: $isLoading)
+                if !isLoading && viewModel.historicalReports.count < 2 {
                     Text("Not enough data")
                         .foregroundStyle(.onSurface)
                         .padding()
@@ -93,6 +95,7 @@ struct ProximityReportDetail: View {
         }
         .task {
             await viewModel.getAllReports(with: data.facilityId)
+            isLoading = false
         }
         .onDisappear {
             viewModel.clearHistorical()
