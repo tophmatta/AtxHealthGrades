@@ -86,10 +86,11 @@ import OrderedCollections
         updatePOIs(poiGroup)
     }
     
-    func getAllReports(with facilityId: String) async {
+    func getAllReports(with facilityId: String) async -> [Report] {
         historicalReports = try! await client.getReports(forRestaurantWith: facilityId).sorted { $0.date > $1.date }
+        return historicalReports
     }
-    
+        
     func goToUserLocation() {
         cameraPosition = .userLocation(fallback: .automatic)
     }

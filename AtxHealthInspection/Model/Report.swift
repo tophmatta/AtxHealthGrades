@@ -115,6 +115,13 @@ extension Report: Hashable {
     }
 }
 
+extension Report {
+    func toPoiData() -> [String: LocationReportGroup]? {
+        guard let coordinate else { return nil }
+        return [parentId : LocationReportGroup(data: [self], address: address, coordinate: coordinate)]
+    }
+}
+
 #if DEBUG
 extension Report: CustomStringConvertible {
     var description: String {

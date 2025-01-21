@@ -12,7 +12,7 @@ import Collections
 struct MapView: View {
     @Environment(MapViewModel.self) var mapViewModel
     @Environment(SearchViewModel.self) var searchViewModel
-    @State private var poiSelected: LocationReportGroup?
+    @Binding var poiSelected: LocationReportGroup?
     @State private var mapCenter: CLLocationCoordinate2D?
     
     @State private var isKeyboardVisible = false
@@ -115,10 +115,4 @@ private struct MapMarker: View {
                 selected = selected == group ? nil : group
             }
     }
-}
-
-
-#Preview {
-    MapView()
-        .environment(MapViewModel(SocrataAPIClient(), locationModel: LocationModel(), poiGroup: LocationReportGroup.test))
 }

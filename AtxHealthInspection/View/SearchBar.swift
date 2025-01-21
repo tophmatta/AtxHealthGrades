@@ -82,14 +82,3 @@ struct ClearButton: View {
         }
     }
 }
-
-
-#Preview {
-    HStack {
-        SearchBar(error: .constant(nil), isSearching: .constant(false))
-            .environment(SearchViewModel(SocrataAPIClient()))
-        ClearButton()
-            .environment(MapViewModel(SocrataAPIClient(), locationModel: LocationModel(), poiGroup: LocationReportGroup.test))
-    }
-    .padding(.horizontal, 10)
-}

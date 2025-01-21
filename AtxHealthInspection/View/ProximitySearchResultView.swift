@@ -87,7 +87,9 @@ struct ProximityReportDetail: View {
             }
         }
         .task {
-            await viewModel.getAllReports(with: data.facilityId)
+            if viewModel.historicalReports.isEmpty {
+                _ = await viewModel.getAllReports(with: data.facilityId)
+            }
             isLoading = false
         }
         .onDisappear {

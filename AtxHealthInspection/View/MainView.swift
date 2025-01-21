@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Tab {
+enum TabType {
     case map, favorites
 }
 
@@ -16,7 +16,8 @@ struct MainView: View {
     @State private var mapViewModel: MapViewModel
     @State private var favoritesViewModel: FavoritesViewModel
     
-    @State private var selectedTab: Tab = .map
+    @State private var selectedTab: TabType = .map
+    @State private var poiSelected: LocationReportGroup?
     
     init(client: SocrataClientProtocol = SocrataAPIClient()) {
         _searchViewModel = State(wrappedValue: SearchViewModel(client))
@@ -31,20 +32,21 @@ struct MainView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            MapView()
+            MapView(poiSelected: $poiSelected)
                 .environment(mapViewModel)
                 .environment(searchViewModel)
                 .environment(favoritesViewModel)
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }
-                .tag(Tab.map)
-            FavoritesView()
+                .tag(TabType.map)
+            FavoritesView(selectedTab: $selectedTab, poiSelected: $poiSelected)
                 .environment(favoritesViewModel)
+                .environment(mapViewModel)
                 .tabItem {
                     Label("Favorites", systemImage: "star")
                 }
-                .tag(Tab.favorites)
+                .tag(TabType.favorites)
         }
         .tint(Color.green)
     }

@@ -12,15 +12,11 @@ import SwiftUI
     var favorites: [FavoriteData] = []
     private let store: FavoritesStore
     
-    init(_ store: FavoritesStore = FavoritesStore(), useMock: Bool = false) {
+    init(_ store: FavoritesStore = FavoritesStore()) {
         self.store = store
         
-        if useMock {
-            favorites = mockData
-        } else {
-            Task {
-                favorites = await getFavorites()
-            }
+        Task {
+            favorites = await getFavorites()
         }
     }
     
@@ -55,16 +51,3 @@ struct FavoriteData: Identifiable {
     let id: String
     let name: String
 }
-
-#if DEBUG
-extension FavoritesViewModel {
-    private var mockData: [FavoriteData] {
-        [
-            FavoriteData(id: "1", name: "Tony's Donuts"),
-            FavoriteData(id: "2", name: "Chelsea's Crepes"),
-            FavoriteData(id: "3", name: "Elaines Bagels"),
-            FavoriteData(id: "4", name: "Mama's Fried Chicken")
-        ]
-    }
-}
-#endif
