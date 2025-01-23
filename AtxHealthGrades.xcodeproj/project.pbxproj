@@ -95,6 +95,7 @@
 		F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBackground.swift; sourceTree = "<group>"; };
 		F1F55FAC2C38E632005C0F30 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F1F55FAE2C38F1FC005C0F30 /* UrlBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
+		F1FA6CE42D41E4AA00F218CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +203,7 @@
 		F1EACEDE2C371C71006BE3F9 /* AtxHealthGrades */ = {
 			isa = PBXGroup;
 			children = (
+				F1FA6CE42D41E4AA00F218CD /* Info.plist */,
 				F1EACEDF2C371C71006BE3F9 /* AtxHealthGradesApp.swift */,
 				F1609A3C2CE3021100988712 /* API */,
 				F1609A3B2CE301F600988712 /* View */,
@@ -551,6 +553,7 @@
 				DEVELOPMENT_TEAM = XXRYJDD55J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AtxHealthGrades/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "ATX Health Grades requires user's location to peform location-based searches.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -589,6 +592,7 @@
 				DEVELOPMENT_TEAM = XXRYJDD55J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AtxHealthGrades/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "ATX Health Grades requires user's location to peform location-based searches.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
