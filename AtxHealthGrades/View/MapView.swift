@@ -39,6 +39,7 @@ struct MapView: View {
                     .annotationTitles(.hidden)
                 }
             }
+            .mapStyle(MapStyle.standard(pointsOfInterest: .excludingAll))
             .sheet(item: $poiSelected) {
                 ProximityResultsListView(group: $0)
             }
@@ -115,4 +116,10 @@ private struct MapMarker: View {
                 selected = selected == group ? nil : group
             }
     }
+}
+
+#Preview {
+    MapView(poiSelected: .constant(nil))
+        .environment(MapViewModel(SocrataAPIClient()))
+        .environment(SearchViewModel(SocrataAPIClient()))
 }
