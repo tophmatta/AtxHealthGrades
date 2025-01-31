@@ -36,7 +36,7 @@ final class SocrataClientTests: XCTestCase {
         }
 
         do {
-            let result = try await mockClient.search(byName: "The 04 Lounge")
+            let result = try await mockClient.getReports(byName: "The 04 Lounge")
             XCTAssertFalse(result.isEmpty, "Result should not be empty")
         } catch {
             XCTFail("Expected success, but got failure with error: \(error)")
@@ -52,7 +52,7 @@ final class SocrataClientTests: XCTestCase {
         }
         
         do {
-            _ = try await mockClient.search(byName: "!@#$%^&*")
+            _ = try await mockClient.getReports(byName: "!@#$%^&*")
         } catch let error as ClientError {
             XCTAssertEqual(error, .emptyTextSearchResponse)
         } catch {
@@ -62,7 +62,7 @@ final class SocrataClientTests: XCTestCase {
     
     func testGetWithEmptyInput() async throws {
         do {
-            _ = try await mockClient.search(byName: "")
+            _ = try await mockClient.getReports(byName: "")
             XCTFail("Expected failure for empty input, but got success")
         } catch let error as ClientError {
             XCTAssertEqual(error, .emptyInputValue)
@@ -73,7 +73,7 @@ final class SocrataClientTests: XCTestCase {
     
     func testGetWithBlankInput() async throws {
         do {
-            _ = try await mockClient.search(byName: "    ")
+            _ = try await mockClient.getReports(byName: "    ")
             XCTFail("Expected failure for blank input, but got success")
         } catch let error as ClientError {
             XCTAssertEqual(error, .emptyInputValue)
@@ -91,7 +91,7 @@ final class SocrataClientTests: XCTestCase {
         }
 
         do {
-            _ = try await mockClient.search(byName: "Casa Bonita de Toph")
+            _ = try await mockClient.getReports(byName: "Casa Bonita de Toph")
         } catch let error as ClientError {
             XCTAssertEqual(error, .emptyTextSearchResponse)
         } catch {

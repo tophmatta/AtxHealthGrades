@@ -12,6 +12,7 @@ import Collections
 struct MapView: View {
     @Environment(MapViewModel.self) var mapViewModel
     @Environment(SearchViewModel.self) var searchViewModel
+    @Environment(\.scenePhase) var scenePhase
     @Binding var poiSelected: LocationReportGroup?
     @State private var mapCenter: CLLocationCoordinate2D?
     
@@ -64,7 +65,12 @@ struct MapView: View {
                         }
                     }
                     MapUtilityButton(type: .location) {
-                        mapViewModel.goToUserLocation()
+                        do {
+                            try mapViewModel.goToUserLocation()
+                        } catch let clientError {
+                            error = clientError
+                        }
+                        
                     }
                 }
             }
@@ -77,6 +83,12 @@ struct MapView: View {
             }
             .onMapCameraChange(frequency: .continuous) { mapCameraUpdateContext in
                 mapCenter = mapCameraUpdateContext.camera.centerCoordinate
+            }
+            .onChange(of: scenePhase) { oldValue, newValue in
+                guard oldValue == .background && newValue == .active else {
+                    return
+                }
+                mapViewModel.checkLocationAuthorization()
             }
             
             AppProgressView(isEnabled: $isSearching)

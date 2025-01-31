@@ -22,7 +22,7 @@ import OrderedCollections
     var lastLocation: CLLocationCoordinate2D? {
         didSet {
             if oldValue == nil && lastLocation != nil && currentPOIs.isEmpty {
-                goToUserLocation()
+                try? goToUserLocation()
             }
         }
     }
@@ -38,12 +38,9 @@ import OrderedCollections
     
     private var subs: Set<AnyCancellable> = []
     
-    init(_ client: SocrataClientProtocol, locationModel: LocationModel = LocationModel(), poiGroup: LocationReportGroup? = nil) {
+    init(_ client: SocrataClientProtocol, locationModel: LocationModel = LocationModel()) {
         self.client = client
         self.locationModel = locationModel
-        if let poiGroup {
-            self.currentPOIs[poiGroup.id] = poiGroup
-        }
         
         locationModel.$lastLocation
             .compactMap { $0 }
@@ -67,20 +64,14 @@ import OrderedCollections
     }
     
     func triggerProximitySearch(at location: CLLocationCoordinate2D) async throws {
-        guard location.isInAustin() else {
-            throw ClientError.notInBounds
-        }
-        
-        let results = try await client.search(inRadiusOf: location).filterOldDuplicates()
-        
-        guard !results.isEmpty else {
-            throw ClientError.emptyProximitySearchResponse
-        }
+        let results = try await client
+                                .getReports(inRadiusOf: location)
+                                .filterOldDuplicates()
         
         let poiGroup = results.reduce(into: [AddressKey: LocationReportGroup]()) { dict, result in
             guard let coordinate = result.coordinate else { return }
-            
-            dict[result.parentId, default: LocationReportGroup(data: [], address: result.address, coordinate: coordinate)].data.append(result)
+            let maybeDefault = LocationReportGroup(data: [], address: result.address, coordinate: coordinate)
+            dict[result.parentId, default: maybeDefault].data.append(result)
         }
         
         updatePOIs(poiGroup)
@@ -91,7 +82,11 @@ import OrderedCollections
         return historicalReports
     }
         
-    func goToUserLocation() {
+    func goToUserLocation() throws {
+        guard lastLocation != nil else {
+            throw ClientError.locationServicesNotEnabled
+        }
+
         cameraPosition = .userLocation(fallback: .automatic)
     }
     

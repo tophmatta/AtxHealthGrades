@@ -22,6 +22,6 @@ import SwiftUI
     }
     
     func triggerSearch(value: String) async throws {
-        currentReports = try await client.search(byName: value).filterOldDuplicates()
+        currentReports = try await client.getReports(byName: value).filterOldDuplicates()
     }
 }
