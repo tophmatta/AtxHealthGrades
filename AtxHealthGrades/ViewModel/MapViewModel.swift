@@ -17,7 +17,7 @@ import OrderedCollections
     typealias AddressKey = String
     
     private let client: SocrataClientProtocol
-    private let locationModel: LocationModel
+    private let locationService: LocationService
     
     var lastLocation: CLLocationCoordinate2D? {
         didSet {
@@ -38,11 +38,11 @@ import OrderedCollections
     
     private var subs: Set<AnyCancellable> = []
     
-    init(_ client: SocrataClientProtocol, locationModel: LocationModel = LocationModel()) {
+    init(_ client: SocrataClientProtocol, locationService: LocationService = LocationService()) {
         self.client = client
-        self.locationModel = locationModel
+        self.locationService = locationService
         
-        locationModel.$lastLocation
+        locationService.$userLocation
             .compactMap { $0 }
             .sink { [weak self] location in
                 guard let self else { return }
@@ -91,7 +91,7 @@ import OrderedCollections
     }
     
     func checkLocationAuthorization() {
-        locationModel.checkAuthorization()
+        locationService.requestOrStartService()
     }
         
     private func updateCameraPosition(for results: OrderedDictionary<AddressKey, LocationReportGroup>) {

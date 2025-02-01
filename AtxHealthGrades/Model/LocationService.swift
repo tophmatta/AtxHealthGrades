@@ -1,5 +1,5 @@
 //
-//  LocationModel.swift
+//  LocationService.swift
 //  AtxHealthGrades
 //
 //  Created by Toph Matta on 7/8/24.
@@ -9,9 +9,9 @@ import Combine
 import CoreLocation
 
 @MainActor
-class LocationModel: NSObject, ObservableObject {
+class LocationService: NSObject, ObservableObject {
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
-    @Published var lastLocation: CLLocation?
+    @Published var userLocation: CLLocation?
     
     private lazy var locationManager = {
         CLLocationManager()
@@ -22,42 +22,42 @@ class LocationModel: NSObject, ObservableObject {
     override init() {
         super.init()
         locationManager.delegate = self
-        observerAuthorizationStatus()
+        observeAuthStatus()
     }
     
-    func checkAuthorization() {
+    func requestOrStartService() {
         if authorizationStatus.isNotAuthorized {
-            requestAuthorization()
-        } else if lastLocation == nil && authorizationStatus.isAuthorized {
-            startUpdatingLocation()
+            requestAuth()
+        } else if userLocation == nil && authorizationStatus.isAuthorized {
+            startService()
         }
     }
     
-    private func requestAuthorization() {
+    private func requestAuth() {
         locationManager.requestWhenInUseAuthorization()
     }
     
-    private func startUpdatingLocation() {
+    private func startService() {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 10
         locationManager.allowsBackgroundLocationUpdates = false
         locationManager.startUpdatingLocation()
     }
     
-    private func observerAuthorizationStatus() {
+    private func observeAuthStatus() {
         $authorizationStatus
             .sink { [weak self] newStatus in
                 guard let self else { return }
                 
                 if newStatus.isAuthorized && authorizationStatus.isNotAuthorized {
-                    startUpdatingLocation()
+                    startService()
                 }
             }.store(in: &cancellables)
     }
 }
 
 // Location manager inits on main thread so we can guarantee the callbacks will be on the same thread
-extension LocationModel: @preconcurrency CLLocationManagerDelegate {
+extension LocationService: @preconcurrency CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.authorizationStatus = status
     }
@@ -67,7 +67,7 @@ extension LocationModel: @preconcurrency CLLocationManagerDelegate {
             let location = locations.last,
             location.coordinate.isValid()
         else { return }
-        self.lastLocation = location
+        self.userLocation = location
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
