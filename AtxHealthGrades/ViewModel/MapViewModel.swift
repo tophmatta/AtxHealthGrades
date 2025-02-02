@@ -21,7 +21,7 @@ import OrderedCollections
     
     var lastLocation: CLLocationCoordinate2D? {
         didSet {
-            if oldValue == nil && lastLocation != nil && currentPOIs.isEmpty {
+            if oldValue == nil && lastLocation != nil && poiData.isEmpty {
                 try? goToUserLocation()
             }
         }
@@ -34,6 +34,7 @@ import OrderedCollections
         }
     }
     var historicalData = [Report]()
+    var textSearchData = [Report]()
     var cameraPosition: MapCameraPosition = .automatic
     
     private var subs: Set<AnyCancellable> = []
@@ -50,20 +51,24 @@ import OrderedCollections
             }.store(in: &subs)
     }
     
-    func clearPOIs() {
+    func clearPoiData() {
         poiData.removeAll()
     }
     
-    func clearHistorical() {
+    func clearHistoricalData() {
         historicalData.removeAll()
     }
     
+    func clearTextSearchData() {
+        textSearchData.removeAll()
+    }
+    
     func updatePOIs(_ pois: [String : LocationReportGroup]) {
-        clearPOIs()
+        clearPoiData()
         poiData = pois.toOrderedDictionary()
     }
     
-    func triggerProximitySearch(at location: CLLocationCoordinate2D) async throws {
+    func getReports(around location: CLLocationCoordinate2D) async throws {
         let results = try await client
                                 .getReports(inRadiusOf: location)
                                 .filterOldDuplicates()
@@ -75,6 +80,10 @@ import OrderedCollections
         }
         
         updatePOIs(poiGroup)
+    }
+    
+    func getReports(with name: String) async throws {
+        textSearchData = try await client.getReports(byName: name).filterOldDuplicates()
     }
     
     func getAllReports(with facilityId: String) async -> [Report] {

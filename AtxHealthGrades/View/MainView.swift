@@ -12,7 +12,6 @@ enum TabType {
 }
 
 struct MainView: View {
-    @State private var searchViewModel: SearchViewModel
     @State private var mapViewModel: MapViewModel
     @State private var favoritesViewModel: FavoritesViewModel
     
@@ -20,7 +19,6 @@ struct MainView: View {
     @State private var poiSelected: LocationReportGroup?
     
     init(client: SocrataClientProtocol = SocrataAPIClient()) {
-        _searchViewModel = State(wrappedValue: SearchViewModel(client))
         _mapViewModel = State(wrappedValue: MapViewModel(client))
         _favoritesViewModel = State(wrappedValue: FavoritesViewModel())
         
@@ -34,7 +32,6 @@ struct MainView: View {
         TabView(selection: $selectedTab) {
             MapView(poiSelected: $poiSelected)
                 .environment(mapViewModel)
-                .environment(searchViewModel)
                 .environment(favoritesViewModel)
                 .tabItem {
                     Label("Map", systemImage: "map")

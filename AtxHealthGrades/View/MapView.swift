@@ -11,7 +11,6 @@ import Collections
 
 struct MapView: View {
     @Environment(MapViewModel.self) var mapViewModel
-    @Environment(SearchViewModel.self) var searchViewModel
     @Environment(\.scenePhase) var scenePhase
     @Binding var poiSelected: LocationReportGroup?
     @State private var mapCenter: CLLocationCoordinate2D?
@@ -25,7 +24,6 @@ struct MapView: View {
     
     var body: some View {
         @Bindable var bindableMapViewModel = mapViewModel
-        @Bindable var bindableSearchViewModel = searchViewModel
         
         ZStack {
             Map(position: $bindableMapViewModel.cameraPosition) {
@@ -42,10 +40,10 @@ struct MapView: View {
             }
             .mapStyle(MapStyle.standard(pointsOfInterest: .excludingAll))
             .sheet(item: $poiSelected) {
-                ProximityResultsListView(group: $0)
+                RestaurantHistorySelectionView(group: $0)
             }
-            .sheet(isPresented: $bindableSearchViewModel.currentReports.isNotEmpty()) {
-                TextSearchResultView(reports: searchViewModel.currentReports)
+            .sheet(isPresented: $bindableMapViewModel.textSearchData.isNotEmpty()) {
+                TextSearchResultView(reports: mapViewModel.textSearchData)
                     .presentationDetents([.medium, .large])
                     .presentationCompactAdaptation(.none)
             }
@@ -55,7 +53,7 @@ struct MapView: View {
                     MapUtilityButton(type: .radius) {
                         Task {
                             guard let mapCenter else { return }
-                            mapViewModel.clearPOIs()
+                            mapViewModel.clearPoiData()
                             mapViewModel.updateCameraPosition(to: mapCenter)
                             await animateCircle(at: mapCenter)
                             isSearching = true
@@ -85,7 +83,7 @@ struct MapView: View {
                 mapCenter = mapCameraUpdateContext.camera.centerCoordinate
             }
             .onChange(of: scenePhase) { oldValue, newValue in
-                guard oldValue == .background && newValue == .active else {
+                guard oldValue == .inactive && newValue == .active else {
                     return
                 }
                 mapViewModel.checkLocationAuthorization()
@@ -107,7 +105,7 @@ struct MapView: View {
     
     private func launchProximitySearch(with center: CLLocationCoordinate2D) async {
         do {
-            try await mapViewModel.triggerProximitySearch(at: center)
+            try await mapViewModel.getReports(around: center)
         } catch let clientError {
             error = clientError
         }
@@ -133,5 +131,4 @@ private struct MapMarker: View {
 #Preview {
     MapView(poiSelected: .constant(nil))
         .environment(MapViewModel(SocrataAPIClient()))
-        .environment(SearchViewModel(SocrataAPIClient()))
 }

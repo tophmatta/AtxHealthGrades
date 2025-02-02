@@ -1,5 +1,5 @@
 //
-//  ProximityResultsListView.swift
+//  RestaurantHistorySelectionView.swift
 //  AtxHealthGrades
 //
 //  Created by Toph Matta on 11/11/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct ProximityResultsListView: View {
+struct RestaurantHistorySelectionView: View {
     @Environment(MapViewModel.self) var viewModel
     
     let group: LocationReportGroup
@@ -18,9 +18,9 @@ struct ProximityResultsListView: View {
             NavigationView {
                 List(group.data) { data in
                     NavigationLink {
-                        ProximityReportDetail(data: data)
+                        RestaurantHistoryDetailView(data: data)
                     } label: {
-                        ProximityReportRow( data: data)
+                        RestaurantSelectionRow( data: data)
                     }
                 }
             }
@@ -30,7 +30,7 @@ struct ProximityResultsListView: View {
     }
 }
 
-struct ProximityReportRow: View {
+struct RestaurantSelectionRow: View {
     let data: Report
     
     var body: some View {
@@ -44,7 +44,7 @@ struct ProximityReportRow: View {
     }
 }
 
-struct ProximityReportDetail: View {
+struct RestaurantHistoryDetailView: View {
     @Environment(MapViewModel.self) var viewModel
     @State private var isLoading = true
     let data: Report
@@ -93,7 +93,7 @@ struct ProximityReportDetail: View {
             isLoading = false
         }
         .onDisappear {
-            viewModel.clearHistorical()
+            viewModel.clearHistoricalData()
         }
     }
 }

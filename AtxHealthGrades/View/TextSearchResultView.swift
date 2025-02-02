@@ -26,7 +26,6 @@ struct TextSearchResultView: View {
 
 struct ReportItem: View {
     @Environment(MapViewModel.self) var mapViewModel
-    @Environment(SearchViewModel.self) var searchViewModel
     @State private var showError = false
     
     let report: Report
@@ -43,7 +42,7 @@ struct ReportItem: View {
             Spacer()
             Button {
                 if let location = report.coordinate {
-                    searchViewModel.clear()
+                    mapViewModel.clearTextSearchData()
                     let result = [report.parentId : LocationReportGroup(data: [report], address: report.address, coordinate: location)]
                     mapViewModel.updatePOIs(result)
                 } else {
