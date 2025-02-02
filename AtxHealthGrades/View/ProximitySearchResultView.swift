@@ -54,9 +54,9 @@ struct ProximityReportDetail: View {
             Text("Report History")
                 .font(.title)
             ZStack {
-                ReportChart(data: viewModel.historicalReports.toPlottableData())
+                ReportChart(data: viewModel.historicalData.toPlottableData())
                 AppProgressView(isEnabled: $isLoading)
-                if !isLoading && viewModel.historicalReports.count < 2 {
+                if !isLoading && viewModel.historicalData.count < 2 {
                     Text("Not enough data")
                         .foregroundStyle(.onSurface)
                         .padding()
@@ -70,7 +70,7 @@ struct ProximityReportDetail: View {
                 
             }
             Divider()
-            List(viewModel.historicalReports) { result in
+            List(viewModel.historicalData) { result in
                 HStack {
                     ScoreItem(result.score)
                     Spacer()
@@ -87,7 +87,7 @@ struct ProximityReportDetail: View {
             }
         }
         .task {
-            if viewModel.historicalReports.isEmpty {
+            if viewModel.historicalData.isEmpty {
                 _ = await viewModel.getAllReports(with: data.facilityId)
             }
             isLoading = false

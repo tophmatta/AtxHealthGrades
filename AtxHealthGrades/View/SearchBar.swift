@@ -66,7 +66,7 @@ struct ClearButton: View {
     @Environment(MapViewModel.self) var viewModel
     
     var body: some View {
-        if !viewModel.currentPOIs.isEmpty {
+        if !viewModel.poiData.isEmpty {
             Button {
                 viewModel.clearPOIs()
             } label: {

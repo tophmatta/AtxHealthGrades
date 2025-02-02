@@ -28,12 +28,12 @@ import OrderedCollections
     }
     
     // Use ordered dictionary for displaying annotations
-    var currentPOIs: OrderedDictionary<AddressKey, LocationReportGroup> = [:] {
+    var poiData: OrderedDictionary<AddressKey, LocationReportGroup> = [:] {
         willSet {
             updateCameraPosition(for: newValue)
         }
     }
-    var historicalReports = [Report]()
+    var historicalData = [Report]()
     var cameraPosition: MapCameraPosition = .automatic
     
     private var subs: Set<AnyCancellable> = []
@@ -51,16 +51,16 @@ import OrderedCollections
     }
     
     func clearPOIs() {
-        currentPOIs.removeAll()
+        poiData.removeAll()
     }
     
     func clearHistorical() {
-        historicalReports.removeAll()
+        historicalData.removeAll()
     }
     
     func updatePOIs(_ pois: [String : LocationReportGroup]) {
         clearPOIs()
-        currentPOIs = pois.toOrderedDictionary()
+        poiData = pois.toOrderedDictionary()
     }
     
     func triggerProximitySearch(at location: CLLocationCoordinate2D) async throws {
@@ -78,8 +78,8 @@ import OrderedCollections
     }
     
     func getAllReports(with facilityId: String) async -> [Report] {
-        historicalReports = try! await client.getReports(forRestaurantWith: facilityId).sorted { $0.date > $1.date }
-        return historicalReports
+        historicalData = try! await client.getReports(forRestaurantWith: facilityId).sorted { $0.date > $1.date }
+        return historicalData
     }
         
     func goToUserLocation() throws {

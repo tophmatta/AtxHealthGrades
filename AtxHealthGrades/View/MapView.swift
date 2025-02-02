@@ -33,7 +33,7 @@ struct MapView: View {
                 circleOverlay?
                     .foregroundStyle(.green.opacity(0.1))
                     .stroke(.green.opacity(0.5), lineWidth: 2.0)
-                ForEach(mapViewModel.currentPOIs.elements, id: \.key) { element in
+                ForEach(mapViewModel.poiData.elements, id: \.key) { element in
                     Annotation("", coordinate: element.value.coordinate) {
                         MapMarker(group: element.value, selected: $poiSelected)
                     }
