@@ -50,26 +50,8 @@ struct MapView: View {
             .errorAlert(error: $error)
             .overlay(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
-                    MapUtilityButton(type: .radius) {
-                        Task {
-                            guard let mapCenter else { return }
-                            mapViewModel.clearPoiData()
-                            mapViewModel.updateCameraPosition(to: mapCenter)
-                            await animateCircle(at: mapCenter)
-                            isSearching = true
-                            await launchProximitySearch(with: mapCenter)
-                            isSearching = false
-                            circleOverlay = nil
-                        }
-                    }
-                    MapUtilityButton(type: .location) {
-                        do {
-                            try mapViewModel.goToUserLocation()
-                        } catch let clientError {
-                            error = clientError
-                        }
-                        
-                    }
+                    MapUtilityButton(type: .radius, action: radiusSearchAction)
+                    MapUtilityButton(type: .location, action: userLocationAction)
                 }
             }
             .overlay(alignment: .top) {
@@ -108,6 +90,27 @@ struct MapView: View {
             try await mapViewModel.getReports(around: center)
         } catch let clientError {
             error = clientError
+        }
+    }
+    
+    private func userLocationAction() {
+        do {
+            try mapViewModel.goToUserLocation()
+        } catch let clientError {
+            error = clientError
+        }
+    }
+    
+    private func radiusSearchAction() {
+        Task {
+            guard let mapCenter else { return }
+            mapViewModel.clearPoiData()
+            mapViewModel.updateCameraPosition(to: mapCenter)
+            await animateCircle(at: mapCenter)
+            isSearching = true
+            await launchProximitySearch(with: mapCenter)
+            isSearching = false
+            circleOverlay = nil
         }
     }
 }
