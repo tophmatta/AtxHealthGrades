@@ -23,7 +23,6 @@ struct MainView: View {
         _favoritesViewModel = State(wrappedValue: FavoritesViewModel())
         
         let tabBarAppearance = UITabBar.appearance()
-        tabBarAppearance.isTranslucent = false
         tabBarAppearance.barTintColor = .green
         tabBarAppearance.backgroundColor = .surface
     }

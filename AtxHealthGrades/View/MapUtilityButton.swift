@@ -33,5 +33,4 @@ struct MapUtilityButton: View {
 
 enum ActionButtonType: String {
     case location = "location.fill"
-    case radius = "circle.dotted"
 }
