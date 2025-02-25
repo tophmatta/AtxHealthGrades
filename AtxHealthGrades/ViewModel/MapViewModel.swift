@@ -102,12 +102,19 @@ import OrderedCollections
     func checkLocationAuthorization() {
         locationService.requestOrStartService()
     }
-        
+    
     private func updateCameraPosition(for results: OrderedDictionary<AddressKey, LocationReportGroup>) {
         if results.elements.count == 1 {
             cameraPosition = .camera(.init(centerCoordinate: results.values.first!.coordinate, distance: 1000))
         } else if results.elements.count > 1  {
-            cameraPosition = .automatic
+            let allCoords = results.values.map { $0.coordinate }
+            
+            cameraPosition =
+                if let center = LocationUtils.boundingBoxCenter(of: allCoords) {
+                    .camera(.init(centerCoordinate: center, distance: 3000))
+                } else {
+                    .automatic
+                }
         }
     }
     
@@ -151,3 +158,25 @@ extension LocationReportGroup {
     )
 }
 #endif
+
+struct LocationUtils {
+    static func boundingBoxCenter(of coordinates: [CLLocationCoordinate2D]) -> CLLocationCoordinate2D? {
+        guard !coordinates.isEmpty else { return nil }
+        
+        var minLat = coordinates.first!.latitude
+        var maxLat = coordinates.first!.latitude
+        var minLon = coordinates.first!.longitude
+        var maxLon = coordinates.first!.longitude
+        
+        for coordinate in coordinates {
+            minLat = min(minLat, coordinate.latitude)
+            maxLat = max(maxLat, coordinate.latitude)
+            minLon = min(minLon, coordinate.longitude)
+            maxLon = max(maxLon, coordinate.longitude)
+        }
+        
+        let centerLat = (minLat + maxLat) / 2
+        let centerLon = (minLon + maxLon) / 2
+        return CLLocationCoordinate2D(latitude: centerLat, longitude: centerLon)
+    }
+}

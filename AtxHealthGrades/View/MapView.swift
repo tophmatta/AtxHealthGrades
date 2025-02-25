@@ -149,10 +149,14 @@ private struct MapMarker: View {
         Image(systemName: "mappin.square.fill")
             .resizable()
             .annotationSize()
-            .foregroundStyle(.white, .green)
+            .foregroundStyle(.white, getMarkerColor(forGroup: group))
             .onTapGesture {
                 selected = selected == group ? nil : group
             }
+    }
+    
+    private func getMarkerColor(forGroup group: LocationReportGroup) -> Color {
+        group.data.count == 1 ? colorForNum(group.data.first!.score) : .gray
     }
 }
 
