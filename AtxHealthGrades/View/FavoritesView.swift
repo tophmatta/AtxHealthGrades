@@ -33,6 +33,8 @@ struct FavoritesView: View {
                             HStack {
                                 Text(favorite.name)
                                     .font(.title2)
+                                    .foregroundStyle(.onSurface)
+                                    .minimumScaleFactor(0.5)
                                 Spacer()
                                 Image(systemName: "chevron.forward.circle")
                                     .resizable()
