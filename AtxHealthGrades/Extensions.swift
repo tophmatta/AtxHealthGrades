@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import OrderedCollections
 
 extension Color {
     static let systemBackground = Color(UIColor.systemBackground)
@@ -121,3 +122,10 @@ extension CLLocationCoordinate2D {
         self.longitude <= CLLocationCoordinate2D.austinBounds.maxLon
     }
 }
+
+extension Dictionary {
+    func toOrderedDictionary() -> OrderedDictionary<Key, Value> {
+        OrderedDictionary(uniqueKeysWithValues: self)
+    }
+}
+

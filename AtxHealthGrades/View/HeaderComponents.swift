@@ -1,5 +1,5 @@
 //
-//  SearchBar.swift
+//  HeaderComponents.swift
 //  AtxHealthGrades
 //
 //  Created by Toph Matta on 11/22/24.
@@ -20,12 +20,12 @@ struct HeaderComponents: View {
             ClearButton()
             
             VStack(spacing: 15) {
-                SegmentedPicker(selection: $segmentedSelection)
+                SearchModeSegmentedPicker(selection: $segmentedSelection)
                     .frame(width: proxy.size.width * 0.4)
                 Group {
                     switch segmentedSelection {
                     case .text:
-                        searchBar
+                        textSearchBar
                             .frame(width: proxy.size.width * 0.85)
                     case .radius:
                         radiusSearchButton
@@ -57,7 +57,7 @@ struct HeaderComponents: View {
     }
     
     @ViewBuilder
-    private var searchBar: some View {
+    private var textSearchBar: some View {
         TextField("", text: $text, prompt: Text("Enter a Restaurant Name"))
             .padding([.vertical, .trailing], 10)
             .padding(.leading, 20)
@@ -117,35 +117,6 @@ struct ClearButton: View {
     }
 }
 
-private struct SegmentedPicker: View {
-    @Binding var selection: Segment
-    
-    init(selection: Binding<Segment>) {
-        self._selection = selection
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(.green)], for: .normal)
-        UISegmentedControl.appearance().backgroundColor = UIColor.surface
-    }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            Text("Search Mode")
-                .font(.callout)
-                .foregroundStyle(Color.gray)
-                .padding(.vertical, 3)
-            Picker("", selection: $selection) {
-                ForEach(Segment.allCases, id: \.self) { segment in
-                    Text(segment.rawValue.capitalized).tag(segment)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding([.leading, .trailing, .bottom], 8)
-        }
-        .background(
-            .ultraThinMaterial,
-            in: RoundedRectangle(cornerRadius: 10)
-        )
-    }
-}
 
 #Preview {
     MapView(poiSelected: .constant(nil))
