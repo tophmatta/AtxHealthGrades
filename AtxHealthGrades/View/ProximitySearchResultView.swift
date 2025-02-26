@@ -35,7 +35,8 @@ struct RestaurantSelectionRow: View {
     
     var body: some View {
         HStack {
-            ScoreItem(data.score)
+            GradeIcon(score: data.score)
+                .frame(width: 50, height: 50)
                 .padding(.trailing)
             Text(data.restaurantName)
                 .font(.title3)
@@ -72,7 +73,8 @@ struct RestaurantHistoryDetailView: View {
             Divider()
             List(viewModel.historicalData) { result in
                 HStack {
-                    ScoreItem(result.score)
+                    GradeIcon(score: data.score)
+                        .frame(width: 50, height: 50)
                     Spacer()
                     Text(result.date.toReadable())
                         .font(.title3)

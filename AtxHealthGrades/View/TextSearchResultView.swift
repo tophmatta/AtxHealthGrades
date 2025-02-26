@@ -32,7 +32,8 @@ struct ReportItem: View {
     
     var body: some View {
         HStack {
-            ScoreItem(report.score)
+            GradeIcon(score: report.score)
+                .frame(width: 50, height: 50)
             VStack(alignment: .leading) {
                 Text(report.restaurantName)
                 Text(report.address)

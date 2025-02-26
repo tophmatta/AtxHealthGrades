@@ -13,7 +13,7 @@
 		F11C8CB82CD072A700409F83 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11C8CB72CD072A300409F83 /* Modifiers.swift */; };
 		F13860582C3CBCEC0052EBC8 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860572C3CBCEC0052EBC8 /* LocationService.swift */; };
 		F138605A2C3CBDF70052EBC8 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13860592C3CBDF70052EBC8 /* MapViewModel.swift */; };
-		F14FA4232CDC52940011B10A /* ScoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14FA4222CDC52940011B10A /* ScoreItem.swift */; };
+		F14FA4232CDC52940011B10A /* GradeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14FA4222CDC52940011B10A /* GradeIcon.swift */; };
 		F152B1C22D24928E00321DDF /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152B1C12D24928400321DDF /* FavoritesView.swift */; };
 		F152C1322C3B3C120064F570 /* SocrataAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */; };
 		F152C1412C3B48590064F570 /* SocrataClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152C1402C3B48590064F570 /* SocrataClientTests.swift */; };
@@ -61,7 +61,7 @@
 		F11C8CB72CD072A300409F83 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		F13860572C3CBCEC0052EBC8 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		F13860592C3CBDF70052EBC8 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		F14FA4222CDC52940011B10A /* ScoreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreItem.swift; sourceTree = "<group>"; };
+		F14FA4222CDC52940011B10A /* GradeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeIcon.swift; sourceTree = "<group>"; };
 		F152B1C12D24928400321DDF /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		F152C1312C3B3C120064F570 /* SocrataAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocrataAPIClient.swift; sourceTree = "<group>"; };
 		F152C1372C3B482A0064F570 /* AtxHealthGradesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtxHealthGradesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,7 +136,7 @@
 				F1EACEE12C371C71006BE3F9 /* MainView.swift */,
 				F15471C12CF0F21F00F65095 /* SearchBar.swift */,
 				F10B6A9A2C508FA0001536B4 /* TextSearchResultView.swift */,
-				F14FA4222CDC52940011B10A /* ScoreItem.swift */,
+				F14FA4222CDC52940011B10A /* GradeIcon.swift */,
 				F1609A342CE300BE00988712 /* AppProgressView.swift */,
 				F1F55FAA2C38680B005C0F30 /* FoodBackground.swift */,
 				F1609A382CE3015200988712 /* MapUtilityButton.swift */,
@@ -352,7 +352,7 @@
 				F1EACEE22C371C71006BE3F9 /* MainView.swift in Sources */,
 				F152C1322C3B3C120064F570 /* SocrataAPIClient.swift in Sources */,
 				F1EACEE02C371C71006BE3F9 /* AtxHealthGradesApp.swift in Sources */,
-				F14FA4232CDC52940011B10A /* ScoreItem.swift in Sources */,
+				F14FA4232CDC52940011B10A /* GradeIcon.swift in Sources */,
 				F15471C22CF0F21F00F65095 /* SearchBar.swift in Sources */,
 				F1609A392CE3015600988712 /* MapUtilityButton.swift in Sources */,
 				F1EACEF02C371DED006BE3F9 /* Constants.swift in Sources */,
