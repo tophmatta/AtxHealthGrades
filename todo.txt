@@ -1,12 +1,11 @@
 TODO:
 
  Tasks:
- - error handling in proximity search - no internet, no results, etc.
  - internet connectivity watcher
  - list top restaurants in an area that have had consistent high scores
- - segmented control - search by: name, radius, top
+ - more robust text search - P. Terry's, Z'Tejas, Torchy's, Amy's; possibly recursive search
  
- Features:
+ Road Map:
  - Push notifications:
     - New inspection posted for favorited restaurant
  - list restaurants with newest health inspections

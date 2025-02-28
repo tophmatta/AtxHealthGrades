@@ -73,7 +73,7 @@ struct RestaurantHistoryDetailView: View {
             Divider()
             List(viewModel.historicalData) { result in
                 HStack {
-                    GradeIcon(score: data.score)
+                    GradeIcon(score: result.score)
                         .frame(width: 50, height: 50)
                     Spacer()
                     Text(result.date.toReadable())
