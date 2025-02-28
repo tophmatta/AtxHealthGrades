@@ -75,7 +75,7 @@ extension LocationService: @preconcurrency CLLocationManagerDelegate {
     }
 }
 
-private extension CLAuthorizationStatus {
+extension CLAuthorizationStatus {
     var isAuthorized: Bool {
         return self == .authorizedWhenInUse || self == .authorizedAlways
     }

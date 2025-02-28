@@ -83,7 +83,19 @@ import OrderedCollections
     }
     
     func getReports(with name: String) async throws {
-        textSearchData = try await client.getReports(byName: name).filterOldDuplicates()
+        textSearchData = try await client
+                                    .getReports(byName: name)
+                                    .filterOldDuplicates()
+                                    .sorted { curr, next in
+                                        guard let curr = curr.coordinate,
+                                                let next = next.coordinate,
+                                                let lastLocation,
+                                                locationService.authorizationStatus.isAuthorized // if not authorized, returns unsorted results
+                                        else { return false }
+                                        
+                                        // sort results in ref to user location
+                                        return curr.distance(from: lastLocation) < next.distance(from: lastLocation)
+                                    }
     }
     
     func getAllReports(with facilityId: String) async -> [Report] {
