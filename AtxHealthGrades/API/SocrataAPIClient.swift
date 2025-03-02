@@ -22,7 +22,7 @@ struct SocrataAPIClient: SocrataClientProtocol {
     }
     
     func getReports(byName value: String) async throws -> [Report] {
-        let str = value.trimForQuery()
+        let str = value.prepForQuery()
         
         guard str.isNotEmpty else {
             throw ClientError.emptyInputValue
@@ -93,12 +93,15 @@ struct SocrataAPIClient: SocrataClientProtocol {
 }
 
 extension String {
-    func trimForQuery() -> Self {
+    func prepForQuery() -> Self {
         return self
             .lowercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .replacingOccurrences(of: "^the ", with: "", options: .regularExpression)
-            .replacingOccurrences(of: "\u{2019}s", with: "")
-            .replacingOccurrences(of: "'s", with: "")
+            .replacingOccurrences(of: "^the\\s+", with: "", options: .regularExpression) // Remove "the " at the start
+            .replacingOccurrences(of: "[’']s", with: "", options: .regularExpression) // Remove 's and ’s
+            .replacingOccurrences(of: "[^a-z0-9\\s]", with: "", options: .regularExpression) // Remove special characters/punctuation
+            .replacingOccurrences(of: "(?<![aeiou])s$", with: "", options: .regularExpression) // Remove s if consonant preceeds it
+            .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression) // Collapse multiple spaces into one
+            .replacingOccurrences(of: " ", with: "%") // Use wildcard for better searchability with SQL-like API
     }
 }

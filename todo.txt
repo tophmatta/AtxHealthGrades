@@ -3,7 +3,6 @@ TODO:
  Tasks:
  - internet connectivity watcher
  - list top restaurants in an area that have had consistent high scores
- - more robust text search - P. Terry's, Z'Tejas, Torchy's, Amy's; possibly recursive search
  
  Road Map:
  - Push notifications:

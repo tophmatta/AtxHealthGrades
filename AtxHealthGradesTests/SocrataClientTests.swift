@@ -54,7 +54,7 @@ final class SocrataClientTests: XCTestCase {
         do {
             _ = try await mockClient.getReports(byName: "!@#$%^&*")
         } catch let error as ClientError {
-            XCTAssertEqual(error, .emptyTextSearchResponse)
+            XCTAssertEqual(error, .emptyInputValue)
         } catch {
             XCTFail("Expected ClientError.emptyTextSearchResponse, but got unexpected error: \(error)")
         }
