@@ -20,6 +20,11 @@ ATX Health Grades is a mobile app designed to help users access restaurant healt
 - **Swift Concurrency**: Modern concurrency in Swift, including `async/await` and structured concurrency, is used to handle API calls and asynchronous tasks, improving app performance and responsiveness. Actors are used to ensure synchronous read and write operations to UserDefaults when persisting favorited items.
 - **Unit Testing**: The app is tested with unit tests leveraging the XCTest framework to ensure data integrity, proper search string trimming, and accurate REST API request handling to maintain app quality and stability.
 
+## Screen Caps
+
+![radius](https://github.com/user-attachments/assets/77fd1409-3371-4c20-9add-2b93d071e028)  
+![text](https://github.com/user-attachments/assets/9d6ed8d8-0d01-4a9d-9f3a-b974dde8152b)
+
 ## API Reference
 
 The City of Austin's Open Data API (Socrata) is used to fetch restaurant health inspection reports. For more information, visit the [City of Austin's Socrata Open Data portal](https://data.austintexas.gov).
